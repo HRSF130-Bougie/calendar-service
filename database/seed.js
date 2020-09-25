@@ -1,43 +1,18 @@
-/* eslint-disable no-console */
-const mongoose = require('mongoose');
 const dayjs = require('dayjs');
 const faker = require('faker');
+const db = require('./connectToDatabase.js');
+const schema = require('./schema.js');
 
-const { Schema } = mongoose;
-
-const listingSchema = new Schema({
-  listing_id: Number,
-  days: [
-    {
-      date: Date,
-      booked: Boolean,
-      price: Number,
-      minimumNights: Number,
-    },
-  ],
-  reservations: [
-    {
-      res_id: Number,
-      checkIn: Number,
-      checkOut: Number,
-      guests: {
-        adults: Number,
-        children: Number,
-        infants: Number,
-      },
-    },
-  ],
-});
-
-const Listing = mongoose.model('Listing', listingSchema);
-
-const reSeed = async (callback) => {
+const reSeed = async () => {
   try {
     // Delete existing documents
-    await Listing.deleteMany({});
-
+    await schema.Listing.deleteMany({});
+  } catch (error) {
+    console.error(error);
+  } finally {
     // Create 100 new records
-    for (let listCount = 1; listCount <= 100; listCount += 1) {
+    let listCount = 1;
+    for (listCount; listCount <= 100; listCount += 1) {
       const daysArray = [];
       const randomPrice = faker.random.number({ min: 75, max: 450 });
 
@@ -66,7 +41,7 @@ const reSeed = async (callback) => {
         daysArray.push(day);
       }
 
-      const newListing = new Listing({
+      const newListing = new schema.Listing({
         listing_id: listCount,
         days: daysArray,
         cleaningFee: faker.random.number({ min: 50, max: 100 }),
@@ -74,14 +49,8 @@ const reSeed = async (callback) => {
 
       newListing.save();
     }
-  } catch (error) {
-    console.error(error);
-    callback(error);
-  } finally {
-    callback(null, 'new records created');
+    console.log(`${listCount - 1} new listings created.`);
   }
 };
 
-module.exports = {
-  Listing, reSeed,
-};
+reSeed();

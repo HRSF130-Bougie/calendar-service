@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 const orderRouter = require('./router.js');
+const db = require('../database/connectToDatabase.js');
 
 const app = express();
 const port = 3000;
