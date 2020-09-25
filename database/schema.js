@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
@@ -7,7 +8,6 @@ const listingSchema = new Schema({
   days: [
     {
       date: Date,
-      // eslint-disable-next-line no-undef
       booked: Boolean,
       price: Number,
       minimumNights: Number,
@@ -25,8 +25,9 @@ const listingSchema = new Schema({
       },
     },
   ],
+  cleaningFee: Number,
 });
 
 const Listing = mongoose.model('Listing', listingSchema);
 
-module.exports = Listing;
+module.exports = { Listing };
