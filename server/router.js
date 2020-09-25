@@ -5,7 +5,7 @@ const schema = require('./schema.js');
 // Get request from the client
 router.route('/api/listings').get((req, res) => {
   schema.Listing.find()
-    .then((listings) => { console.log(listings); res.status(200).send(listings); })
+    .then((listings) => res.status(200).send(listings))
     .catch((err) => res.status(400).send(`Error: ${err}`));
 });
 
@@ -15,7 +15,7 @@ router.route('/api/reseed').get((req, res) => {
     if (error) {
       res.status(400).send(`Something went wrong ${error}`);
     } else {
-      res.status(200).send('Woohoo! ');
+      res.status(200).send(success);
     }
   });
 });
