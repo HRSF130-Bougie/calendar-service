@@ -9,6 +9,12 @@
     "@babel/preset-react"
   ],
   "plugins": [
+    [
+      "babel-plugin-styled-components",
+      {
+        "fileName": false
+      }
+    ],
     "react-hot-loader/babel"
   ]
 }

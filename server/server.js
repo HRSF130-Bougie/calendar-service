@@ -1,7 +1,9 @@
+/* eslint-disable no-console */
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 const orderRouter = require('./router.js');
+// eslint-disable-next-line no-unused-vars
 const db = require('../database/connectToDatabase.js');
 
 const app = express();

@@ -1,5 +1,7 @@
+/* eslint-disable no-console */
 const dayjs = require('dayjs');
 const faker = require('faker');
+// eslint-disable-next-line no-unused-vars
 const db = require('./connectToDatabase.js');
 const schema = require('./schema.js');
 
