@@ -10,7 +10,7 @@ const CalendarWrapper = styled.div`
 
 const DayCell = styled.div`
   color: green;
-  background-color: orange;
+  background-color: cyan;
   text-align: center;
   padding: 3px;
   font-family: 'Airbnb Cereal App Light', sans-serif;
