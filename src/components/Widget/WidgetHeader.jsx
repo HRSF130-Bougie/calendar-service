@@ -25,7 +25,7 @@ const PerNight = styled.span`
 `;
 
 const Star = styled.span`
-  color: #FF385C;
+  color: #92174D;
 `;
 
 const Score = styled.span`
