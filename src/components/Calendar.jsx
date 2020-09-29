@@ -5,7 +5,7 @@ const CalendarWrapper = styled.div`
   display: grid;
   grid-gap: 3px;
   grid-template-columns: repeat(7, 42px);
-  grid-template-rows: repeat(5, 42px);
+  grid-template-rows: repeat(6, 42px);
   `;
 
 const DayCell = styled.div`
@@ -17,7 +17,7 @@ const DayCell = styled.div`
 
 const Calendar = () => (
   <CalendarWrapper>
-    {[...Array(35)].map((x, i) => <DayCell>{i + 1}</DayCell>)}
+    {[...Array(42)].map((x, i) => <DayCell>{i + 1}</DayCell>)}
   </CalendarWrapper>
 );
 

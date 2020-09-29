@@ -10,13 +10,12 @@ const WidgetWrapper = styled.div`
   max-width: 372px;
   height: auto;
   margin: 50px;
-  border: 1px solid gray;
+  border: 1px solid rgb(221, 221, 221);
   border-radius: 12px;
   padding: 24px;
   color: #484848;
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 6px 16px;
 `;
-
-
 
 class Widget extends React.Component {
   constructor() {
