@@ -12,14 +12,18 @@ const WidgetWrapper = styled.div`
   border: 1px solid gray;
   border-radius: 12px;
   padding: 24px;
+  color: #484848;
 `;
 
 const WidgetHeader = styled.div`
   width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
 `;
 
 const Price = styled.span`
-  color: #484848;
+
   font-size: 22px;
   line-height: 26px;
   font-weight: 600;
@@ -29,16 +33,19 @@ const PerNight = styled.span`
   font-size: 16px;
   line-height: 20px;
   font-weight: 400;
-  color: #484848;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+`;
+
+const Star = styled.span`
+  color: #FF385C;
 `;
 
 const Score = styled.span`
   font-size: 14px;
   line-height: 18px;
   font-weight: 600;
-  color: #484848;
+  padding-left: 4px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 `;
@@ -47,14 +54,11 @@ const Count = styled.span`
   font-size: 14px;
   line-height: 18px;
   font-weight: 400;
-  color: #484848;
+  padding-left: 4px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 `;
 
-const Star = styled.span`
-  color: #FF385C;
-`;
 
 class Widget extends React.Component {
   constructor() {
@@ -68,11 +72,15 @@ class Widget extends React.Component {
     return (
       <WidgetWrapper>
         <WidgetHeader>
-          <Price>$236</Price>
-          <PerNight> / night</PerNight>
-          <Star><FontAwesomeIcon icon={faStar} size="xs" /></Star>
-          <Score>4.89</Score>
-          <Count>(36)</Count>
+          <div>
+            <Price>$236</Price>
+            <PerNight> / night</PerNight>
+          </div>
+          <div>
+            <Star><FontAwesomeIcon icon={faStar} size="xs" /></Star>
+            <Score>4.89</Score>
+            <Count>(36)</Count>
+          </div>
         </WidgetHeader>
       </WidgetWrapper>
     );
