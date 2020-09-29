@@ -13,6 +13,7 @@ const DayCell = styled.div`
   background-color: orange;
   text-align: center;
   padding: 3px;
+  font-family: 'Airbnb Cereal App Light', sans-serif;
 `;
 
 const Calendar = () => (
