@@ -3,19 +3,7 @@ import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 
-const WidgetWrapper = styled.div`
-  box-sizing: border-box;
-  min-width: 220px;
-  max-width: 372px;
-  height: auto;
-  margin: 50px;
-  border: 1px solid gray;
-  border-radius: 12px;
-  padding: 24px;
-  color: #484848;
-`;
-
-const WidgetHeader = styled.div`
+const WidgetHeaderWrapper = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -23,7 +11,6 @@ const WidgetHeader = styled.div`
 `;
 
 const Price = styled.span`
-
   font-size: 22px;
   line-height: 26px;
   font-weight: 600;
@@ -59,32 +46,18 @@ const Count = styled.span`
   -moz-osx-font-smoothing: grayscale;
 `;
 
+const WidgetHeader = () => (
+  <WidgetHeaderWrapper>
+    <div>
+      <Price>$236</Price>
+      <PerNight> / night</PerNight>
+    </div>
+    <div>
+      <Star><FontAwesomeIcon icon={faStar} size="xs" /></Star>
+      <Score>4.89</Score>
+      <Count>(36)</Count>
+    </div>
+  </WidgetHeaderWrapper>
+);
 
-class Widget extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      startDateSelected: false,
-    };
-  }
-
-  render() {
-    return (
-      <WidgetWrapper>
-        <WidgetHeader>
-          <div>
-            <Price>$236</Price>
-            <PerNight> / night</PerNight>
-          </div>
-          <div>
-            <Star><FontAwesomeIcon icon={faStar} size="xs" /></Star>
-            <Score>4.89</Score>
-            <Count>(36)</Count>
-          </div>
-        </WidgetHeader>
-      </WidgetWrapper>
-    );
-  }
-}
-
-export default Widget;
+export default WidgetHeader;

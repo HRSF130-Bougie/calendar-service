@@ -1,7 +1,7 @@
 import React from 'react';
 import { hot } from 'react-hot-loader/root';
 import Calendar from './Calendar';
-import Widget from './Widget';
+import Widget from './Widget/Widget';
 
 class Booking extends React.Component {
   constructor() {
