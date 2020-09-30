@@ -9,11 +9,11 @@ const CalendarWrapper = styled.div`
   `;
 
 const DayCell = styled.div`
+  font-family: 'Airbnb Cereal App Light', sans-serif;
   color: green;
   background-color: cyan;
   text-align: center;
   padding: 3px;
-  font-family: 'Airbnb Cereal App Light', sans-serif;
 `;
 
 const Calendar = () => (
