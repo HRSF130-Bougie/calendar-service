@@ -27,12 +27,17 @@
     "@babel/runtime": "^7.11.2",
     "@fortawesome/fontawesome-free": "^5.14.0",
 <<<<<<< HEAD
+<<<<<<< HEAD
     "@fortawesome/fontawesome-svg-core": "^1.2.31",
     "@fortawesome/free-solid-svg-icons": "^5.15.0",
 =======
     "@fortawesome/fontawesome-svg-core": "^1.2.30",
     "@fortawesome/free-solid-svg-icons": "^5.14.0",
 >>>>>>> 168dd5b... Merging for rebase - all necessary text present for widget header
+=======
+    "@fortawesome/fontawesome-svg-core": "^1.2.31",
+    "@fortawesome/free-solid-svg-icons": "^5.15.0",
+>>>>>>> b61ebe6... Add text and border highlighting on the GuestBox
     "@fortawesome/react-fontawesome": "^0.1.11",
     "@shelf/jest-mongodb": "^1.2.3",
     "axios": "^0.20.0",
