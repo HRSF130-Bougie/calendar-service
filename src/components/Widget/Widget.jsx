@@ -14,7 +14,6 @@ const WidgetWrapper = styled.div`
   border: 1px solid rgb(221, 221, 221);
   border-radius: 12px;
   padding: 24px;
-  color: #484848;
   box-shadow: rgba(0, 0, 0, 0.12) 0px 6px 16px;
 `;
 
