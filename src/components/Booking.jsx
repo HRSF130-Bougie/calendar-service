@@ -53,6 +53,7 @@ const GlobalStyle = createGlobalStyle`
       font-weight: normal;
       src: local('Airbnb Cereal App Black'), url(${AirbnbCerealBlack}) format('woff');
     }
+`:
 
 html, body {
   font-family: 'Airbnb Cereal App Book', sans-serif;
