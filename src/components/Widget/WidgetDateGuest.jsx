@@ -55,14 +55,13 @@ const DisplayText = styled.span`
   display: block;
   font-size: 14px;
   line-height: 18px;
-  font-weight: 400;
   margin-top: 2px;
   color: rgb(113, 113, 113);
 `;
 
 const GuestText = styled(DisplayText)`
-    color: rgb(34, 34, 34);
     font-family: 'Airbnb Cereal App Book', sans-serif;
+    color: rgb(34, 34, 34);
 `;
 
 const AngleUp = styled.span`
