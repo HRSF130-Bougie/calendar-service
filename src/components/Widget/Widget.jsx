@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import WidgetHeader from './WidgetHeader';
+import WidgetDateGuest from './WidgetDateGuest';
 
 const WidgetWrapper = styled.div`
   box-sizing: border-box;
@@ -29,6 +30,7 @@ class Widget extends React.Component {
     return (
       <WidgetWrapper>
         <WidgetHeader />
+        <WidgetDateGuest />
       </WidgetWrapper>
     );
   }

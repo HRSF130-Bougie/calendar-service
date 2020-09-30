@@ -8,6 +8,7 @@ const WidgetHeaderWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: baseline;
+  margin-bottom: 24px;
 `;
 
 const Price = styled.span`
