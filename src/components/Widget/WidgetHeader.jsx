@@ -21,8 +21,6 @@ const PerNight = styled.span`
   font-size: 16px;
   line-height: 20px;
   font-weight: 400;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 `;
 
 const Star = styled.span`
@@ -34,8 +32,6 @@ const Score = styled.span`
   line-height: 18px;
   font-weight: 600;
   padding-left: 4px;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 `;
 
 const Count = styled.span`
@@ -43,8 +39,6 @@ const Count = styled.span`
   line-height: 18px;
   font-weight: 400;
   padding-left: 4px;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 `;
 
 const WidgetHeader = () => (

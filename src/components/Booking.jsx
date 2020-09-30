@@ -56,6 +56,8 @@ const GlobalStyle = createGlobalStyle`
 
 html, body {
   font-family: 'Airbnb Cereal App Book', sans-serif;
+    -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 `;
 
