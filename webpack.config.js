@@ -25,6 +25,12 @@ const config = {
           'css-loader',
         ],
       },
+      {
+        test: /\.(woff|woff2)$/,
+        use: {
+          loader: 'url-loader',
+        },
+      },
     ],
   },
   resolve: {
