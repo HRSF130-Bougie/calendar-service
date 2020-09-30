@@ -19,14 +19,12 @@ const GlobalStyle = createGlobalStyle`
     src: local('Airbnb Cereal App Book'), url(${AirbnbCerealBook}) format('woff');
     }
 
-
     @font-face {
     font-family: 'Airbnb Cereal App Light';
     font-style: normal;
     font-weight: normal;
     src: local('Airbnb Cereal App Light'), url(${AirbnbCerealLight}) format('woff');
     }
-
 
     @font-face {
     font-family: 'Airbnb Cereal App Medium';
@@ -35,7 +33,6 @@ const GlobalStyle = createGlobalStyle`
     src: local('Airbnb Cereal App Medium'), url(${AirbnbCerealMedium}) format('woff');
     }
 
-
 @font-face {
   font - family: 'Airbnb Cereal App Bold';
   font - style: normal;
@@ -43,14 +40,12 @@ const GlobalStyle = createGlobalStyle`
   src: local('Airbnb Cereal App Bold'), url(${AirbnbCerealBold}) format('woff');
 }
 
-
 @font-face {
   font - family: 'Airbnb Cereal App Extra Bold';
   font - style: normal;
   font - weight: normal;
   src: local('Airbnb Cereal App Extra Bold'), url(${AirbnbCerealExtraBold}) format('woff');
 }
-
 
 @font-face {
   font - family: 'Airbnb Cereal App Black';

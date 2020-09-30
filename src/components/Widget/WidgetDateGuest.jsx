@@ -79,6 +79,7 @@ class WidgetDateGuest extends React.Component {
   }
 
   render() {
+    const { guestModal } = this.state;
     return (
       <WidgetDateGuestWrapper>
         <CheckInBox>
@@ -97,7 +98,7 @@ class WidgetDateGuest extends React.Component {
             MM/DD/YYYY
           </DisplayText>
         </CheckOutBox>
-        <GuestBox onClick={this.toggleGuestModal} focused={this.state.guestModal}>
+        <GuestBox onClick={this.toggleGuestModal} focused={guestModal}>
           <div>
             <DescriptionText>
               Guests
@@ -107,7 +108,7 @@ class WidgetDateGuest extends React.Component {
             </DisplayText>
           </div>
           <div>
-            <AngleUp><FontAwesomeIcon icon={faAngleUp} size="2x" flip={this.state.guestModal === true ? 'vertical' : null} /></AngleUp>
+            <AngleUp><FontAwesomeIcon icon={faAngleUp} size="2x" flip={guestModal === true ? 'vertical' : null} /></AngleUp>
           </div>
         </GuestBox>
       </WidgetDateGuestWrapper>
