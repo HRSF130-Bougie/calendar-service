@@ -1,0 +1,56 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+import styled from 'styled-components';
+
+const GuestModalWrapper = styled.div`
+position: relative;
+display: flex;
+flex-flow: column;
+width: 100 %
+margin: 0px;
+border: medium none transparent;
+color: rgb(34, 34, 34);
+background-color: transparent;
+border-radius: 0px;
+box-shadow: none;
+font-size: 16px;
+line-height: 20px;
+font-weight: 400;
+outline: currentcolor none 0px;
+`;
+
+const GuestModalInnerWrapper = styled.div`
+background: rgb(255, 255, 255) none repeat scroll 0% 0% ;
+border-radius: 4px ;
+box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 6px, rgba(0, 0, 0, 0.07) 0px 0px 0px 1px ;
+box-sizing: border-box ;
+margin-bottom: 16px ;
+padding: 16px ;
+position: absolute ;
+text-align: left ;
+z-index: 999 ;
+right: 0px ;
+width: 100% ;
+min-width: 280px ;
+`;
+
+const GuestModal = ({ hideModal, show }) => (
+  <GuestModalWrapper>
+    {show
+      ? (
+        <GuestModalInnerWrapper>
+          <p>Hi! I am a modal!</p>
+          <button type="button" onClick={hideModal}>Close</button>
+        </GuestModalInnerWrapper>
+      )
+      : <div />}
+
+  </GuestModalWrapper>
+);
+
+export default GuestModal;
+
+GuestModal.propTypes = {
+  hideModal: PropTypes.func.isRequired,
+  show: PropTypes.bool.isRequired,
+};

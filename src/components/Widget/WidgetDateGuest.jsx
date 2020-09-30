@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleUp } from '@fortawesome/free-solid-svg-icons';
+import PropTypes from 'prop-types';
 
 const WidgetDateGuestWrapper = styled.div`
   width: 100%;
@@ -74,47 +75,29 @@ class WidgetDateGuest extends React.Component {
     this.state = {
       checkIn: null,
       checkOut: null,
-      guestModal: false,
     };
-
-    this.toggleGuestModal = this.toggleGuestModal.bind(this);
-  }
-
-  toggleGuestModal() {
-    this.setState((prevState) => ({ guestModal: !prevState.guestModal }));
   }
 
   render() {
-    const { guestModal } = this.state;
+    const { toggleGuestModal, guestModalVisible } = this.props;
+
     return (
       <WidgetDateGuestWrapper>
         <CheckInBox>
-          <DescriptionText>
-            Check-in
-          </DescriptionText>
-          <DisplayText>
-            Add date
-          </DisplayText>
+          <DescriptionText>Check-in</DescriptionText>
+          <DisplayText> Add date</DisplayText>
         </CheckInBox>
         <CheckOutBox>
-          <DescriptionText>
-            Check-out
-          </DescriptionText>
-          <DisplayText>
-            Add date
-          </DisplayText>
+          <DescriptionText>Check-out</DescriptionText>
+          <DisplayText>Add date </DisplayText>
         </CheckOutBox>
-        <GuestBox onClick={this.toggleGuestModal} focused={guestModal}>
+        <GuestBox onClick={toggleGuestModal} focused={guestModalVisible}>
           <div>
-            <DescriptionText>
-              Guests
-            </DescriptionText>
-            <GuestText>
-              1 guest
-            </GuestText>
+            <DescriptionText>Guests</DescriptionText>
+            <DisplayText>1 guest</DisplayText>
           </div>
           <div>
-            <AngleUp><FontAwesomeIcon icon={faAngleUp} size="2x" flip={guestModal === true ? 'vertical' : null} /></AngleUp>
+            <AngleUp><FontAwesomeIcon icon={faAngleUp} size="2x" flip={guestModalVisible === true ? 'vertical' : null} /></AngleUp>
           </div>
         </GuestBox>
       </WidgetDateGuestWrapper>
@@ -123,3 +106,8 @@ class WidgetDateGuest extends React.Component {
 }
 
 export default WidgetDateGuest;
+
+WidgetDateGuest.propTypes = {
+  toggleGuestModal: PropTypes.func.isRequired,
+  guestModalVisible: PropTypes.bool.isRequired,
+};

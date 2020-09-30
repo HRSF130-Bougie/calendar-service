@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import WidgetHeader from './WidgetHeader';
 import WidgetDateGuest from './WidgetDateGuest';
+import GuestModal from './GuestModal';
 
 const WidgetWrapper = styled.div`
   box-sizing: border-box;
@@ -22,14 +23,32 @@ class Widget extends React.Component {
     super();
     this.state = {
       startDateSelected: false,
+      guestModalVisible: false,
     };
+
+    this.toggleGuestModal = this.toggleGuestModal.bind(this);
+    this.hideGuestModal = this.hideGuestModal.bind(this);
+  }
+
+  toggleGuestModal() {
+    this.setState((prevState) => ({ guestModalVisible: !prevState.guestModalVisible }));
+  }
+
+  hideGuestModal() {
+    this.setState({ guestModalVisible: false });
   }
 
   render() {
+    const { guestModalVisible } = this.state;
+
     return (
       <WidgetWrapper>
         <WidgetHeader />
-        <WidgetDateGuest />
+        <WidgetDateGuest
+          toggleGuestModal={this.toggleGuestModal}
+          guestModalVisible={guestModalVisible}
+        />
+        <GuestModal hideModal={this.hideGuestModal} show={guestModalVisible} />
       </WidgetWrapper>
     );
   }
