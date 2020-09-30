@@ -55,7 +55,6 @@ const DisplayText = styled.span`
   font-size: 14px;
   line-height: 18px;
   font-weight: 200;
-  text-transform: uppercase;
 `;
 
 const AngleUp = styled.span`
@@ -87,7 +86,7 @@ class WidgetDateGuest extends React.Component {
             Check-in
           </DescriptionText>
           <DisplayText>
-            MM/DD/YYYY
+            Add date
           </DisplayText>
         </CheckInBox>
         <CheckOutBox>
@@ -95,7 +94,7 @@ class WidgetDateGuest extends React.Component {
             Check-out
           </DescriptionText>
           <DisplayText>
-            MM/DD/YYYY
+            Add date
           </DisplayText>
         </CheckOutBox>
         <GuestBox onClick={this.toggleGuestModal} focused={guestModal}>
