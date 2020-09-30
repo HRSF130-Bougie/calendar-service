@@ -38,24 +38,28 @@ const GlobalStyle = createGlobalStyle`
       font-style: normal;
       font-weight: normal;
       src: local('Airbnb Cereal App Bold'), url(${AirbnbCerealBold}) format('woff');
-  }
+    }
 
     @font-face {
       font-family: 'Airbnb Cereal App Extra Bold';
       font-style: normal;
       font-weight: normal;
       src: local('Airbnb Cereal App Extra Bold'), url(${AirbnbCerealExtraBold}) format('woff');
-  }
+    }
 
     @font-face {
       font-family: 'Airbnb Cereal App Black';
       font-style: normal;
       font-weight: normal;
       src: local('Airbnb Cereal App Black'), url(${AirbnbCerealBlack}) format('woff');
-}
+    }
 
-html, body {
-  font-family: 'Airbnb Cereal App Book', sans-serif;
+
+  html, body {
+    font-family: 'Airbnb Cereal App Book', sans - serif;
+    color: rgb(34, 34, 34)
+    -webkit - font - smoothing: antialiased;
+    -moz - osx - font - smoothing: grayscale;
 }
 `;
 
