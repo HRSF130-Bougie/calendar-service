@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/HRSF130-Bougie/calendar-service#readme",
   "dependencies": {
+    "@babel/runtime": "^7.11.2",
     "@fortawesome/fontawesome-free": "^5.14.0",
     "@fortawesome/fontawesome-svg-core": "^1.2.31",
     "@fortawesome/free-solid-svg-icons": "^5.15.0",
@@ -48,6 +49,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.11.6",
+    "@babel/plugin-transform-runtime": "^7.11.5",
     "@babel/preset-env": "^7.11.5",
     "@babel/preset-react": "^7.10.4",
     "@hot-loader/react-dom": "^17.0.0-rc.2",

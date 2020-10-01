@@ -84,7 +84,11 @@ class WidgetDateGuest extends React.Component {
   }
 
   render() {
-    const { toggleGuestModal, guestModalVisible } = this.props;
+    const { toggleGuestModal, guestModalVisible, state } = this.props;
+    let guestCount = '';
+    if (state.totalGuests === 1) { guestCount = '1 guest'; } else { guestCount = `${state.totalGuests} guests`; }
+    let infantCount = '';
+    if (state.infants === 1) { infantCount = ', 1 infant'; } else if (state.infants > 1) { infantCount = `, ${state.infants} infants`; }
 
     return (
       <WidgetDateGuestWrapper>
@@ -99,7 +103,10 @@ class WidgetDateGuest extends React.Component {
         <GuestBox onClick={toggleGuestModal} focused={guestModalVisible}>
           <div>
             <DescriptionText>Guests</DescriptionText>
-            <GuestText>1 guest</GuestText>
+            <GuestText>
+              {guestCount}
+              {infantCount}
+            </GuestText>
           </div>
           <div>
             <AngleUp><FontAwesomeIcon icon={faAngleUp} size="2x" flip={guestModalVisible === true ? 'vertical' : null} /></AngleUp>
@@ -115,4 +122,5 @@ export default WidgetDateGuest;
 WidgetDateGuest.propTypes = {
   toggleGuestModal: PropTypes.func.isRequired,
   guestModalVisible: PropTypes.bool.isRequired,
+  state: PropTypes.objectOf(PropTypes.number).isRequired,
 };

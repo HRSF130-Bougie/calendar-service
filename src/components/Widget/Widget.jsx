@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import WidgetHeader from './WidgetHeader';
 import WidgetDateGuest from './WidgetDateGuest';
 import GuestModal from './GuestModal';
@@ -42,13 +43,21 @@ class Widget extends React.Component {
 
   render() {
     const { guestModalVisible } = this.state;
-
+    const { state, increaseGuestCount, decreaseGuestCount } = this.props;
     return (
       <WidgetWrapper>
         <WidgetHeader />
         <WidgetDateGuest
           toggleGuestModal={this.toggleGuestModal}
           guestModalVisible={guestModalVisible}
+          state={state}
+        />
+        <GuestModal
+          hideModal={this.hideGuestModal}
+          show={guestModalVisible}
+          state={state}
+          increaseGuestCount={increaseGuestCount}
+          decreaseGuestCount={decreaseGuestCount}
         />
         <GuestModal hideModal={this.hideGuestModal} show={guestModalVisible} />
         <MainButton />
@@ -58,3 +67,10 @@ class Widget extends React.Component {
 }
 
 export default Widget;
+
+Widget.propTypes = {
+  state: PropTypes.objectOf(PropTypes.number).isRequired,
+  increaseGuestCount: PropTypes.func.isRequired,
+  decreaseGuestCount: PropTypes.func.isRequired,
+
+};
