@@ -44,18 +44,24 @@ const GuestBox = styled.div`
 `;
 
 const DescriptionText = styled.span`
+  font-family: 'Airbnb Cereal App Bold', sans-serif;
   font-size: 10px;
   line-height: 12px;
-  font-weight: 800;
   text-transform: uppercase;
 `;
 
 const DisplayText = styled.span`
+  font-family: 'Airbnb Cereal App Light', sans-serif;
   display: block;
   font-size: 14px;
   line-height: 18px;
-  font-weight: 200;
-  text-transform: uppercase;
+  margin-top: 2px;
+  color: rgb(113, 113, 113);
+`;
+
+const GuestText = styled(DisplayText)`
+    font-family: 'Airbnb Cereal App Book', sans-serif;
+    color: rgb(34, 34, 34);
 `;
 
 const AngleUp = styled.span`
@@ -87,7 +93,7 @@ class WidgetDateGuest extends React.Component {
             Check-in
           </DescriptionText>
           <DisplayText>
-            MM/DD/YYYY
+            Add date
           </DisplayText>
         </CheckInBox>
         <CheckOutBox>
@@ -95,7 +101,7 @@ class WidgetDateGuest extends React.Component {
             Check-out
           </DescriptionText>
           <DisplayText>
-            MM/DD/YYYY
+            Add date
           </DisplayText>
         </CheckOutBox>
         <GuestBox onClick={this.toggleGuestModal} focused={guestModal}>
@@ -103,9 +109,9 @@ class WidgetDateGuest extends React.Component {
             <DescriptionText>
               Guests
             </DescriptionText>
-            <DisplayText>
+            <GuestText>
               1 guest
-            </DisplayText>
+            </GuestText>
           </div>
           <div>
             <AngleUp><FontAwesomeIcon icon={faAngleUp} size="2x" flip={guestModal === true ? 'vertical' : null} /></AngleUp>
