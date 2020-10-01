@@ -54,7 +54,6 @@ class Booking extends React.Component {
     return (
       <>
         <GlobalFonts />
-<<<<<<< HEAD
         <Widget
           state={{
             adults, children, infants, totalGuests,
@@ -62,9 +61,6 @@ class Booking extends React.Component {
           increaseGuestCount={this.increaseGuestCount}
           decreaseGuestCount={this.decreaseGuestCount}
         />
-=======
-        <Widget />
->>>>>>> 4734cb4... Merging for rebase - Start laying out calendar grid
         <Calendar />
       </>
     );
