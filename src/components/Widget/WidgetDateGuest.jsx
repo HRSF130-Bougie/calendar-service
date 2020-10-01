@@ -42,6 +42,7 @@ const GuestBox = styled.div`
   border-top: 1px solid rgb(190, 190, 190);
   border: ${(props) => (props.focused ? '2px solid rgb(34,34,34)' : '')};
   border-radius: ${(props) => (props.focused ? '8px' : '')};
+  vertical-align: top;
 `;
 
 const DescriptionText = styled.span`
@@ -49,6 +50,7 @@ const DescriptionText = styled.span`
   font-size: 10px;
   line-height: 12px;
   text-transform: uppercase;
+  vertical-align: top;
 `;
 
 const DisplayText = styled.span`
@@ -56,12 +58,13 @@ const DisplayText = styled.span`
   display: block;
   font-size: 14px;
   line-height: 18px;
-  margin-top: 2px;
+  vertical-align: top;
   color: rgb(113, 113, 113);
 `;
 
 const GuestText = styled(DisplayText)`
-    font-family: 'Airbnb Cereal App Book', sans-serif;
+    line-height: 12px;
+    font-family: 'Airbnb Cereal App Light', sans-serif;
     color: rgb(34, 34, 34);
 `;
 
@@ -94,7 +97,7 @@ class WidgetDateGuest extends React.Component {
         <GuestBox onClick={toggleGuestModal} focused={guestModalVisible}>
           <div>
             <DescriptionText>Guests</DescriptionText>
-            <DisplayText>1 guest</DisplayText>
+            <GuestText>1 guest</GuestText>
           </div>
           <div>
             <AngleUp><FontAwesomeIcon icon={faAngleUp} size="2x" flip={guestModalVisible === true ? 'vertical' : null} /></AngleUp>
