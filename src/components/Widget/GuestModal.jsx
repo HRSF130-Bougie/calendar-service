@@ -49,9 +49,9 @@ const GuestModal = ({ hideModal, show, state, increaseGuestCount, decreaseGuestC
       show
         ? (
           <GuestModalInnerWrapper>
-            <GuestSelector target={['adults', '']} currentValue={state[0]} increaseGuestCount={increaseGuestCount} decreaseGuestCount={decreaseGuestCount} currentTotal={state[3]} />
-            <GuestSelector target={['children', 'Ages 2-12']} currentValue={state[1]} increaseGuestCount={increaseGuestCount} decreaseGuestCount={decreaseGuestCount} currentTotal={state[3]} />
-            <GuestSelector target={['infants', 'Under 2']} currentValue={state[2]} increaseGuestCount={increaseGuestCount} decreaseGuestCount={decreaseGuestCount} currentTotal={state[3]} />
+            <GuestSelector target={{ target: 'adults', subtext: '' }} currentValue={state.adults} increaseGuestCount={increaseGuestCount} decreaseGuestCount={decreaseGuestCount} currentTotal={state.totalGuests} />
+            <GuestSelector target={{ target: 'children', subtext: 'Ages 2-12' }} currentValue={state.children} increaseGuestCount={increaseGuestCount} decreaseGuestCount={decreaseGuestCount} currentTotal={state.totalGuests} />
+            <GuestSelector target={{ target: 'infants', subtext: 'Under 2' }} currentValue={state.infants} increaseGuestCount={increaseGuestCount} decreaseGuestCount={decreaseGuestCount} currentTotal={state.totalGuests} />
 
             <MaxGuests>
               6 guests maximum. Infants don’t count toward the number of guests.
@@ -72,7 +72,7 @@ export default GuestModal;
 GuestModal.propTypes = {
   hideModal: PropTypes.func.isRequired,
   show: PropTypes.bool.isRequired,
-  state: PropTypes.arrayOf(PropTypes.number).isRequired,
+  state: PropTypes.objectOf(PropTypes.number).isRequired,
   increaseGuestCount: PropTypes.func.isRequired,
   decreaseGuestCount: PropTypes.func.isRequired,
 };

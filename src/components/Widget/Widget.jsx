@@ -68,9 +68,8 @@ class Widget extends React.Component {
 export default Widget;
 
 Widget.propTypes = {
-  state: PropTypes.arrayOf(PropTypes.number).isRequired,
+  state: PropTypes.objectOf(PropTypes.number).isRequired,
   increaseGuestCount: PropTypes.func.isRequired,
   decreaseGuestCount: PropTypes.func.isRequired,
-  state: PropTypes.arrayOf(PropTypes.number).isRequired,
 
 };

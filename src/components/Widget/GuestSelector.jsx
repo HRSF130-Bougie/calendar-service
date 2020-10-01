@@ -102,22 +102,22 @@ const Count = styled.div`
 
 const GuestSelector = ({ target, currentValue, increaseGuestCount, decreaseGuestCount, currentTotal }) => {
   let minusDisabled = false;
-  if (target[0] === 'adults' && currentValue < 2) {
+  if (target.target === 'adults' && currentValue < 2) {
     minusDisabled = true;
   } else if (currentValue < 1) {
     minusDisabled = true;
   }
 
   let plusDisabled = false;
-  if (currentTotal === 6 && target[0] !== 'infants') {
+  if (currentTotal === 6 && target.target !== 'infants') {
     plusDisabled = true;
   }
 
   return (
     <SelectorWrapper>
       <GuestCategoryWrapper>
-        <GuestCategory>{target[0]}</GuestCategory>
-        {target[1] ? <GuestSubtext>{target[1]}</GuestSubtext> : null}
+        <GuestCategory>{target.target}</GuestCategory>
+        {target.subtext ? <GuestSubtext>{target.subtext}</GuestSubtext> : null}
       </GuestCategoryWrapper>
 
       <CountWrapper>
@@ -126,7 +126,7 @@ const GuestSelector = ({ target, currentValue, increaseGuestCount, decreaseGuest
             <PlusMinusButtonDisabled>-</PlusMinusButtonDisabled>
           )
           : (
-            <PlusMinusButton name={target[0]} onClick={decreaseGuestCount}>-</PlusMinusButton>
+            <PlusMinusButton name={target.target} onClick={decreaseGuestCount}>-</PlusMinusButton>
           )}
         <Count>{currentValue}</Count>
         {plusDisabled === true
@@ -134,7 +134,7 @@ const GuestSelector = ({ target, currentValue, increaseGuestCount, decreaseGuest
             <PlusMinusButtonDisabled>+</PlusMinusButtonDisabled>
           )
           : (
-            <PlusMinusButton name={target[0]} onClick={increaseGuestCount}>+</PlusMinusButton>
+            <PlusMinusButton name={target.target} onClick={increaseGuestCount}>+</PlusMinusButton>
           )}
       </CountWrapper>
 
@@ -145,7 +145,7 @@ const GuestSelector = ({ target, currentValue, increaseGuestCount, decreaseGuest
 export default GuestSelector;
 
 GuestSelector.propTypes = {
-  target: PropTypes.arrayOf(PropTypes.string, PropTypes.string).isRequired,
+  target: PropTypes.objectOf(PropTypes.string, PropTypes.string).isRequired,
   currentValue: PropTypes.number.isRequired,
   increaseGuestCount: PropTypes.func.isRequired,
   decreaseGuestCount: PropTypes.func.isRequired,
