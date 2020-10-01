@@ -58,8 +58,8 @@ const GlobalStyle = createGlobalStyle`
   html, body {
     font-family: 'Airbnb Cereal App Book', sans-serif;
     color: rgb(34, 34, 34)
-    -webkit - font - smoothing: antialiased;
-    -moz - osx - font - smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 `;
 
