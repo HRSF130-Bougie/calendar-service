@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import WidgetHeader from './WidgetHeader';
 import WidgetDateGuest from './WidgetDateGuest';
 import GuestModal from './GuestModal';
-import MainButton from './MainButton'
+import MainButton from './MainButton';
 
 const WidgetWrapper = styled.div`
   box-sizing: border-box;

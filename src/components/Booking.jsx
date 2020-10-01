@@ -57,7 +57,7 @@ class Booking extends React.Component {
     } = this.state;
     return (
       <>
-        <GlobalStyle />
+        <GlobalFonts />
         <Widget
           state={{ adults, children, infants, totalGuests }}
           increaseGuestCount={this.increaseGuestCount}
