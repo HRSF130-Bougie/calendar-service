@@ -53,7 +53,9 @@ const GuestModal = ({ hideModal, show, state, increaseGuestCount, decreaseGuestC
             <GuestSelector target={['children', 'Ages 2-12']} currentValue={state[1]} increaseGuestCount={increaseGuestCount} decreaseGuestCount={decreaseGuestCount} currentTotal={state[3]} />
             <GuestSelector target={['infants', 'Under 2']} currentValue={state[2]} increaseGuestCount={increaseGuestCount} decreaseGuestCount={decreaseGuestCount} currentTotal={state[3]} />
 
-            <MaxGuests>Do not exceed the maximum number of guests</MaxGuests>
+            <MaxGuests>
+              6 guests maximum. Infants don’t count toward the number of guests.
+            </MaxGuests>
             <GuestModalCloseButtonWrapper>
               <GuestModalCloseButton hideModal={hideModal} />
             </GuestModalCloseButtonWrapper>

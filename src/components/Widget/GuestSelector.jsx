@@ -65,6 +65,32 @@ const PlusMinusButton = styled.button`
 }
 `;
 
+const PlusMinusButtonDisabled = styled.div`
+    font-family: 'Airbnb Cereal App Light', sans-serif;
+    -moz-box-pack: center;
+    -moz-box-align: center;
+    -moz-box-flex: 0;
+    width: 32px;
+    height: 32px;
+    flex-grow: 0;
+    flex-shrink: 0;
+    cursor: pointer;
+    display: inline-flex;
+    margin: 0px;
+    border-width: 1px;
+    border-style: solid;
+    border-color:  rgb(235, 235, 235);
+    color:  rgb(235, 235, 235);
+    font-family: inherit;
+    font-size: 25px;
+    outline: currentcolor none medium;
+    align-items: center;
+    justify-content: center;
+    background: rgb(255, 255, 255) none repeat scroll 0% 0%;
+    border-radius: 50%;
+}
+`;
+
 const Count = styled.div`
   display: flex-inline;
   margin: 0 8px;
@@ -74,22 +100,47 @@ const Count = styled.div`
   align-self: center;
 `;
 
-const GuestSelector = ({ target, currentValue, increaseGuestCount, decreaseGuestCount }) => (
+const GuestSelector = ({ target, currentValue, increaseGuestCount, decreaseGuestCount, currentTotal }) => {
+  let minusDisabled = false;
+  if (target[0] === 'adults' && currentValue < 2) {
+    minusDisabled = true;
+  } else if (currentValue < 1) {
+    minusDisabled = true;
+  }
 
-  <SelectorWrapper>
-    <GuestCategoryWrapper>
-      <GuestCategory>{target[0]}</GuestCategory>
-      {target[1] ? <GuestSubtext>{target[1]}</GuestSubtext> : null}
-    </GuestCategoryWrapper>
+  let plusDisabled = false;
+  if (currentTotal === 6 && target[0] !== 'infants') {
+    plusDisabled = true;
+  }
 
-    <CountWrapper>
-      <PlusMinusButton name={target[0]} onClick={decreaseGuestCount}>-</PlusMinusButton>
-      <Count>{currentValue}</Count>
-      <PlusMinusButton name={target[0]} onClick={increaseGuestCount}>+</PlusMinusButton>
-    </CountWrapper>
+  return (
+    <SelectorWrapper>
+      <GuestCategoryWrapper>
+        <GuestCategory>{target[0]}</GuestCategory>
+        {target[1] ? <GuestSubtext>{target[1]}</GuestSubtext> : null}
+      </GuestCategoryWrapper>
 
-  </SelectorWrapper>
-);
+      <CountWrapper>
+        {minusDisabled === true
+          ? (
+            <PlusMinusButtonDisabled>-</PlusMinusButtonDisabled>
+          )
+          : (
+            <PlusMinusButton name={target[0]} onClick={decreaseGuestCount}>-</PlusMinusButton>
+          )}
+        <Count>{currentValue}</Count>
+        {plusDisabled === true
+          ? (
+            <PlusMinusButtonDisabled>+</PlusMinusButtonDisabled>
+          )
+          : (
+            <PlusMinusButton name={target[0]} onClick={increaseGuestCount}>+</PlusMinusButton>
+          )}
+      </CountWrapper>
+
+    </SelectorWrapper>
+  );
+};
 
 export default GuestSelector;
 
@@ -98,4 +149,5 @@ GuestSelector.propTypes = {
   currentValue: PropTypes.number.isRequired,
   increaseGuestCount: PropTypes.func.isRequired,
   decreaseGuestCount: PropTypes.func.isRequired,
+  currentTotal: PropTypes.number.isRequired,
 };
