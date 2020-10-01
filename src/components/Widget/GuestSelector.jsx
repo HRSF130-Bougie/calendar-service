@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable object-curly-newline */
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -122,20 +123,14 @@ const GuestSelector = ({ target, currentValue, increaseGuestCount, decreaseGuest
 
       <CountWrapper>
         {minusDisabled === true
-          ? (
-            <PlusMinusButtonDisabled>-</PlusMinusButtonDisabled>
-          )
-          : (
-            <PlusMinusButton name={target.target} onClick={decreaseGuestCount}>-</PlusMinusButton>
-          )}
+          ? (<PlusMinusButtonDisabled>-</PlusMinusButtonDisabled>)
+          : (<PlusMinusButton name={target.target} onClick={decreaseGuestCount}>-</PlusMinusButton>)}
+
         <Count>{currentValue}</Count>
+
         {plusDisabled === true
-          ? (
-            <PlusMinusButtonDisabled>+</PlusMinusButtonDisabled>
-          )
-          : (
-            <PlusMinusButton name={target.target} onClick={increaseGuestCount}>+</PlusMinusButton>
-          )}
+          ? (<PlusMinusButtonDisabled>+</PlusMinusButtonDisabled>)
+          : (<PlusMinusButton name={target.target} onClick={increaseGuestCount}>+</PlusMinusButton>)}
       </CountWrapper>
 
     </SelectorWrapper>
