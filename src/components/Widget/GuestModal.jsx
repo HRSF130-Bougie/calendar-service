@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import GuestModalCloseButton from './GuestModalCloseButton';
 
 const GuestModalWrapper = styled.div`
   position: relative;
@@ -25,13 +26,20 @@ const GuestModalInnerWrapper = styled.div`
   min-width: 280px;
 `;
 
+const GuestModalCloseButtonWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`;
+
 const GuestModal = ({ hideModal, show }) => (
   <GuestModalWrapper>
     {show
       ? (
         <GuestModalInnerWrapper>
           <p>Hi! I am a modal!</p>
-          <button type="button" onClick={hideModal}>Close</button>
+          <GuestModalCloseButtonWrapper>
+            <GuestModalCloseButton hideModal={hideModal} />
+          </GuestModalCloseButtonWrapper>
         </GuestModalInnerWrapper>
       )
       : <div />}
