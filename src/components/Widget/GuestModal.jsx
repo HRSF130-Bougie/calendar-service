@@ -8,7 +8,7 @@ import GuestSelector from './GuestSelector';
 const GuestModalWrapper = styled.div`
   position: relative;
   display: flex;
-  flex-flow: column;
+  flex-flow: column nowrap;
   width: 100 %;
   margin: 0px;
 `;

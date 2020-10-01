@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import WidgetHeader from './WidgetHeader';
 import WidgetDateGuest from './WidgetDateGuest';
 import GuestModal from './GuestModal';
-// import MainButton from './MainButton';
+import MainButton from './MainButton'
 
 const WidgetWrapper = styled.div`
   box-sizing: border-box;
@@ -59,7 +59,8 @@ class Widget extends React.Component {
           increaseGuestCount={increaseGuestCount}
           decreaseGuestCount={decreaseGuestCount}
         />
-        {/* <MainButton /> */}
+        <GuestModal hideModal={this.hideGuestModal} show={guestModalVisible} />
+        <MainButton />
       </WidgetWrapper>
     );
   }
