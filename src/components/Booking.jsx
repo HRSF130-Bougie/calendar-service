@@ -30,7 +30,7 @@ class Booking extends React.Component {
 
   async increaseGuestCount(event) {
     const targetName = event.target.name;
-    let currentValue = this.state[targetName];
+    const currentValue = this.state[targetName];
 
     try {
       await this.setState({ [targetName]: currentValue + 1 });
@@ -41,7 +41,7 @@ class Booking extends React.Component {
 
   async decreaseGuestCount(event) {
     const targetName = event.target.name;
-    let currentValue = this.state[targetName];
+    const currentValue = this.state[targetName];
 
     try {
       await this.setState({ [targetName]: currentValue - 1 });
@@ -59,7 +59,9 @@ class Booking extends React.Component {
       <>
         <GlobalFonts />
         <Widget
-          state={{ adults, children, infants, totalGuests }}
+          state={{
+            adults, children, infants, totalGuests,
+          }}
           increaseGuestCount={this.increaseGuestCount}
           decreaseGuestCount={this.decreaseGuestCount}
         />

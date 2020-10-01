@@ -59,7 +59,6 @@ class Widget extends React.Component {
           increaseGuestCount={increaseGuestCount}
           decreaseGuestCount={decreaseGuestCount}
         />
-        <GuestModal hideModal={this.hideGuestModal} show={guestModalVisible} />
         <MainButton />
       </WidgetWrapper>
     );
