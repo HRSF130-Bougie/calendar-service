@@ -28,26 +28,18 @@ class Booking extends React.Component {
     this.setState({ totalGuests: adults + children });
   }
 
-  async increaseGuestCount(event) {
+  increaseGuestCount(event) {
     const targetName = event.target.name;
     const currentValue = this.state[targetName];
 
-    try {
-      await this.setState({ [targetName]: currentValue + 1 });
-    } finally {
-      this.calcTotalGuests();
-    }
+    this.setState({ [targetName]: currentValue + 1 }, () => { this.calcTotalGuests(); });
   }
 
-  async decreaseGuestCount(event) {
+  decreaseGuestCount(event) {
     const targetName = event.target.name;
     const currentValue = this.state[targetName];
 
-    try {
-      await this.setState({ [targetName]: currentValue - 1 });
-    } finally {
-      this.calcTotalGuests();
-    }
+    this.setState({ [targetName]: currentValue - 1 }, () => { this.calcTotalGuests(); });
   }
 
   render() {
