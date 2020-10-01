@@ -7,7 +7,7 @@ const WidgetHeaderWrapper = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;
-  align-items: end;
+  align-items: baseline;
   margin-bottom: 24px;
 `;
 
@@ -27,6 +27,7 @@ const Star = styled.span`
   color: #92174D;
   font-size: 0.6em;
   line-height: 18px;
+  vertical-align: top;
 `;
 
 const Score = styled.span`
