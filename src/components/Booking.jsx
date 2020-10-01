@@ -23,6 +23,10 @@ class Booking extends React.Component {
     this.calcTotalGuests = this.calcTotalGuests.bind(this);
   }
 
+  componentDidMount() {
+
+  }
+
   calcTotalGuests() {
     const { adults, children } = this.state;
     this.setState({ totalGuests: adults + children });
@@ -40,10 +44,6 @@ class Booking extends React.Component {
     const currentValue = this.state[targetName];
 
     this.setState({ [targetName]: currentValue - 1 }, () => { this.calcTotalGuests(); });
-  }
-
-  componentDidMount() {
-
   }
 
   render() {
