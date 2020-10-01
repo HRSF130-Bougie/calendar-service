@@ -76,7 +76,9 @@ class WidgetDateGuest extends React.Component {
   constructor() {
     super();
     this.state = {
+      // eslint-disable-next-line react/no-unused-state
       checkIn: null,
+      // eslint-disable-next-line react/no-unused-state
       checkOut: null,
     };
   }
