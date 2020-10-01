@@ -1,7 +1,9 @@
+/* eslint-disable object-curly-newline */
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import GuestModalCloseButton from './GuestModalCloseButton';
+import GuestSelector from './GuestSelector';
 
 const GuestModalWrapper = styled.div`
   position: relative;
@@ -26,23 +28,36 @@ const GuestModalInnerWrapper = styled.div`
   min-width: 280px;
 `;
 
+const MaxGuests = styled.div`
+  font-family: 'Airbnb Cereal App Light', sans-serif;
+  display: block;
+  font-size: 14px;
+  line-height: 18px;
+  vertical-align: top;
+  color: rgb(113, 113, 113);
+  margin-bottom: 16px;
+`;
+
 const GuestModalCloseButtonWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
 `;
 
-const GuestModal = ({ hideModal, show }) => (
+const GuestModal = ({ hideModal, show, state, increaseGuestCount, decreaseGuestCount }) => (
   <GuestModalWrapper>
-    {show
-      ? (
-        <GuestModalInnerWrapper>
-          <p>Hi! I am a modal!</p>
-          <GuestModalCloseButtonWrapper>
-            <GuestModalCloseButton hideModal={hideModal} />
-          </GuestModalCloseButtonWrapper>
-        </GuestModalInnerWrapper>
-      )
-      : <div />}
+    {
+      show
+        ? (
+          <GuestModalInnerWrapper>
+            <GuestSelector target={['adults', 'Testing']} currentValue={state[0]} increaseGuestCount={increaseGuestCount} decreaseGuestCount={decreaseGuestCount} />
+            <MaxGuests>Do not exceed the maximum number of guests</MaxGuests>
+            <GuestModalCloseButtonWrapper>
+              <GuestModalCloseButton hideModal={hideModal} />
+            </GuestModalCloseButtonWrapper>
+          </GuestModalInnerWrapper>
+        )
+        : <div />
+    }
 
   </GuestModalWrapper>
 );
@@ -52,4 +67,7 @@ export default GuestModal;
 GuestModal.propTypes = {
   hideModal: PropTypes.func.isRequired,
   show: PropTypes.bool.isRequired,
+  state: PropTypes.arrayOf(PropTypes.number).isRequired,
+  increaseGuestCount: PropTypes.func.isRequired,
+  decreaseGuestCount: PropTypes.func.isRequired,
 };

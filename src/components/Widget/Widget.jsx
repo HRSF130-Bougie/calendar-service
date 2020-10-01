@@ -1,8 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import WidgetHeader from './WidgetHeader';
 import WidgetDateGuest from './WidgetDateGuest';
 import GuestModal from './GuestModal';
+// import MainButton from './MainButton';
 
 const WidgetWrapper = styled.div`
   box-sizing: border-box;
@@ -22,6 +24,7 @@ class Widget extends React.Component {
   constructor() {
     super();
     this.state = {
+      // eslint-disable-next-line react/no-unused-state
       startDateSelected: false,
       guestModalVisible: false,
     };
@@ -40,7 +43,7 @@ class Widget extends React.Component {
 
   render() {
     const { guestModalVisible } = this.state;
-
+    const { state, increaseGuestCount, decreaseGuestCount } = this.props;
     return (
       <WidgetWrapper>
         <WidgetHeader />
@@ -48,10 +51,24 @@ class Widget extends React.Component {
           toggleGuestModal={this.toggleGuestModal}
           guestModalVisible={guestModalVisible}
         />
-        <GuestModal hideModal={this.hideGuestModal} show={guestModalVisible} />
+        <GuestModal
+          hideModal={this.hideGuestModal}
+          show={guestModalVisible}
+          state={state}
+          increaseGuestCount={increaseGuestCount}
+          decreaseGuestCount={decreaseGuestCount}
+        />
+        {/* <MainButton /> */}
       </WidgetWrapper>
     );
   }
 }
 
 export default Widget;
+
+Widget.propTypes = {
+  state: PropTypes.arrayOf(PropTypes.number).isRequired,
+  increaseGuestCount: PropTypes.func.isRequired,
+  decreaseGuestCount: PropTypes.func.isRequired,
+
+};

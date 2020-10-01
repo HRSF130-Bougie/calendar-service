@@ -7,7 +7,7 @@ const GuestModalCloseButtonStyle = styled.button`
   font-family: 'Airbnb Cereal App Medium';
   cursor: pointer;
   display: inline-block;
-  margin: 0px-10px;
+  margin: 0px -10px;
   position: relative;
   text-align: center;
   width: auto;

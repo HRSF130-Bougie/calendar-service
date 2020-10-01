@@ -9,7 +9,6 @@ const WidgetHeaderWrapper = styled.div`
   justify-content: space-between;
   align-items: end;
   margin-bottom: 24px;
-  vertical-align: start;
 `;
 
 const Price = styled.span`
