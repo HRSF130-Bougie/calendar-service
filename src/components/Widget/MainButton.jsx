@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 const MainButtonStyled = styled.button`
-  font-family: 'Airbnb Cereal App Medium';
+  font-family: 'Airbnb Cereal App Book';
   cursor: pointer;
   display: inline-block;
   margin-top: 16px;
@@ -12,7 +12,6 @@ const MainButtonStyled = styled.button`
   touch-action: manipulation;
   font-size: 16px;
   line-height: 20px;
-  font-weight: 600;
   border-radius: 8px;
   outline: currentcolor none medium;
   padding: 14px 24px;
@@ -23,10 +22,11 @@ const MainButtonStyled = styled.button`
   width: 100%;
   transition: none 0s ease 0s;
   background: var(--dls19-brand-gradient, linear-gradient(to right, #E61E4D 0%, #E31C5F 50%, #D70466 100%));
+  background-position: calc((100 - var(--mouse-x, 0)) * 1%) calc((100 - var(--mouse-y, 0)) * 1%);
 `;
 
 const MainButton = () => (
-  <MainButtonStyled>Check Availability</MainButtonStyled>
+  <MainButtonStyled>Check availability</MainButtonStyled>
 );
 
 export default MainButton;
