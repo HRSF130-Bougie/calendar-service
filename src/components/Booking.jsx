@@ -42,6 +42,10 @@ class Booking extends React.Component {
     this.setState({ [targetName]: currentValue - 1 }, () => { this.calcTotalGuests(); });
   }
 
+  componentDidMount() {
+
+  }
+
   render() {
     const guestType = 'adults';
     const {

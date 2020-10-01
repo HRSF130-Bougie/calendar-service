@@ -1,11 +1,32 @@
 import React from 'react';
 import styled from 'styled-components';
 
+const CalendarPopUp = styled.div`
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 6px 20px;
+  display: inline-block;
+  padding: 24px 32px 16px;
+  position: absolute;
+  top: -24px;
+  right: -32px;
+  width: 661px;
+  z-index: 1;
+  min-height: 460px;
+  background: rgb(255, 255, 255) none repeat scroll 0% 0%;
+  border-radius: 16px;
+`;
+
 const CalendarWrapper = styled.div`
   display: grid;
   grid-gap: 3px;
   grid-template-columns: repeat(7, 42px);
   grid-template-rows: repeat(6, 42px);
+  `;
+
+const WeekWrapper = styled.div`
+  display: grid;
+  grid-gap: 3px;
+  grid-template-columns: repeat(7, 42px);
+  margin-bottom: 10px;
   `;
 
 const DayCell = styled.div`
@@ -16,10 +37,19 @@ const DayCell = styled.div`
   padding: 3px;
 `;
 
-const Calendar = () => (
-  <CalendarWrapper>
-    {[...Array(42)].map((x, i) => <DayCell key={i}>{i + 1}</DayCell>)}
-  </CalendarWrapper>
-);
+const Calendar = () => {
+  const days = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
+
+  return (
+    <>
+      <WeekWrapper>
+        {days.map((day) => <DayCell>{day}</DayCell>)}
+      </WeekWrapper>
+      <CalendarWrapper>
+        {[...Array(42)].map((x, i) => <DayCell>{i + 1}</DayCell>)}
+      </CalendarWrapper>
+    </>
+  );
+};
 
 export default Calendar;
