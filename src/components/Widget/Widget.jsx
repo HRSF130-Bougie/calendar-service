@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import WidgetHeader from './WidgetHeader';
 import WidgetDateGuest from './WidgetDateGuest';
 import GuestModal from './GuestModal';
+import MainButton from './MainButton'
 
 const WidgetWrapper = styled.div`
   box-sizing: border-box;
@@ -22,6 +23,7 @@ class Widget extends React.Component {
   constructor() {
     super();
     this.state = {
+      // eslint-disable-next-line react/no-unused-state
       startDateSelected: false,
       guestModalVisible: false,
     };
@@ -49,6 +51,7 @@ class Widget extends React.Component {
           guestModalVisible={guestModalVisible}
         />
         <GuestModal hideModal={this.hideGuestModal} show={guestModalVisible} />
+        <MainButton />
       </WidgetWrapper>
     );
   }

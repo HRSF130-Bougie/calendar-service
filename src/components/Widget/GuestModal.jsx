@@ -5,7 +5,7 @@ import styled from 'styled-components';
 const GuestModalWrapper = styled.div`
   position: relative;
   display: flex;
-  flex-flow: column;
+  flex-flow: column nowrap;
   width: 100 %;
   margin: 0px;
 `;
