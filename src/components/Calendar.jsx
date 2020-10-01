@@ -18,7 +18,7 @@ const DayCell = styled.div`
 
 const Calendar = () => (
   <CalendarWrapper>
-    {[...Array(42)].map((x, i) => <DayCell>{i + 1}</DayCell>)}
+    {[...Array(42)].map((x, i) => <DayCell key={i}>{i + 1}</DayCell>)}
   </CalendarWrapper>
 );
 

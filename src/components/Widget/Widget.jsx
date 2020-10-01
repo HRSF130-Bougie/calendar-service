@@ -50,6 +50,7 @@ class Widget extends React.Component {
         <WidgetDateGuest
           toggleGuestModal={this.toggleGuestModal}
           guestModalVisible={guestModalVisible}
+          state={state}
         />
         <GuestModal
           hideModal={this.hideGuestModal}
@@ -70,5 +71,6 @@ Widget.propTypes = {
   state: PropTypes.arrayOf(PropTypes.number).isRequired,
   increaseGuestCount: PropTypes.func.isRequired,
   decreaseGuestCount: PropTypes.func.isRequired,
+  state: PropTypes.arrayOf(PropTypes.number).isRequired,
 
 };
