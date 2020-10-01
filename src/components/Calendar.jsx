@@ -37,19 +37,27 @@ const DayCell = styled.div`
   padding: 3px;
 `;
 
-const Calendar = () => {
-  const days = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
+class Calendar extends React.Component {
+  constructor() {
+    super();
+    this.state = {
 
-  return (
-    <>
-      <WeekWrapper>
-        {days.map((day) => <DayCell>{day}</DayCell>)}
-      </WeekWrapper>
-      <CalendarWrapper>
-        {[...Array(42)].map((x, i) => <DayCell>{i + 1}</DayCell>)}
-      </CalendarWrapper>
-    </>
-  );
-};
+    };
+  }
+
+  render() {
+    const days = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
+    return (
+      <>
+        <WeekWrapper>
+          {days.map((day) => <DayCell>{day}</DayCell>)}
+        </WeekWrapper>
+        <CalendarWrapper>
+          {[...Array(42)].map((x, i) => <DayCell>{i + 1}</DayCell>)}
+        </CalendarWrapper>
+      </>
+    );
+  }
+}
 
 export default Calendar;
