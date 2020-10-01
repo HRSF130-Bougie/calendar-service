@@ -11,7 +11,10 @@ class Booking extends React.Component {
     super();
     this.state = {
       // eslint-disable-next-line react/no-unused-state
-      currentMonth: 10,
+      currentListing: 0,
+      days: [],
+      reservations: [],
+      cleaningFee: 0,
       adults: 1,
       children: 0,
       infants: 0,
@@ -24,7 +27,16 @@ class Booking extends React.Component {
   }
 
   componentDidMount() {
+    const listing = Math.floor((Math.random() * 100) + 1);
+    this.setState({ currentListing: listing });
 
+    fetch(`/api/listing/${listing}`)
+      .then((response) => response.json())
+      .then((data) => {
+        const { days, reservations, cleaningFee } = data;
+        this.setState({ days, reservations, cleaningFee });
+      })
+      .catch((error) => console.error('Fetch error: ', error));
   }
 
   calcTotalGuests() {
@@ -36,14 +48,20 @@ class Booking extends React.Component {
     const targetName = event.target.name;
     const currentValue = this.state[targetName];
 
-    this.setState({ [targetName]: currentValue + 1 }, () => { this.calcTotalGuests(); });
+    this.setState(
+      (prevState) => ({ [targetName]: currentValue + 1 }),
+      () => { this.calcTotalGuests(); },
+    );
   }
 
   decreaseGuestCount(event) {
     const targetName = event.target.name;
     const currentValue = this.state[targetName];
 
-    this.setState({ [targetName]: currentValue - 1 }, () => { this.calcTotalGuests(); });
+    this.setState(
+      (prevState) => ({ [targetName]: currentValue - 1 }),
+      () => { this.calcTotalGuests(); },
+    );
   }
 
   render() {
