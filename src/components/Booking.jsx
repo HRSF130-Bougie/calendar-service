@@ -1,6 +1,5 @@
 import React from 'react';
 import { hot } from 'react-hot-loader/root';
-import { createGlobalStyle } from 'styled-components';
 import Calendar from './Calendar';
 import Widget from './Widget/Widget';
 import GlobalFonts from '../assets/fonts/GlobalFonts';
