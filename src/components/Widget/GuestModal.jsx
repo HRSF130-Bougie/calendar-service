@@ -49,7 +49,10 @@ const GuestModal = ({ hideModal, show, state, increaseGuestCount, decreaseGuestC
       show
         ? (
           <GuestModalInnerWrapper>
-            <GuestSelector target={['adults', 'Testing']} currentValue={state[0]} increaseGuestCount={increaseGuestCount} decreaseGuestCount={decreaseGuestCount} />
+            <GuestSelector target={['adults', '']} currentValue={state[0]} increaseGuestCount={increaseGuestCount} decreaseGuestCount={decreaseGuestCount} currentTotal={state[3]} />
+            <GuestSelector target={['children', 'Ages 2-12']} currentValue={state[1]} increaseGuestCount={increaseGuestCount} decreaseGuestCount={decreaseGuestCount} currentTotal={state[3]} />
+            <GuestSelector target={['infants', 'Under 2']} currentValue={state[2]} increaseGuestCount={increaseGuestCount} decreaseGuestCount={decreaseGuestCount} currentTotal={state[3]} />
+
             <MaxGuests>Do not exceed the maximum number of guests</MaxGuests>
             <GuestModalCloseButtonWrapper>
               <GuestModalCloseButton hideModal={hideModal} />
