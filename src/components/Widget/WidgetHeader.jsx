@@ -9,6 +9,7 @@ const WidgetHeaderWrapper = styled.div`
   justify-content: space-between;
   align-items: end;
   margin-bottom: 24px;
+  vertical-align: start;
 `;
 
 const Price = styled.span`
@@ -27,7 +28,6 @@ const Star = styled.span`
   color: #92174D;
   font-size: 0.6em;
   line-height: 18px;
-  vertical-align: middle;
 `;
 
 const Score = styled.span`

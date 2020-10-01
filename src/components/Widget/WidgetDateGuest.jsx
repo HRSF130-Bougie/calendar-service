@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleUp } from '@fortawesome/free-solid-svg-icons';
+import PropTypes from 'prop-types';
 
 const WidgetDateGuestWrapper = styled.div`
   width: 100%;
@@ -41,6 +42,7 @@ const GuestBox = styled.div`
   border-top: 1px solid rgb(190, 190, 190);
   border: ${(props) => (props.focused ? '2px solid rgb(34,34,34)' : '')};
   border-radius: ${(props) => (props.focused ? '8px' : '')};
+  vertical-align: top;
 `;
 
 const DescriptionText = styled.span`
@@ -48,6 +50,7 @@ const DescriptionText = styled.span`
   font-size: 10px;
   line-height: 12px;
   text-transform: uppercase;
+  vertical-align: top;
 `;
 
 const DisplayText = styled.span`
@@ -55,12 +58,13 @@ const DisplayText = styled.span`
   display: block;
   font-size: 14px;
   line-height: 18px;
-  margin-top: 2px;
+  vertical-align: top;
   color: rgb(113, 113, 113);
 `;
 
 const GuestText = styled(DisplayText)`
-    font-family: 'Airbnb Cereal App Book', sans-serif;
+    line-height: 12px;
+    font-family: 'Airbnb Cereal App Light', sans-serif;
     color: rgb(34, 34, 34);
 `;
 
@@ -72,49 +76,33 @@ class WidgetDateGuest extends React.Component {
   constructor() {
     super();
     this.state = {
+      // eslint-disable-next-line react/no-unused-state
       checkIn: null,
+      // eslint-disable-next-line react/no-unused-state
       checkOut: null,
-      guestModal: false,
     };
-
-    this.toggleGuestModal = this.toggleGuestModal.bind(this);
-  }
-
-  toggleGuestModal() {
-    this.setState((prevState) => ({ guestModal: !prevState.guestModal }));
   }
 
   render() {
-    const { guestModal } = this.state;
+    const { toggleGuestModal, guestModalVisible } = this.props;
+
     return (
       <WidgetDateGuestWrapper>
         <CheckInBox>
-          <DescriptionText>
-            Check-in
-          </DescriptionText>
-          <DisplayText>
-            Add date
-          </DisplayText>
+          <DescriptionText>Check-in</DescriptionText>
+          <DisplayText> Add date</DisplayText>
         </CheckInBox>
         <CheckOutBox>
-          <DescriptionText>
-            Check-out
-          </DescriptionText>
-          <DisplayText>
-            Add date
-          </DisplayText>
+          <DescriptionText>Check-out</DescriptionText>
+          <DisplayText>Add date </DisplayText>
         </CheckOutBox>
-        <GuestBox onClick={this.toggleGuestModal} focused={guestModal}>
+        <GuestBox onClick={toggleGuestModal} focused={guestModalVisible}>
           <div>
-            <DescriptionText>
-              Guests
-            </DescriptionText>
-            <GuestText>
-              1 guest
-            </GuestText>
+            <DescriptionText>Guests</DescriptionText>
+            <GuestText>1 guest</GuestText>
           </div>
           <div>
-            <AngleUp><FontAwesomeIcon icon={faAngleUp} size="2x" flip={guestModal === true ? 'vertical' : null} /></AngleUp>
+            <AngleUp><FontAwesomeIcon icon={faAngleUp} size="2x" flip={guestModalVisible === true ? 'vertical' : null} /></AngleUp>
           </div>
         </GuestBox>
       </WidgetDateGuestWrapper>
@@ -123,3 +111,8 @@ class WidgetDateGuest extends React.Component {
 }
 
 export default WidgetDateGuest;
+
+WidgetDateGuest.propTypes = {
+  toggleGuestModal: PropTypes.func.isRequired,
+  guestModalVisible: PropTypes.bool.isRequired,
+};
