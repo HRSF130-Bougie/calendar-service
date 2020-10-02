@@ -87,11 +87,11 @@ class WidgetDateGuest extends React.Component {
   }
 
   render() {
-    const { toggleGuestModal, guestModalVisible, state } = this.props;
+    const { toggleGuestModal, guestModalVisible, guests } = this.props;
     let guestCount = '';
-    if (state.totalGuests === 1) { guestCount = '1 guest'; } else { guestCount = `${state.totalGuests} guests`; }
+    if (guests.totalGuests === 1) { guestCount = '1 guest'; } else { guestCount = `${guests.totalGuests} guests`; }
     let infantCount = '';
-    if (state.infants === 1) { infantCount = ', 1 infant'; } else if (state.infants > 1) { infantCount = `, ${state.infants} infants`; }
+    if (guests.infants === 1) { infantCount = ', 1 infant'; } else if (guests.infants > 1) { infantCount = `, ${guests.infants} infants`; }
 
     return (
       <WidgetDateGuestWrapper>
@@ -125,5 +125,5 @@ export default WidgetDateGuest;
 WidgetDateGuest.propTypes = {
   toggleGuestModal: PropTypes.func.isRequired,
   guestModalVisible: PropTypes.bool.isRequired,
-  state: PropTypes.objectOf(PropTypes.number).isRequired,
+  guests: PropTypes.objectOf(PropTypes.number).isRequired,
 };

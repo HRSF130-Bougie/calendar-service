@@ -6,19 +6,15 @@ const db = require('./connectToDatabase.js');
 const schema = require('./schema.js');
 
 const reSeed = async () => {
+  let listCount = 1;
   try {
     // Delete existing documents
     await schema.Listing.deleteMany({});
-  } catch (error) {
-    console.error(error);
-  } finally {
-    // Create 100 new records
-    let listCount = 1;
     for (listCount; listCount <= 100; listCount += 1) {
       const daysArray = [];
       const randomPrice = faker.random.number({ min: 75, max: 450 });
 
-      for (let dayCount = 0; dayCount <= 30; dayCount += 1) {
+      for (let dayCount = 0; dayCount <= 90; dayCount += 1) {
         // Construct day object to be pushed to array, 6 months worth of days
         const day = {
           date: dayjs().startOf('month').add(dayCount, 'day').toDate(),
@@ -51,6 +47,9 @@ const reSeed = async () => {
 
       newListing.save();
     }
+  } catch (error) {
+    console.error(error);
+  } finally {
     console.log(`${listCount - 1} new listings created.`);
   }
 };

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const CalendarPopUp = styled.div`
@@ -46,11 +47,12 @@ class Calendar extends React.Component {
   }
 
   render() {
-    const days = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
+    const weekdays = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
+
     return (
       <>
         <WeekWrapper>
-          {days.map((day) => <DayCell>{day}</DayCell>)}
+          {weekdays.map((day) => <DayCell>{day}</DayCell>)}
         </WeekWrapper>
         <CalendarWrapper>
           {[...Array(42)].map((x, i) => <DayCell>{i + 1}</DayCell>)}
@@ -61,3 +63,7 @@ class Calendar extends React.Component {
 }
 
 export default Calendar;
+
+Calendar.propTypes = {
+  days: PropTypes.arrayOf(PropTypes.object).isRequired,
+};

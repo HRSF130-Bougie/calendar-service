@@ -43,19 +43,19 @@ class Widget extends React.Component {
 
   render() {
     const { guestModalVisible } = this.state;
-    const { state, increaseGuestCount, decreaseGuestCount } = this.props;
+    const { guests, increaseGuestCount, decreaseGuestCount } = this.props;
     return (
       <WidgetWrapper>
         <WidgetHeader />
         <WidgetDateGuest
           toggleGuestModal={this.toggleGuestModal}
           guestModalVisible={guestModalVisible}
-          state={state}
+          guests={guests}
         />
         <GuestModal
           hideModal={this.hideGuestModal}
           show={guestModalVisible}
-          state={state}
+          guests={guests}
           increaseGuestCount={increaseGuestCount}
           decreaseGuestCount={decreaseGuestCount}
         />
@@ -68,7 +68,7 @@ class Widget extends React.Component {
 export default Widget;
 
 Widget.propTypes = {
-  state: PropTypes.objectOf(PropTypes.number).isRequired,
+  guests: PropTypes.objectOf(PropTypes.number).isRequired,
   increaseGuestCount: PropTypes.func.isRequired,
   decreaseGuestCount: PropTypes.func.isRequired,
 
