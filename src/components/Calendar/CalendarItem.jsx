@@ -2,6 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import CalendarDayCell from './CalendarDayCell';
 
 const CalendarWrapper = styled.div`
   display: grid;
@@ -10,14 +11,6 @@ const CalendarWrapper = styled.div`
   grid-template-rows: repeat(6, 42px);
   margin: 10px 20px;
   `;
-
-const DayCell = styled.div`
-  font-family: 'Airbnb Cereal App Light', sans-serif;
-  color: black;
-  background-color: cyan;
-  text-align: center;
-  padding: 3px;
-`;
 
 const CalendarItem = ({ month }) => {
   const startingDay = new Date(month[0].date);
@@ -38,12 +31,7 @@ const CalendarItem = ({ month }) => {
   return (
     <CalendarWrapper>
       {fillMonthArray.map((day) => (
-        <DayCell
-          key={day._id}
-          dayInfo={day}
-        >
-          {day.price}
-        </DayCell>
+        <CalendarDayCell key={day._id} dayInfo={day} />
       ))}
     </CalendarWrapper>
   );

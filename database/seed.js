@@ -12,7 +12,7 @@ const reSeed = async () => {
     await schema.Listing.deleteMany({});
     for (listCount; listCount <= 100; listCount += 1) {
       const daysArray = [];
-      const randomPrice = faker.random.number({ min: 75, max: 450 });
+      const randomPrice = Math.floor(faker.random.number({ min: 75, max: 450 }));
 
       const getLastDay = function (yy, mm) {
         return new Date(yy, mm + 1, 0).getDate();
@@ -33,13 +33,12 @@ const reSeed = async () => {
             date: dayjs(startDay).add(day - 1, 'day').toDate(),
             booked: faker.random.boolean(),
             price: randomPrice,
-            servicefee: 0,
             minimumNights: 1,
           };
 
           // Make weekends more expensive
           if (date.date.getDay() >= 5) {
-            date.price = Number((date.price * 1.2).toFixed(2));
+            date.price = Math.floor(Number(date.price * 1.2));
           }
 
           // Make a two day minimum on Fridays
@@ -48,7 +47,7 @@ const reSeed = async () => {
           }
 
           // Set service fee
-          date.serviceFee = Number((date.price * 0.142).toFixed(2));
+          date.serviceFee = Math.floor(Number(date.price * 0.142));
           monthArray.push(date);
         }
         daysArray.push(monthArray);
