@@ -14,29 +14,44 @@ const reSeed = async () => {
       const daysArray = [];
       const randomPrice = faker.random.number({ min: 75, max: 450 });
 
-      for (let dayCount = 0; dayCount <= 90; dayCount += 1) {
+      const getLastDay = function (yy, mm) {
+        return new Date(yy, mm + 1, 0).getDate();
+      };
+
+      for (let month = 1; month <= 6; month++) {
         // Construct day object to be pushed to array, 6 months worth of days
-        const day = {
-          date: dayjs().startOf('month').add(dayCount, 'day').toDate(),
-          booked: faker.random.boolean(),
-          price: randomPrice,
-          servicefee: 0,
-          minimumNights: 1,
-        };
 
-        // Make weekends more expensive
-        if (day.date.getDay() >= 5) {
-          day.price = Number((day.price * 1.2).toFixed(2));
+        const startDay = dayjs().startOf('month').add(month - 1, 'month').toDate();
+        const startMonth = startDay.getMonth();
+        const startYear = startDay.getFullYear();
+        const lastDay = getLastDay(startYear, startMonth);
+
+        const monthArray = [];
+
+        for (let day = 1; day <= lastDay; day++) {
+          const date = {
+            date: dayjs(startDay).add(day - 1, 'day').toDate(),
+            booked: faker.random.boolean(),
+            price: randomPrice,
+            servicefee: 0,
+            minimumNights: 1,
+          };
+
+          // Make weekends more expensive
+          if (date.date.getDay() >= 5) {
+            date.price = Number((date.price * 1.2).toFixed(2));
+          }
+
+          // Make a two day minimum on Fridays
+          if (date.date.getDay() === 5) {
+            date.minimumNights = 2;
+          }
+
+          // Set service fee
+          date.serviceFee = Number((date.price * 0.142).toFixed(2));
+          monthArray.push(date);
         }
-
-        // Make a two day minimum on Fridays
-        if (day.date.getDay() === 5) {
-          day.minimumNights = 2;
-        }
-
-        // Set service fee
-        day.serviceFee = Number((day.price * 0.142).toFixed(2));
-        daysArray.push(day);
+        daysArray.push(monthArray);
       }
 
       const newListing = new schema.Listing({

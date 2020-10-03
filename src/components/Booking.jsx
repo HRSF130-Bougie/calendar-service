@@ -1,8 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
 import React from 'react';
-import { hot } from 'react-hot-loader/root';
-import Calendar from './Calendar';
+import CalendarCarousel from './Calendar/CalendarCarousel';
 import Widget from './Widget/Widget';
 import GlobalFonts from '../assets/fonts/GlobalFonts';
 
@@ -19,9 +18,6 @@ class Booking extends React.Component {
       children: 0,
       infants: 0,
       totalGuests: 1,
-      currentMonth: 0,
-      visibleMonth1: 0,
-      visibleMonth2: 0,
     };
 
     this.increaseGuestCount = this.increaseGuestCount.bind(this);
@@ -38,21 +34,7 @@ class Booking extends React.Component {
       .then((data) => {
         const { days, reservations, cleaningFee } = data;
         this.setState({ days, reservations, cleaningFee });
-        return days;
       })
-      .then((days) => {
-        let firstDate = new Date(days[0].date);
-        console.log(firstDate);
-        firstDate = new Date(firstDate);
-        const dayOfWeek = firstDate.getDay();
-        const getMonth = firstDate.getMonth();
-        this.setState({
-          currentMonth: getMonth,
-          visibleMonth1: getMonth,
-          visibleMonth2: getMonth + 1,
-        });
-      })
-
       .catch((error) => console.error('Fetch error: ', error));
   }
 
@@ -62,6 +44,7 @@ class Booking extends React.Component {
   }
 
   increaseGuestCount(event) {
+    event.preventDefault();
     const targetName = event.target.name;
 
     this.setState(
@@ -71,6 +54,7 @@ class Booking extends React.Component {
   }
 
   decreaseGuestCount(event) {
+    event.preventDefault();
     const targetName = event.target.name;
 
     this.setState(
@@ -82,7 +66,7 @@ class Booking extends React.Component {
   render() {
     const guestType = 'adults';
     const {
-      adults, children, infants, totalGuests, days, currentMonth, visibleMonth1, visibleMonth2,
+      adults, children, infants, totalGuests, days,
     } = this.state;
     return (
       <>
@@ -94,16 +78,14 @@ class Booking extends React.Component {
           increaseGuestCount={this.increaseGuestCount}
           decreaseGuestCount={this.decreaseGuestCount}
         />
-        <Calendar
-          days={days}
-          currentMonth={currentMonth}
-          visibleMonth1={visibleMonth1}
-          visibleMonth2={visibleMonth2}
-
-        />
+        { days
+          ? (
+            <CalendarCarousel days={days} />
+          )
+          : <div />}
       </>
     );
   }
 }
 
-export default hot(Booking);
+export default Booking;
