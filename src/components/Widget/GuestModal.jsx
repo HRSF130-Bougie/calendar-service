@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import GuestModalCloseButton from './GuestModalCloseButton';
+import ModalCloseButton from '../ModalCloseButton';
 import GuestSelector from './GuestSelector';
 
 const GuestModalWrapper = styled.div`
@@ -49,15 +49,33 @@ const GuestModal = ({ hideModal, show, guests, increaseGuestCount, decreaseGuest
       show
         ? (
           <GuestModalInnerWrapper>
-            <GuestSelector target={{ target: 'adults', subtext: '' }} currentValue={guests.adults} increaseGuestCount={increaseGuestCount} decreaseGuestCount={decreaseGuestCount} currentTotal={guests.totalGuests} />
-            <GuestSelector target={{ target: 'children', subtext: 'Ages 2-12' }} currentValue={guests.children} increaseGuestCount={increaseGuestCount} decreaseGuestCount={decreaseGuestCount} currentTotal={guests.totalGuests} />
-            <GuestSelector target={{ target: 'infants', subtext: 'Under 2' }} currentValue={guests.infants} increaseGuestCount={increaseGuestCount} decreaseGuestCount={decreaseGuestCount} currentTotal={guests.totalGuests} />
+            <GuestSelector
+              target={{ target: 'adults', subtext: '' }}
+              currentValue={guests.adults}
+              increaseGuestCount={increaseGuestCount}
+              decreaseGuestCount={decreaseGuestCount}
+              currentTotal={guests.totalGuests}
+            />
+            <GuestSelector
+              target={{ target: 'children', subtext: 'Ages 2-12' }}
+              currentValue={guests.children}
+              increaseGuestCount={increaseGuestCount}
+              decreaseGuestCount={decreaseGuestCount}
+              currentTotal={guests.totalGuests}
+            />
+            <GuestSelector
+              target={{ target: 'infants', subtext: 'Under 2' }}
+              currentValue={guests.infants}
+              increaseGuestCount={increaseGuestCount}
+              decreaseGuestCount={decreaseGuestCount}
+              currentTotal={guests.totalGuests}
+            />
 
             <MaxGuests>
               6 guests maximum. Infants don’t count toward the number of guests.
             </MaxGuests>
             <GuestModalCloseButtonWrapper>
-              <GuestModalCloseButton hideModal={hideModal} />
+              <ModalCloseButton name="guestModalVisible" funct={hideModal} />
             </GuestModalCloseButtonWrapper>
           </GuestModalInnerWrapper>
         )

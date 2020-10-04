@@ -2,15 +2,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import CalendarDayCell from './CalendarDayCell';
+import CalendarItemDays from './CalendarItemDays';
 
 const CalendarWrapper = styled.div`
   display: grid;
   grid-gap: 3px;
   grid-template-columns: repeat(7, 42px);
   grid-template-rows: repeat(6, 42px);
-  margin: 10px 20px;
-  `;
+  margin-left: -10px;
+  margin-right: 50px;
+`;
 
 const CalendarItem = ({ month }) => {
   const startingDay = new Date(month[0].date);
@@ -31,7 +32,7 @@ const CalendarItem = ({ month }) => {
   return (
     <CalendarWrapper>
       {fillMonthArray.map((day) => (
-        <CalendarDayCell key={day._id} dayInfo={day} />
+        <CalendarItemDays key={day._id} dayInfo={day} />
       ))}
     </CalendarWrapper>
   );

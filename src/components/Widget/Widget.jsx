@@ -21,29 +21,28 @@ const WidgetWrapper = styled.div`
 `;
 
 class Widget extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       // eslint-disable-next-line react/no-unused-state
       startDateSelected: false,
       guestModalVisible: false,
     };
 
+    const { hideModal } = this.props;
+
     this.toggleGuestModal = this.toggleGuestModal.bind(this);
-    this.hideGuestModal = this.hideGuestModal.bind(this);
+    this.hideGuestModal = hideModal.bind(this);
   }
 
   toggleGuestModal() {
     this.setState((prevState) => ({ guestModalVisible: !prevState.guestModalVisible }));
   }
 
-  hideGuestModal() {
-    this.setState({ guestModalVisible: false });
-  }
-
   render() {
     const { guestModalVisible } = this.state;
-    const { guests, increaseGuestCount, decreaseGuestCount } = this.props;
+    const {
+      guests, increaseGuestCount, decreaseGuestCount } = this.props;
     return (
       <WidgetWrapper>
         <WidgetHeader />
@@ -71,5 +70,5 @@ Widget.propTypes = {
   guests: PropTypes.objectOf(PropTypes.number).isRequired,
   increaseGuestCount: PropTypes.func.isRequired,
   decreaseGuestCount: PropTypes.func.isRequired,
-
+  hideModal: PropTypes.func.isRequired,
 };

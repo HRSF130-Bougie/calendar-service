@@ -1,9 +1,9 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
 import React from 'react';
-import CalendarCarousel from './Calendar/CalendarCarousel';
-import Widget from './Widget/Widget';
 import GlobalFonts from '../assets/fonts/GlobalFonts';
+import Widget from './Widget/Widget';
+import CalendarModal from './Calendar/CalendarModal';
 
 class Booking extends React.Component {
   constructor() {
@@ -63,6 +63,12 @@ class Booking extends React.Component {
     );
   }
 
+  hideModal(event) {
+    console.log(event.target.name)
+    const targetName = event.target.name;
+    this.setState({ [targetName]: false });
+  }
+
   render() {
     const guestType = 'adults';
     const {
@@ -77,10 +83,14 @@ class Booking extends React.Component {
           }}
           increaseGuestCount={this.increaseGuestCount}
           decreaseGuestCount={this.decreaseGuestCount}
+          hideModal={this.hideModal}
         />
         { days
           ? (
-            <CalendarCarousel days={days} />
+            <CalendarModal
+              days={days}
+              hideModal={this.hideModal}
+            />
           )
           : <div />}
       </>

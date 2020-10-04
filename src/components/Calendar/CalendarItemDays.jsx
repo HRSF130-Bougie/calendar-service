@@ -31,6 +31,7 @@ const DateDisplay = styled.div`
 `;
 
 const PriceDisplay = styled.div`
+  font-family: 'Airbnb Cereal App Book', sans-serif;
   font-size: 10px;
   line-height: 12px;
   color: rgb(113, 113, 113);
@@ -52,12 +53,15 @@ class CalendarDayCell extends React.PureComponent {
     return (
       <DayCell>
         {
-          dayInfo.booked
+          (dayInfo.booked || dayInfo.booked === undefined)
             ? <Unavailable>{dateDisplay}</Unavailable>
             : (
               <Available>
                 <DateDisplay>{dateDisplay}</DateDisplay>
-                <PriceDisplay>${priceDisplay}</PriceDisplay>
+                <PriceDisplay>
+                  $
+                  {priceDisplay}
+                </PriceDisplay>
               </Available>
             )
         }
