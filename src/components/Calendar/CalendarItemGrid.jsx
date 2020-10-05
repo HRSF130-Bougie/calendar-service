@@ -6,14 +6,14 @@ import CalendarItemDays from './CalendarItemDays';
 
 const CalendarWrapper = styled.div`
   display: grid;
-  grid-gap: 3px;
+  grid-gap: 2px;
   grid-template-columns: repeat(7, 42px);
   grid-template-rows: repeat(6, 42px);
   margin-left: -10px;
-  margin-right: 50px;
-`;
+  margin-right: 25px;
+  `;
 
-const CalendarItem = ({ month }) => {
+const CalendarItem = ({ month, weekendPricing, selectCheckIn }) => {
   const startingDay = new Date(month[0].date);
 
   const startDayOfWeek = startingDay.getDay();
@@ -32,7 +32,12 @@ const CalendarItem = ({ month }) => {
   return (
     <CalendarWrapper>
       {fillMonthArray.map((day) => (
-        <CalendarItemDays key={day._id} dayInfo={day} />
+        <CalendarItemDays
+          key={day._id}
+          dayInfo={day}
+          weekendPricing={weekendPricing}
+          selectCheckIn={selectCheckIn}
+        />
       ))}
     </CalendarWrapper>
   );
@@ -42,4 +47,6 @@ export default CalendarItem;
 
 CalendarItem.propTypes = {
   month: PropTypes.arrayOf(PropTypes.object).isRequired,
+  weekendPricing: PropTypes.bool.isRequired,
+  selectCheckIn: PropTypes.func.isRequired,
 };

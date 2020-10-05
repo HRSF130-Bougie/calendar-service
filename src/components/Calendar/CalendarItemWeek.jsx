@@ -4,10 +4,10 @@ import styled from 'styled-components';
 
 const WeekWrapper = styled.div`
   display: grid;
-  grid-gap: 3px;
+  grid-gap: 2px;
   grid-template-columns: repeat(7, 42px);
   margin-left: -10px;
-  margin-right: 50px;
+  margin-right: 25px;
 `;
 
 const WeekCell = styled.div`

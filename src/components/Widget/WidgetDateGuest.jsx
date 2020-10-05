@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleUp } from '@fortawesome/free-solid-svg-icons';
 import PropTypes from 'prop-types';
@@ -11,27 +11,65 @@ const WidgetDateGuestWrapper = styled.div`
                       "guests guests";
   grid-template-columns: "1fr 1fr";
   grid-template-rows: 56px 56px;
-  border-radius: 8px;
-  border: 1px solid rgb(190, 190, 190);
 `;
 
-const CheckInBox = styled.div`
+const CheckInBoxPopUp = css`
+  border: 2px solid black;
+  border-radius: 8px;
+  width: 150px;
+  margin-left: -41px;
+`;
+
+const CheckInBox = styled.button`
   grid-area: checkin;
   display: flex;
-  flex-flow: column wrap;
-  box-sizing: border-box;
+  flex-flow: column nowrap;
+  box-sizing: content-box;
   border-radius: 8px 0px 0px 0px;
-  border-right: 1px solid rgb(190, 190, 190);
+  border: 1px solid rgb(190,190,190);
   padding: 12px;
+  z-index: 10;
+  background:white;
+  &:focus {
+    outline:none;
+  }
+
+  ${({ calendarModalVisible }) => calendarModalVisible && CheckInBoxPopUp}
+`;
+
+const CheckOutBoxPopUp = css`
+  border-color: rgb(190,190,190);
+  border: 1px;
+  border-style: solid;
+  border-radius: 8px;
+  width: 153px;
+  margin-left: -12px;
+  padding-left: 26px;
+  color: rgb(221, 221, 221);
+  background: rgb(235, 235, 235);
 `;
 
 const CheckOutBox = styled.div`
   grid-area: checkout;
   display: flex;
-  flex-flow: column wrap;
-  box-sizing: border-box;
+  flex-flow: column nowrap;
+  box-sizing: content-box;
   border-radius: 0px 8px 0px 0px;
+  border-color: rgb(190,190,190) rgb(190,190,190) rgb(190,190,190) transparent;
+  border-width: 1px;
+  border-style: solid;
   padding: 12px;
+  z-index: 8;
+  &:focus {
+    outline:none;
+  }
+
+  ${({ calendarModalVisible }) => calendarModalVisible && CheckOutBoxPopUp}
+`;
+
+const GuestBoxPopUp = css`
+  border: 2px solid black;
+  border-radius: 8px;
 `;
 
 const GuestBox = styled.div`
@@ -39,10 +77,14 @@ const GuestBox = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 12px;
-  border-top: 1px solid rgb(190, 190, 190);
-  border: ${(props) => (props.focused ? '2px solid rgb(34,34,34)' : '')};
-  border-radius: ${(props) => (props.focused ? '8px' : '')};
+  border-radius: 0px 0px 8px 8px;
+  border-color: transparent rgb(190,190,190) rgb(190,190,190) rgb(190,190,190);
+  border-width: 1px;
+  border-style: solid;
   vertical-align: top;
+
+  ${({ guestModalVisible }) => guestModalVisible && GuestBoxPopUp}
+
 `;
 
 const DescriptionText = styled.span`
@@ -54,6 +96,7 @@ const DescriptionText = styled.span`
   font-weight: 800;
   text-transform: uppercase;
   vertical-align: top;
+  z-index: 4;
 `;
 
 const DisplayText = styled.span`
@@ -66,28 +109,27 @@ const DisplayText = styled.span`
 `;
 
 const GuestText = styled(DisplayText)`
-    line-height: 12px;
-    font-family: 'Airbnb Cereal App Light', sans-serif;
-    color: rgb(34, 34, 34);
+  line-height: 12px;
+  font-family: 'Airbnb Cereal App Light', sans-serif;
+  color: rgb(34, 34, 34);
 `;
 
 const AngleUp = styled.span`
-color: #484848;
+  color: #484848;
 `;
 
 class WidgetDateGuest extends React.Component {
   constructor() {
     super();
     this.state = {
-      // eslint-disable-next-line react/no-unused-state
-      checkIn: null,
-      // eslint-disable-next-line react/no-unused-state
-      checkOut: null,
     };
   }
 
   render() {
-    const { toggleGuestModal, guestModalVisible, guests } = this.props;
+    const {
+      toggleGuestModal, guestModalVisible, calendarModalVisible,
+      guests, showModal, checkInFormatted,
+    } = this.props;
     let guestCount = '';
     if (guests.totalGuests === 1) { guestCount = '1 guest'; } else { guestCount = `${guests.totalGuests} guests`; }
     let infantCount = '';
@@ -95,15 +137,28 @@ class WidgetDateGuest extends React.Component {
 
     return (
       <WidgetDateGuestWrapper>
-        <CheckInBox>
+        <CheckInBox
+          onClick={() => showModal('calendarModalVisible', () => toggleGuestModal(false))}
+          calendarModalVisible={calendarModalVisible}
+        >
           <DescriptionText>Check-in</DescriptionText>
-          <DisplayText> Add date</DisplayText>
+          <DisplayText>
+            {' '}
+            {checkInFormatted}
+          </DisplayText>
         </CheckInBox>
-        <CheckOutBox>
+        <CheckOutBox
+          onClick={() => showModal('calendarModalVisible', () => toggleGuestModal(false))}
+          calendarModalVisible={calendarModalVisible}
+        >
           <DescriptionText>Check-out</DescriptionText>
           <DisplayText>Add date </DisplayText>
         </CheckOutBox>
-        <GuestBox onClick={toggleGuestModal} focused={guestModalVisible}>
+        <GuestBox
+          onClick={toggleGuestModal}
+          focused={guestModalVisible}
+          guestModalVisible={guestModalVisible}
+        >
           <div>
             <DescriptionText>Guests</DescriptionText>
             <GuestText>
@@ -125,5 +180,8 @@ export default WidgetDateGuest;
 WidgetDateGuest.propTypes = {
   toggleGuestModal: PropTypes.func.isRequired,
   guestModalVisible: PropTypes.bool.isRequired,
+  calendarModalVisible: PropTypes.bool.isRequired,
   guests: PropTypes.objectOf(PropTypes.number).isRequired,
+  showModal: PropTypes.func.isRequired,
+  checkInFormatted: PropTypes.string.isRequired,
 };

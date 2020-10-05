@@ -4,7 +4,6 @@ const path = require('path');
 
 const config = {
   entry: [
-    'react-hot-loader/patch',
     './src/index.jsx',
   ],
   output: {
@@ -36,6 +35,10 @@ const config = {
         use: {
           loader: 'url-loader',
         },
+      },
+      {
+        test: /\.svg$/,
+        use: ['@svgr/webpack'],
       },
     ],
   },

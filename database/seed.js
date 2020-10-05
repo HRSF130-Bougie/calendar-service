@@ -13,12 +13,14 @@ const reSeed = async () => {
     for (listCount; listCount <= 100; listCount += 1) {
       const daysArray = [];
       const randomPrice = Math.floor(faker.random.number({ min: 75, max: 450 }));
+      const weekendPricing = faker.random.boolean();
+
 
       const getLastDay = function (yy, mm) {
         return new Date(yy, mm + 1, 0).getDate();
       };
 
-      for (let month = 1; month <= 6; month++) {
+      for (let month = 1; month <= 6; month += 1) {
         // Construct day object to be pushed to array, 6 months worth of days
 
         const startDay = dayjs().startOf('month').add(month - 1, 'month').toDate();
@@ -28,7 +30,7 @@ const reSeed = async () => {
 
         const monthArray = [];
 
-        for (let day = 1; day <= lastDay; day++) {
+        for (let day = 1; day <= lastDay; day += 1) {
           const date = {
             date: dayjs(startDay).add(day - 1, 'day').toDate(),
             booked: faker.random.boolean(),
@@ -36,16 +38,17 @@ const reSeed = async () => {
             minimumNights: 1,
           };
 
-          // Make weekends more expensive
-          if (date.date.getDay() >= 5) {
-            date.price = Math.floor(Number(date.price * 1.2));
-          }
+          if (weekendPricing) {
+            // Make weekends more expensive
+            if (date.date.getDay() >= 5) {
+              date.price = Math.floor(Number(date.price * 1.2));
+            }
 
-          // Make a two day minimum on Fridays
-          if (date.date.getDay() === 5) {
-            date.minimumNights = 2;
+            // Make a two day minimum on Fridays
+            if (date.date.getDay() === 5) {
+              date.minimumNights = 2;
+            }
           }
-
           // Set service fee
           date.serviceFee = Math.floor(Number(date.price * 0.142));
           monthArray.push(date);
@@ -57,6 +60,7 @@ const reSeed = async () => {
         listing_id: listCount,
         days: daysArray,
         cleaningFee: faker.random.number({ min: 50, max: 100 }),
+        weekendPricing,
       });
 
       newListing.save();

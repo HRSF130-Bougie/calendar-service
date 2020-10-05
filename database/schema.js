@@ -25,6 +25,7 @@ const listingSchema = new Schema({
       },
     },
   ],
+  weekendPricing: Boolean,
   cleaningFee: Number,
 });
 

@@ -93,4 +93,5 @@ GuestModal.propTypes = {
   guests: PropTypes.objectOf(PropTypes.number).isRequired,
   increaseGuestCount: PropTypes.func.isRequired,
   decreaseGuestCount: PropTypes.func.isRequired,
+
 };

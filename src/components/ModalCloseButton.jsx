@@ -7,7 +7,8 @@ const ModalCloseButtonStyle = styled.button`
   font-family: ${(props) => (props.calendar ? 'Airbnb Cereal App Book' : 'Airbnb Cereal App Medium')};
   cursor: pointer;
   display: inline-block;
-  margin:${(props) => (props.calendar || props.clear ? '0' : '0 -10px')};
+  margin:${(props) => (props.clear ? '0' : '0 -10px')};
+  margin:${(props) => (props.calendar && '5px 0')};
   position: relative;
   text-align: center;
   width: auto;
@@ -28,7 +29,9 @@ const ModalCloseButtonStyle = styled.button`
     }`)}
   `;
 
-const ModalCloseButton = ({ funct, name, calendar, text, clear }) => (
+const ModalCloseButton = ({
+  funct, name, calendar, text, clear,
+}) => (
   <ModalCloseButtonStyle type="button" onClick={funct} name={name} calendar={calendar} clear={clear}>{text}</ModalCloseButtonStyle>
 );
 

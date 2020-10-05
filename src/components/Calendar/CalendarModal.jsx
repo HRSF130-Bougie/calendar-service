@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { far } from '@fortawesome/free-solid-svg-icons'
-import { faKeyboard } from '@fortawesome/free-solid-svg-icons';
+import Keyboard from '../../assets/svg/keyboard-regular.svg';
+
 import CalendarItemWeek from './CalendarItemWeek';
 import CalendarItemGrid from './CalendarItemGrid';
 import ModalCloseButton from '../ModalCloseButton';
 
 const CalendarPopUp = styled.div`
+  grid-area: calendar;
   box-sizing: box-border;
   box-shadow: rgba(0, 0, 0, 0.2) 0px 6px 20px;
   display: grid;
@@ -16,27 +16,30 @@ const CalendarPopUp = styled.div`
   flex-flow: row;
   padding: 24px 32px 16px;
   margin: auto;
-  ${'' /* position: absolute; */}
-  top: -24px;
-  right: -32px;
+  position: absolute;
+  top: 100px;
+  right: 74px;
   width: 661px;
   z-index: 1;
   min-height: 460px;
   height: auto;
-  width: 661px;
-  background: rgb(255, 255, 255) none repeat scroll 0% 0%;
+  width: 597px;
+  ${'' /* background: rgb(255, 255, 255); */}
   border-radius: 16px;
+  background: white;
 `;
 
 const CalendarHeaderRow = styled.div`
   display: flex;
   rgb(34, 34, 34);
   width: 100%;
+  padding: 2px 0;
 `;
 
 const CalendarHeaderRowLeft = styled.div`
   display: flex;
   flex-flow: column;
+  width: auto;
 `;
 
 const SelectDates = styled.div`
@@ -54,7 +57,7 @@ const MinimumStay = styled.div`
 const MonthHeaderRow = styled.div`
   display: flex;
   flex-flow: row;
-  width: 100 %
+  width: 100%;
 `;
 
 const MonthHeaderTitle = styled.div`
@@ -65,15 +68,18 @@ const MonthHeaderTitle = styled.div`
   align-self: center;
   text-align: center;
   margin-left: -10px;
-  margin-right: 50px;
+  margin-right: 25px;
+  padding: 26px 0px;
 `;
 
 const CalendarGridRow = styled(MonthHeaderRow)`
+  background: transparent;
 `;
 
 const FooterRow = styled.div`
-  width: 661px;
-  height: 34px;
+  margin-left: -5px;
+  width: 602px;
+  height: 32px;
   display: grid;
   grid-template-columns: auto 1fr auto auto;
 `;
@@ -89,6 +95,26 @@ const PriceWarning = styled.div`
   color: rgb(113, 113, 113);
 `;
 
+const KeyboardInner = styled.div`
+    svg {
+    color: rgb(113,113,113);
+    height: 20px;
+    };
+`;
+
+const KeyboardOuter = styled.div`
+    display: inline-flex;
+    align-self: center;
+    margin-right: 8px;
+    border: black solid 0px;
+    border-radius: 25px;
+    background: transparent;
+    padding: 10px;
+    : hover {
+      background: rgb(247, 247, 247);
+    }
+`;
+
 // const WeekWrapper = styled.div`
 //   display: grid;
 //   grid-gap: 3px;
@@ -100,18 +126,15 @@ class CalendarModal extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      calendarModalVisible: true,
     };
-
-    const { hideModal } = this.props;
-    this.hideCalendarModal = hideModal.bind(this);
   }
 
   render() {
     const weekdays = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
 
-    const { days } = this.props;
-    const { calendarModalVisible } = this.state;
+    const {
+      days, weekendPricing, calendarModalVisible, hideModal, selectCheckIn, clearDates,
+    } = this.props;
 
     const renderMonthName = (date) => {
       const options = { month: 'long' };
@@ -149,17 +172,22 @@ class CalendarModal extends React.PureComponent {
           <CalendarGridRow>
             {
               days.map((month) => (
-                <CalendarItemGrid key={Math.random()} month={month} />
+                <CalendarItemGrid
+                  key={Math.random()}
+                  month={month}
+                  weekendPricing={weekendPricing}
+                  selectCheckIn={selectCheckIn}
+                />
               ))
             }
           </CalendarGridRow>
           <FooterRow>
-            <button><FontAwesomeIcon icon={['far', 'keyboard']} /></button>
+            <KeyboardOuter><KeyboardInner><Keyboard /></KeyboardInner></KeyboardOuter>
             <PriceWarning>Prices on calendar do not include taxes and fees</PriceWarning>
-            <ModalCloseButton name="clearDates" text="Clear dates" clear />
-            <ModalCloseButton name="calendarModalVisible" funct={this.hideCalendarModal} calendar />
+            <ModalCloseButton name="clearDates" text="Clear dates" funct={clearDates} clear />
+            <ModalCloseButton name="calendarModalVisible" funct={hideModal} calendar />
           </FooterRow>
-        </CalendarPopUp >
+        </CalendarPopUp>
       )
     );
   }
@@ -169,5 +197,9 @@ export default CalendarModal;
 
 CalendarModal.propTypes = {
   days: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.object)).isRequired,
+  weekendPricing: PropTypes.bool.isRequired,
+  calendarModalVisible: PropTypes.bool.isRequired,
   hideModal: PropTypes.func.isRequired,
+  selectCheckIn: PropTypes.func.isRequired,
+  clearDates: PropTypes.func.isRequired,
 };

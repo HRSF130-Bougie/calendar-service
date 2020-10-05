@@ -10,6 +10,19 @@ const DayCell = styled.div`
   font-size: 14px;
   line-height: 18px;
   color: rgb(34, 34, 34);
+  height: -webkit-fill-available;
+  justify-content: center;
+  border-radius: 50%;
+  width: -webkit-fill-available;
+  &:hover {
+    border: thin solid rgb(34,34,34);
+}
+`;
+
+const SelectedCheck = styled(DayCell)`
+  background: black;
+  color: white !important;
+  border-radius: 50%;
 `;
 
 const Available = styled.div`
@@ -20,7 +33,7 @@ const Available = styled.div`
   padding: 3px;
 `;
 
-const Unavailable = styled(DayCell)`
+const Unavailable = styled(Available)`
   color: rgb(176, 176, 176);
   text-decoration: line-through;
 `;
@@ -28,42 +41,100 @@ const Unavailable = styled(DayCell)`
 const DateDisplay = styled.div`
   font-size: 14px;
   line-height: 18px;
+  align-self: center;
 `;
 
 const PriceDisplay = styled.div`
   font-family: 'Airbnb Cereal App Book', sans-serif;
   font-size: 10px;
   line-height: 12px;
-  color: rgb(113, 113, 113);
+  color: ${(props) => (props.selected === 'selected' ? 'white' : 'rgb(113, 113, 113)')};
+  align-self: center;
 `;
 
 class CalendarDayCell extends React.PureComponent {
   constructor() {
     super();
     this.state = {
-
+      dayState: 'available',
+      // beforeToday, booked, available, beforeCheckin,
+      // checkInOnly, checkInBoth, inBetween, checkOut
     };
+
+    this.calcDayState = this.calcDayState.bind(this);
+    this.selectThisDate = this.selectThisDate.bind(this);
+  }
+
+  componentDidMount() {
+    this.calcDayState();
+  }
+
+  componentDidUpdate() {
+    this.calcDayState();
+  }
+
+  calcDayState() {
+    const { dayState } = this.state;
+    const { dayInfo } = this.props;
+    const today = Date.now;
+    const thisCell = new Date(dayInfo.date);
+
+    if (thisCell < today) {
+      this.setState({ dayState: 'beforeToday' });
+    } else if (dayInfo.booked || dayInfo.booked === undefined) {
+      this.setState({ dayState: 'booked' });
+    } else if (dayInfo.booked === false && thisCell > today && dayState !== 'selected') {
+      this.setState({ dayState: 'available' });
+    }
+  }
+
+  selectThisDate() {
+    const { dayInfo, selectCheckIn } = this.props;
+    this.setState({ dayState: 'selected' });
+    selectCheckIn(new Date(dayInfo.date));
   }
 
   render() {
-    const { dayInfo } = this.props;
+    const { dayInfo, weekendPricing, selectCheckIn } = this.props;
     const dateDisplay = dayInfo.date ? new Date(dayInfo.date).getDate() : null;
     const priceDisplay = dayInfo.price ? dayInfo.price : null;
+    const { dayState } = this.state;
 
     return (
-      <DayCell>
+      <DayCell cellState={dayState}>
+        { dayState === 'available'
+          && (
+            <Available onClick={this.selectThisDate}>
+              <DateDisplay>{dateDisplay}</DateDisplay>
+              { weekendPricing
+                && (
+                  <PriceDisplay>
+                    $
+                    {priceDisplay}
+                  </PriceDisplay>
+                )}
+            </Available>
+          )}
         {
-          (dayInfo.booked || dayInfo.booked === undefined)
-            ? <Unavailable>{dateDisplay}</Unavailable>
-            : (
-              <Available>
-                <DateDisplay>{dateDisplay}</DateDisplay>
-                <PriceDisplay>
-                  $
-                  {priceDisplay}
-                </PriceDisplay>
-              </Available>
-            )
+          (dayState === 'beforeToday' || dayState === 'booked')
+          && (
+            <Unavailable>{dateDisplay}</Unavailable>
+          )
+        }
+        {
+          (dayState === 'selected')
+          && (
+            <SelectedCheck>
+              <DateDisplay>{dateDisplay}</DateDisplay>
+              { weekendPricing
+                && (
+                  <PriceDisplay selected={dayState}>
+                    $
+                    {priceDisplay}
+                  </PriceDisplay>
+                )}
+            </SelectedCheck>
+          )
         }
       </DayCell>
     );
@@ -73,7 +144,10 @@ class CalendarDayCell extends React.PureComponent {
 export default CalendarDayCell;
 
 CalendarDayCell.propTypes = {
+  // eslint-disable-next-line react/forbid-prop-types
   dayInfo: PropTypes.object,
+  weekendPricing: PropTypes.bool,
+  selectCheckIn: PropTypes.func.isRequired,
 };
 
 CalendarDayCell.defaultProps = {
@@ -83,4 +157,5 @@ CalendarDayCell.defaultProps = {
     booked: false,
     minimumNights: 0,
   },
+  weekendPricing: false,
 };
