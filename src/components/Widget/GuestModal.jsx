@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import GuestModalCloseButton from './GuestModalCloseButton';
+import ModalCloseButton from '../ModalCloseButton';
 import GuestSelector from './GuestSelector';
 
 const GuestModalWrapper = styled.div`
@@ -43,21 +43,39 @@ const GuestModalCloseButtonWrapper = styled.div`
   justify-content: flex-end;
 `;
 
-const GuestModal = ({ hideModal, show, state, increaseGuestCount, decreaseGuestCount }) => (
+const GuestModal = ({ hideGuestModal, show, guests, increaseGuestCount, decreaseGuestCount }) => (
   <GuestModalWrapper>
     {
       show
         ? (
           <GuestModalInnerWrapper>
-            <GuestSelector target={{ target: 'adults', subtext: '' }} currentValue={state.adults} increaseGuestCount={increaseGuestCount} decreaseGuestCount={decreaseGuestCount} currentTotal={state.totalGuests} />
-            <GuestSelector target={{ target: 'children', subtext: 'Ages 2-12' }} currentValue={state.children} increaseGuestCount={increaseGuestCount} decreaseGuestCount={decreaseGuestCount} currentTotal={state.totalGuests} />
-            <GuestSelector target={{ target: 'infants', subtext: 'Under 2' }} currentValue={state.infants} increaseGuestCount={increaseGuestCount} decreaseGuestCount={decreaseGuestCount} currentTotal={state.totalGuests} />
+            <GuestSelector
+              target={{ target: 'adults', subtext: '' }}
+              currentValue={guests.adults}
+              increaseGuestCount={increaseGuestCount}
+              decreaseGuestCount={decreaseGuestCount}
+              currentTotal={guests.totalGuests}
+            />
+            <GuestSelector
+              target={{ target: 'children', subtext: 'Ages 2-12' }}
+              currentValue={guests.children}
+              increaseGuestCount={increaseGuestCount}
+              decreaseGuestCount={decreaseGuestCount}
+              currentTotal={guests.totalGuests}
+            />
+            <GuestSelector
+              target={{ target: 'infants', subtext: 'Under 2' }}
+              currentValue={guests.infants}
+              increaseGuestCount={increaseGuestCount}
+              decreaseGuestCount={decreaseGuestCount}
+              currentTotal={guests.totalGuests}
+            />
 
             <MaxGuests>
               6 guests maximum. Infants don’t count toward the number of guests.
             </MaxGuests>
             <GuestModalCloseButtonWrapper>
-              <GuestModalCloseButton hideModal={hideModal} />
+              <ModalCloseButton name="guestModalVisible" funct={hideGuestModal} />
             </GuestModalCloseButtonWrapper>
           </GuestModalInnerWrapper>
         )
@@ -70,9 +88,9 @@ const GuestModal = ({ hideModal, show, state, increaseGuestCount, decreaseGuestC
 export default GuestModal;
 
 GuestModal.propTypes = {
-  hideModal: PropTypes.func.isRequired,
+  hideGuestModal: PropTypes.func.isRequired,
   show: PropTypes.bool.isRequired,
-  state: PropTypes.objectOf(PropTypes.number).isRequired,
+  guests: PropTypes.objectOf(PropTypes.number).isRequired,
   increaseGuestCount: PropTypes.func.isRequired,
   decreaseGuestCount: PropTypes.func.isRequired,
 };

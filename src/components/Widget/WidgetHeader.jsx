@@ -44,7 +44,6 @@ const Count = styled.span`
   font-weight: 400;
   padding-left: 4px;
   color: rgb(113, 113, 113);
-
 `;
 
 const WidgetHeader = () => (

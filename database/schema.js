@@ -6,12 +6,12 @@ const { Schema } = mongoose;
 const listingSchema = new Schema({
   listing_id: Number,
   days: [
-    {
+    [{
       date: Date,
       booked: Boolean,
       price: Number,
       minimumNights: Number,
-    },
+    }],
   ],
   reservations: [
     {
@@ -25,6 +25,7 @@ const listingSchema = new Schema({
       },
     },
   ],
+  weekendPricing: Boolean,
   cleaningFee: Number,
 });
 
