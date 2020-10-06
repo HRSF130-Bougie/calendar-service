@@ -22,16 +22,20 @@ const CalendarItem = ({
 
   let fillMonthArray = [];
 
-  // for (let i = 0; i < startDayOfWeek; i += 1) {
-  //   fillMonthArray[i] = { _id: Math.random(), price: null };
-  // }
-
   // Fill in array with month data, placed in the correct days of the week
   for (let i = startDayOfWeek, j = 0; j < month.length; i += 1, j += 1) {
     fillMonthArray[i] = month[j];
   }
 
   fillMonthArray = fillMonthArray.fill(0, 0, startDayOfWeek);
+
+  const getLastCheckOutDay = () => {
+    if (checkIn) {
+      console.log(checkIn.toUTCString(), new Date(month[0].date).toUTCString());
+    }
+  };
+
+  getLastCheckOutDay();
 
   return (
     <CalendarWrapper>
