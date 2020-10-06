@@ -1,3 +1,4 @@
+/* eslint-disable react/require-default-props */
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
@@ -30,41 +31,30 @@ class Widget extends React.Component {
       // eslint-disable-next-line react/no-unused-state
       startDateSelected: false,
       guestModalVisible: false,
-      calendarModalVisible: false,
     };
 
+    const { hideModal } = props;
+
     this.toggleGuestModal = this.toggleGuestModal.bind(this);
-    this.showModal = this.showModal.bind(this);
-    this.hideModal = this.hideModal.bind(this);
+    this.hideGuestModal = hideModal.bind(this);
   }
 
   toggleGuestModal(event, bool) {
     // eslint-disable-next-line no-unused-expressions
+    // TODO: dont use ternary
     bool !== undefined
       ? this.setState({ guestModalVisible: bool })
       : this.setState((prevState) => ({ guestModalVisible: !prevState.guestModalVisible }));
   }
 
-  showModal(targetName, prefunct) {
-    if (prefunct) { prefunct(); }
-    this.setState({ [targetName]: true });
-  }
-
-  hideModal(event) {
-    event.preventDefault();
-    const targetName = event.target.name;
-    this.setState({ [targetName]: false });
-  }
-
   render() {
-    const { guestModalVisible, calendarModalVisible } = this.state;
+    const { guestModalVisible } = this.state;
     const {
       guests, increaseGuestCount, decreaseGuestCount,
       days, weekendPricing, selectDate, clearDates,
-      checkIn, checkOut, checkInFormatted, checkOutFormatted,
+      checkIn, checkOut, checkInFormatted, checkOutFormatted, calendarModalVisible,
+      hideModal, hideCalendarModal, showModal, showCalendarModal,
     } = this.props;
-
-    console.log(typeof guestModalVisible);
 
     return (
       <WidgetWrapper>
@@ -74,13 +64,13 @@ class Widget extends React.Component {
           guestModalVisible={guestModalVisible}
           calendarModalVisible={calendarModalVisible}
           guests={guests}
-          showModal={this.showModal}
+          showCalendarModal={showCalendarModal}
           checkInFormatted={checkInFormatted}
           checkOutFormatted={checkOutFormatted}
         />
         <GuestModal
           name="guestModalVisible"
-          hideModal={this.hideModal}
+          hideGuestModal={this.hideGuestModal}
           show={guestModalVisible}
           guests={guests}
           increaseGuestCount={increaseGuestCount}
@@ -90,14 +80,13 @@ class Widget extends React.Component {
         { (days && calendarModalVisible)
           && (
             <CalendarModal
-              days={days}
-              hideModal={this.hideModal}
+            days={days}
               weekendPricing={weekendPricing}
-            // calendarModalVisible={calendarModalVisible}
-            selectDate={selectDate}
+            hideCalendarModal={hideCalendarModal}
+              selectDate={selectDate}
               clearDates={clearDates}
-            checkIn={checkIn}
-            checkOut={checkOut}
+              checkIn={checkIn}
+              checkOut={checkOut}
             />
           )}
       </WidgetWrapper>
@@ -119,9 +108,9 @@ Widget.propTypes = {
   checkOut: PropTypes.instanceOf(Date),
   checkInFormatted: PropTypes.string,
   checkOutFormatted: PropTypes.string,
-};
-
-Widget.defaultProps = {
-  checkInFormatted: 'Add date',
-  checkOutFormatted: 'Add date',
+  showModal: PropTypes.func.isRequired,
+  showCalendarModal: PropTypes.func.isRequired,
+  hideModal: PropTypes.func.isRequired,
+  hideCalendarModal: PropTypes.func.isRequired,
+  calendarModalVisible: PropTypes.bool.isRequired,
 };

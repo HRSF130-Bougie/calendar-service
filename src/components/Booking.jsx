@@ -38,13 +38,16 @@ class Booking extends React.Component {
       checkOut: null,
       checkInFormatted: 'Add date',
       checkOutFormatted: 'Add date',
+      calendarModalVisible: false,
     };
 
+    this.selectDate = this.selectDate.bind(this);
+    this.clearDates = this.clearDates.bind(this);
     this.increaseGuestCount = this.increaseGuestCount.bind(this);
     this.decreaseGuestCount = this.decreaseGuestCount.bind(this);
     this.calcTotalGuests = this.calcTotalGuests.bind(this);
-    this.selectDate = this.selectDate.bind(this);
-    this.clearDates = this.clearDates.bind(this);
+    this.hideCalendarModal = this.hideModal.bind(this);
+    this.showCalendarModal = this.showModal.bind(this);
   }
 
   componentDidMount() {
@@ -100,10 +103,25 @@ class Booking extends React.Component {
 
   // eslint-disable-next-line class-methods-use-this
   appendLeadingZeroes(n) {
+    // TODO: Use a ternary when you want to return something
     if (n <= 9) {
       return `0${n}`;
     }
     return n;
+  }
+
+  showModal(targetName, preFunct) {
+    if (preFunct) { preFunct(); }
+    this.setState({ [targetName]: true });
+  }
+
+  hideModal(event, name) {
+    let targetName = name;
+    if (event) {
+      event.preventDefault();
+      targetName = event.target.name;
+    }
+    this.setState({ [targetName]: false });
   }
 
   selectDate(date) {
@@ -119,7 +137,7 @@ class Booking extends React.Component {
       this.setState({
         checkOut: date,
         checkOutFormatted: formattedDate,
-      });
+      }, () => this.hideModal(null, 'calendarModalVisible'));
     } else if (checkIn && checkOut) {
       this.clearDates();
       this.setState({
@@ -133,7 +151,7 @@ class Booking extends React.Component {
     const guestType = 'adults';
     const {
       adults, children, infants, totalGuests, days, weekendPricing, checkIn, checkOut,
-      checkInFormatted,
+      checkInFormatted, checkOutFormatted, calendarModalVisible,
     } = this.state;
     return (
       <OuterPage>
@@ -151,7 +169,13 @@ class Booking extends React.Component {
             checkIn={checkIn}
             checkOut={checkOut}
             checkInFormatted={checkInFormatted}
+            checkOutFormatted={checkOutFormatted}
             clearDates={this.clearDates}
+            showModal={this.showModal}
+            showCalendarModal={this.showCalendarModal}
+            hideModal={this.hideModal}
+            hideCalendarModal={this.hideCalendarModal}
+            calendarModalVisible={calendarModalVisible}
           />
         </InnerPage>
       </OuterPage>

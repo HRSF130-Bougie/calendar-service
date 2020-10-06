@@ -43,7 +43,7 @@ const GuestModalCloseButtonWrapper = styled.div`
   justify-content: flex-end;
 `;
 
-const GuestModal = ({ hideModal, show, guests, increaseGuestCount, decreaseGuestCount }) => (
+const GuestModal = ({ hideGuestModal, show, guests, increaseGuestCount, decreaseGuestCount }) => (
   <GuestModalWrapper>
     {
       show
@@ -75,7 +75,7 @@ const GuestModal = ({ hideModal, show, guests, increaseGuestCount, decreaseGuest
               6 guests maximum. Infants don’t count toward the number of guests.
             </MaxGuests>
             <GuestModalCloseButtonWrapper>
-              <ModalCloseButton name="guestModalVisible" funct={hideModal} />
+              <ModalCloseButton name="guestModalVisible" funct={hideGuestModal} />
             </GuestModalCloseButtonWrapper>
           </GuestModalInnerWrapper>
         )
@@ -88,10 +88,9 @@ const GuestModal = ({ hideModal, show, guests, increaseGuestCount, decreaseGuest
 export default GuestModal;
 
 GuestModal.propTypes = {
-  hideModal: PropTypes.func.isRequired,
+  hideGuestModal: PropTypes.func.isRequired,
   show: PropTypes.bool.isRequired,
   guests: PropTypes.objectOf(PropTypes.number).isRequired,
   increaseGuestCount: PropTypes.func.isRequired,
   decreaseGuestCount: PropTypes.func.isRequired,
-
 };

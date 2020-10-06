@@ -7,9 +7,8 @@
     "clean": "rm dist/bundle.js",
     "build-dev": "webpack -d --mode development --watch src/",
     "build-prod": "webpack -p --mode production",
-    "start": "webpack-dev-server --hot --mode development",
     "test": "jest",
-    "start-server": "nodemon server/server.js --watch",
+    "start": "nodemon server/server.js --watch",
     "seed": "node database/seed.js"
   },
   "repository": {

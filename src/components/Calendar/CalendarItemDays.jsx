@@ -1,3 +1,4 @@
+/* eslint-disable react/require-default-props */
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
@@ -69,29 +70,32 @@ class CalendarDayCell extends React.PureComponent {
     this.calcDayState();
   }
 
-  componentDidUpdate() {
-    this.calcDayState();
-  }
+  // componentDidUpdate() {
+  //   this.calcDayState();
+  // }
 
   calcDayState() {
     const { dayState } = this.state;
     const { dayInfo, checkIn, checkOut } = this.props;
-    const today = Date.now;
+    const today = new Date(Date.now());
     const thisCell = new Date(dayInfo.date);
 
-    if (thisCell < today) {
+    if (thisCell <= today || (thisCell < checkIn && !checkOut)) {
       this.setState({ dayState: 'beforeToday' });
     } else if (dayInfo.booked || dayInfo.booked === undefined) {
       this.setState({ dayState: 'booked' });
-    } else if (dayInfo.booked === false && thisCell > today && dayState !== 'selected') {
-      this.setState({ dayState: 'available' });
-    } else if (dayState === 'selected' && ![].includes(thisCell)) {
+    } else if ((checkIn && thisCell.toUTCString() === checkIn.toUTCString())
+      || (checkOut && thisCell.toUTCString() === checkOut.toUTCString())) {
+      this.setState({ dayState: 'selected' });
+    } else if (dayInfo.booked === false && dayState !== 'selected') {
       this.setState({ dayState: 'available' });
     }
   }
 
   selectThisDate() {
-    const { dayInfo, selectDate } = this.props;
+    const {
+      dayInfo, selectDate, checkIn, checkOut,
+    } = this.props;
     const { dayState } = this.state;
     this.setState({ dayState: 'selected' });
     selectDate(new Date(dayInfo.date));
@@ -152,7 +156,7 @@ CalendarDayCell.propTypes = {
   weekendPricing: PropTypes.bool,
   selectDate: PropTypes.func.isRequired,
   checkIn: PropTypes.instanceOf(Date),
-  checkOut: PropTypes.instanceOf(Date)
+  checkOut: PropTypes.instanceOf(Date),
 };
 
 CalendarDayCell.defaultProps = {

@@ -1,3 +1,4 @@
+/* eslint-disable react/require-default-props */
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
@@ -126,7 +127,7 @@ class CalendarModal extends React.PureComponent {
     const weekdays = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
 
     const {
-      days, weekendPricing, calendarModalVisible, hideModal,
+      days, weekendPricing, hideCalendarModal,
       selectDate, clearDates, checkIn, checkOut,
     } = this.props;
 
@@ -182,7 +183,7 @@ class CalendarModal extends React.PureComponent {
             <KeyboardOuter><KeyboardInner><Keyboard /></KeyboardInner></KeyboardOuter>
             <PriceWarning>Prices on calendar do not include taxes and fees</PriceWarning>
             <ModalCloseButton name="clearDates" text="Clear dates" funct={clearDates} clear />
-            <ModalCloseButton name="calendarModalVisible" funct={hideModal} calendar />
+            <ModalCloseButton name="calendarModalVisible" funct={hideCalendarModal} calendar />
           </FooterRow>
         </CalendarPopUp>
       )
@@ -195,8 +196,7 @@ export default CalendarModal;
 CalendarModal.propTypes = {
   days: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.object)).isRequired,
   weekendPricing: PropTypes.bool.isRequired,
-  // calendarModalVisible: PropTypes.bool.isRequired,
-  hideModal: PropTypes.func.isRequired,
+  hideCalendarModal: PropTypes.func.isRequired,
   selectDate: PropTypes.func.isRequired,
   clearDates: PropTypes.func.isRequired,
   checkIn: PropTypes.instanceOf(Date),

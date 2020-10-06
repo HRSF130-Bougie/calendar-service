@@ -1,3 +1,4 @@
+/* eslint-disable react/require-default-props */
 /* eslint-disable no-underscore-dangle */
 import React, { memo } from 'react';
 import PropTypes from 'prop-types';
@@ -37,17 +38,16 @@ const CalendarItem = ({
       {fillMonthArray.map((day) => (
         day._id !== undefined
           ? (
-          <CalendarItemDays
-            key={day._id}
-            dayInfo={day}
-            weekendPricing={weekendPricing}
+            <CalendarItemDays
+              key={day._id}
+              dayInfo={day}
+              weekendPricing={weekendPricing}
               selectDate={selectDate}
               checkIn={checkIn}
               checkOut={checkOut}
-          />
+            />
           )
-          :
-          <div key={Math.random()} />
+          : <div key={Math.random()} />
       ))}
     </CalendarWrapper>
   );

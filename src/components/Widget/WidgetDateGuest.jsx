@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React from 'react';
 import styled, { css } from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleUp } from '@fortawesome/free-solid-svg-icons';
@@ -128,7 +128,7 @@ class WidgetDateGuest extends React.Component {
   render() {
     const {
       toggleGuestModal, guestModalVisible, calendarModalVisible,
-      guests, showModal, checkInFormatted, checkOutFormatted,
+      guests, checkInFormatted, checkOutFormatted, showCalendarModal,
     } = this.props;
     let guestCount = '';
     if (guests.totalGuests === 1) { guestCount = '1 guest'; } else { guestCount = `${guests.totalGuests} guests`; }
@@ -138,14 +138,14 @@ class WidgetDateGuest extends React.Component {
     return (
       <WidgetDateGuestWrapper>
         <CheckInBox
-          onClick={() => showModal('calendarModalVisible', (e) => toggleGuestModal(e, false))}
+          onClick={() => showCalendarModal('calendarModalVisible', (e) => toggleGuestModal(e, false))}
           calendarModalVisible={calendarModalVisible}
         >
           <DescriptionText>Check-in</DescriptionText>
           <DisplayText>{checkInFormatted}</DisplayText>
         </CheckInBox>
         <CheckOutBox
-          onClick={() => showModal('calendarModalVisible', (e) => toggleGuestModal(e, false))}
+          onClick={() => showCalendarModal('calendarModalVisible', (e) => toggleGuestModal(e, false))}
           calendarModalVisible={calendarModalVisible}
         >
           <DescriptionText>Check-out</DescriptionText>
@@ -172,14 +172,14 @@ class WidgetDateGuest extends React.Component {
   }
 }
 
-export default memo(WidgetDateGuest);
+export default WidgetDateGuest;
 
 WidgetDateGuest.propTypes = {
   toggleGuestModal: PropTypes.func.isRequired,
   guestModalVisible: PropTypes.bool.isRequired,
   calendarModalVisible: PropTypes.bool.isRequired,
   guests: PropTypes.objectOf(PropTypes.number).isRequired,
-  showModal: PropTypes.func.isRequired,
+  showCalendarModal: PropTypes.func.isRequired,
   checkInFormatted: PropTypes.string.isRequired,
   checkOutFormatted: PropTypes.string.isRequired,
 };
