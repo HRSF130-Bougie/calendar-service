@@ -43,7 +43,7 @@ class Booking extends React.Component {
     this.increaseGuestCount = this.increaseGuestCount.bind(this);
     this.decreaseGuestCount = this.decreaseGuestCount.bind(this);
     this.calcTotalGuests = this.calcTotalGuests.bind(this);
-    this.selectCheckIn = this.selectCheckIn.bind(this);
+    this.selectDate = this.selectDate.bind(this);
     this.clearDates = this.clearDates.bind(this);
   }
 
@@ -106,20 +106,35 @@ class Booking extends React.Component {
     return n;
   }
 
-  selectCheckIn(date) {
+  selectDate(date) {
     const formattedDate = `${this.appendLeadingZeroes(date.getMonth() + 1)}/${this.appendLeadingZeroes(date.getDate())}/${date.getFullYear()}`;
     console.log(formattedDate);
-    this.setState({
-      checkIn: date,
-      checkInFormatted: formattedDate,
-    });
+    const { checkIn, checkOut } = this.state;
+    if (!checkIn) {
+      this.setState({
+        checkIn: date,
+        checkInFormatted: formattedDate,
+      });
+    } else if (checkIn && !checkOut) {
+      this.setState({
+        checkOut: date,
+        checkOutFormatted: formattedDate,
+      });
+    } else if (checkIn && checkOut) {
+      this.clearDates();
+      this.setState({
+        checkIn: date,
+        checkInFormatted: formattedDate,
+      });
+    }
   }
 
   render() {
     const guestType = 'adults';
     const {
       adults, children, infants, totalGuests, days, weekendPricing, checkIn, checkOut,
-      checkInFormatted } = this.state;
+      checkInFormatted,
+    } = this.state;
     return (
       <OuterPage>
         <GlobalFonts />
@@ -132,8 +147,9 @@ class Booking extends React.Component {
             decreaseGuestCount={this.decreaseGuestCount}
             weekendPricing={weekendPricing}
             days={days}
-            selectCheckIn={this.selectCheckIn}
+            selectDate={this.selectDate}
             checkIn={checkIn}
+            checkOut={checkOut}
             checkInFormatted={checkInFormatted}
             clearDates={this.clearDates}
           />

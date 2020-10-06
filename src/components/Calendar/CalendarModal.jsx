@@ -64,12 +64,12 @@ const MonthHeaderTitle = styled.div`
   font-family: 'Airbnb Cereal App Medium', sans-serif;
   font-size: 16px !important;
   line-height: 20px margin!important;
-  width: 312px;
+  width: 294px;
   align-self: center;
   text-align: center;
-  margin-left: -10px;
-  margin-right: 25px;
   padding: 26px 0px;
+  margin-left: -10px;
+  margin-right: 40px;
 `;
 
 const CalendarGridRow = styled(MonthHeaderRow)`
@@ -115,13 +115,6 @@ const KeyboardOuter = styled.div`
     }
 `;
 
-// const WeekWrapper = styled.div`
-//   display: grid;
-//   grid-gap: 3px;
-//   grid-template-columns: repeat(7, 42px);
-//   margin-bottom: 10px;
-// `;
-
 class CalendarModal extends React.PureComponent {
   constructor(props) {
     super(props);
@@ -133,7 +126,8 @@ class CalendarModal extends React.PureComponent {
     const weekdays = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
 
     const {
-      days, weekendPricing, calendarModalVisible, hideModal, selectCheckIn, clearDates,
+      days, weekendPricing, calendarModalVisible, hideModal,
+      selectDate, clearDates, checkIn, checkOut,
     } = this.props;
 
     const renderMonthName = (date) => {
@@ -142,8 +136,9 @@ class CalendarModal extends React.PureComponent {
     };
 
     return (
-      calendarModalVisible
-      && (
+      // calendarModalVisible
+      // &&
+      (
         <CalendarPopUp>
           <CalendarHeaderRow>
             <CalendarHeaderRowLeft>
@@ -176,7 +171,9 @@ class CalendarModal extends React.PureComponent {
                   key={Math.random()}
                   month={month}
                   weekendPricing={weekendPricing}
-                  selectCheckIn={selectCheckIn}
+                  selectDate={selectDate}
+                  checkIn={checkIn}
+                  checkOut={checkOut}
                 />
               ))
             }
@@ -198,8 +195,10 @@ export default CalendarModal;
 CalendarModal.propTypes = {
   days: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.object)).isRequired,
   weekendPricing: PropTypes.bool.isRequired,
-  calendarModalVisible: PropTypes.bool.isRequired,
+  // calendarModalVisible: PropTypes.bool.isRequired,
   hideModal: PropTypes.func.isRequired,
-  selectCheckIn: PropTypes.func.isRequired,
+  selectDate: PropTypes.func.isRequired,
   clearDates: PropTypes.func.isRequired,
+  checkIn: PropTypes.instanceOf(Date),
+  checkOut: PropTypes.instanceOf(Date),
 };

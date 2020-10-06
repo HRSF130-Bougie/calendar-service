@@ -75,7 +75,7 @@ class CalendarDayCell extends React.PureComponent {
 
   calcDayState() {
     const { dayState } = this.state;
-    const { dayInfo } = this.props;
+    const { dayInfo, checkIn, checkOut } = this.props;
     const today = Date.now;
     const thisCell = new Date(dayInfo.date);
 
@@ -85,17 +85,20 @@ class CalendarDayCell extends React.PureComponent {
       this.setState({ dayState: 'booked' });
     } else if (dayInfo.booked === false && thisCell > today && dayState !== 'selected') {
       this.setState({ dayState: 'available' });
+    } else if (dayState === 'selected' && ![].includes(thisCell)) {
+      this.setState({ dayState: 'available' });
     }
   }
 
   selectThisDate() {
-    const { dayInfo, selectCheckIn } = this.props;
+    const { dayInfo, selectDate } = this.props;
+    const { dayState } = this.state;
     this.setState({ dayState: 'selected' });
-    selectCheckIn(new Date(dayInfo.date));
+    selectDate(new Date(dayInfo.date));
   }
 
   render() {
-    const { dayInfo, weekendPricing, selectCheckIn } = this.props;
+    const { dayInfo, weekendPricing } = this.props;
     const dateDisplay = dayInfo.date ? new Date(dayInfo.date).getDate() : null;
     const priceDisplay = dayInfo.price ? dayInfo.price : null;
     const { dayState } = this.state;
@@ -147,7 +150,9 @@ CalendarDayCell.propTypes = {
   // eslint-disable-next-line react/forbid-prop-types
   dayInfo: PropTypes.object,
   weekendPricing: PropTypes.bool,
-  selectCheckIn: PropTypes.func.isRequired,
+  selectDate: PropTypes.func.isRequired,
+  checkIn: PropTypes.instanceOf(Date),
+  checkOut: PropTypes.instanceOf(Date)
 };
 
 CalendarDayCell.defaultProps = {

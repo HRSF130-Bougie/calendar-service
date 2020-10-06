@@ -38,15 +38,15 @@ class Widget extends React.Component {
     this.hideModal = this.hideModal.bind(this);
   }
 
-  toggleGuestModal(bool) {
-    bool !== undefined ?
-      this.setState({ guestModalVisible: bool })
-      :
-      this.setState((prevState) => ({ guestModalVisible: !prevState.guestModalVisible }));
+  toggleGuestModal(event, bool) {
+    // eslint-disable-next-line no-unused-expressions
+    bool !== undefined
+      ? this.setState({ guestModalVisible: bool })
+      : this.setState((prevState) => ({ guestModalVisible: !prevState.guestModalVisible }));
   }
 
-  showModal(targetName, funct) {
-    if (funct) { funct(); }
+  showModal(targetName, prefunct) {
+    if (prefunct) { prefunct(); }
     this.setState({ [targetName]: true });
   }
 
@@ -60,8 +60,12 @@ class Widget extends React.Component {
     const { guestModalVisible, calendarModalVisible } = this.state;
     const {
       guests, increaseGuestCount, decreaseGuestCount,
-      days, weekendPricing, selectCheckIn, checkIn, checkInFormatted, clearDates,
+      days, weekendPricing, selectDate, clearDates,
+      checkIn, checkOut, checkInFormatted, checkOutFormatted,
     } = this.props;
+
+    console.log(typeof guestModalVisible);
+
     return (
       <WidgetWrapper>
         <WidgetHeader />
@@ -72,6 +76,7 @@ class Widget extends React.Component {
           guests={guests}
           showModal={this.showModal}
           checkInFormatted={checkInFormatted}
+          checkOutFormatted={checkOutFormatted}
         />
         <GuestModal
           name="guestModalVisible"
@@ -82,15 +87,17 @@ class Widget extends React.Component {
           decreaseGuestCount={decreaseGuestCount}
         />
         <MainButton />
-        { days
+        { (days && calendarModalVisible)
           && (
             <CalendarModal
               days={days}
               hideModal={this.hideModal}
               weekendPricing={weekendPricing}
-              calendarModalVisible={calendarModalVisible}
-            selectCheckIn={selectCheckIn}
-            clearDates={clearDates}
+            // calendarModalVisible={calendarModalVisible}
+            selectDate={selectDate}
+              clearDates={clearDates}
+            checkIn={checkIn}
+            checkOut={checkOut}
             />
           )}
       </WidgetWrapper>
@@ -106,8 +113,15 @@ Widget.propTypes = {
   decreaseGuestCount: PropTypes.func.isRequired,
   days: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.object)).isRequired,
   weekendPricing: PropTypes.bool.isRequired,
-  selectCheckIn: PropTypes.func.isRequired,
-  checkIn: PropTypes.instanceOf(Date),
-  checkInFormatted: PropTypes.string.isRequired,
+  selectDate: PropTypes.func.isRequired,
   clearDates: PropTypes.func.isRequired,
+  checkIn: PropTypes.instanceOf(Date),
+  checkOut: PropTypes.instanceOf(Date),
+  checkInFormatted: PropTypes.string,
+  checkOutFormatted: PropTypes.string,
+};
+
+Widget.defaultProps = {
+  checkInFormatted: 'Add date',
+  checkOutFormatted: 'Add date',
 };
