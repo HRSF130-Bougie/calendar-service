@@ -2,7 +2,25 @@ import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 
+const NoCharge = styled.div`
+  display: flex;
+  flex-direction: column;
+  color: rgb(34, 34, 34);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 18px;
+  margin-top: 16px;
+  margin-bottom: 22px;
+  padding: 0px;
+  text-align: center;
+`;
+
+const PriceWrap = styled.div`
+  margin-top: 16px;
+`;
+
 const PriceRow = styled.div`
+  color: rgb(34, 34, 34);
   font-family: 'Airbnb Cereal App Light', sans-serif;
   display: flex;
   flex-flow: row nowrap;
@@ -12,7 +30,7 @@ const PriceRow = styled.div`
 `;
 
 const PriceDescription = styled.button`
-  color: rgb(34, 34, 34);
+  color: inherit;
   font-size: 16px;
   line-height: 20px;
   text-align: left;
@@ -21,6 +39,9 @@ const PriceDescription = styled.button`
   border: none;
   background: transparent;
   cursor: pointer;
+  &:hover {
+    color: rgb(5, 5, 5);
+  };
 `;
 
 const PriceFigure = styled.div`
@@ -36,16 +57,22 @@ const BorderDiv = styled.div`
   margin: 16px 0 0;
 `;
 
+const TotalRow = styled(PriceRow)`
+  margin: 0px;
+`;
+
 const Total = styled(PriceFigure)`
 font-family: 'Airbnb Cereal App Bold', sans-serif;
+margin: 0px;
 `;
 
 const averagePerNight = (base, nightCount) => base / nightCount;
 
-const currencyFormat = (num) => `$${num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}`;
+const currencyFormat = (num) => `$${num.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}`;
 
 const Pricing = ({ fees }) => (
-  <>
+  <PriceWrap>
+    <NoCharge>You won't be charged yet</NoCharge>
     <PriceRow>
       <PriceDescription>{`${currencyFormat(averagePerNight(fees.basePrice, fees.nights.length))} x ${fees.nights.length} nights`}</PriceDescription>
       <PriceFigure>{`${currencyFormat(fees.basePrice)}`}</PriceFigure>
@@ -63,11 +90,11 @@ const Pricing = ({ fees }) => (
       <PriceFigure>{`${currencyFormat(fees.taxes)}`}</PriceFigure>
     </PriceRow>
     <BorderDiv />
-    <PriceRow>
+    <TotalRow>
       <Total>Total</Total>
       <PriceFigure><Total>{`${currencyFormat(fees.total)}`}</Total></PriceFigure>
-    </PriceRow>
-  </>
+    </TotalRow>
+  </PriceWrap>
 );
 
 export default memo(Pricing);

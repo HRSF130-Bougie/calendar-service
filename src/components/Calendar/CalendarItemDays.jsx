@@ -128,7 +128,9 @@ class CalendarDayCell extends React.PureComponent {
   }
 
   render() {
-    const { dayInfo, weekendPricing, checkIn, checkOut } = this.props;
+    const {
+      dayInfo, weekendPricing, checkIn, checkOut,
+    } = this.props;
     const dateDisplay = dayInfo.date ? new Date(dayInfo.date).getDate() : null;
     const priceDisplay = dayInfo.price ? dayInfo.price : null;
     const { dayState } = this.state;
@@ -195,7 +197,7 @@ class CalendarDayCell extends React.PureComponent {
             )}
 
         </DayCell>
-      </DayCellWrapper >
+      </DayCellWrapper>
     );
   }
 }

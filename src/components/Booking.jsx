@@ -56,14 +56,14 @@ class Booking extends React.Component {
     const listing = Math.floor((Math.random() * 100) + 1);
     this.setState({ currentListing: listing });
 
-    fetch(`/api/listing/${listing}`)
+    fetch(`http://localhost:3002/api/listing/${listing}`)
       .then((response) => response.json())
       .then((data) => {
         const {
           days, reservations, cleaningFee, weekendPricing,
         } = data;
         this.setState({
-          days, reservations, weekendPricing, fees: { cleaningFee }
+          days, reservations, weekendPricing, fees: { cleaningFee },
         });
       })
       .catch((error) => console.error('Fetch error: ', error));

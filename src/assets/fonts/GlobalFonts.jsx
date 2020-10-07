@@ -51,7 +51,6 @@ const GlobalFonts = createGlobalStyle`
       src: local('Airbnb Cereal App Black'), url(${AirbnbCerealBlack}) format('woff');
     }
 
-
   html, body {
     font-family: 'Airbnb Cereal App Book', sans-serif;
     color: rgb(34, 34, 34);

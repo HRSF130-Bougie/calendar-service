@@ -41,54 +41,42 @@ const CountWrapper = styled.div`
 
 const PlusMinusButton = styled.button`
     font-family: 'Airbnb Cereal App Light', sans-serif;
-    -moz-box-pack: center;
-    -moz-box-align: center;
-    -moz-box-flex: 0;
     width: 32px;
     height: 32px;
     flex-grow: 0;
     flex-shrink: 0;
     cursor: pointer;
-    display: inline-flex;
     margin: 0px;
     border-width: 1px;
     border-style: solid;
     border-color: rgb(176, 176, 176);
     color: rgb(113, 113, 113);
-    font-family: inherit;
     font-size: 25px;
-    outline: currentcolor none medium;
-    touch-action: manipulation;
-    align-items: flex-end;
-    justify-content: center;
-    background: rgb(255, 255, 255) none repeat scroll 0% 0%;
+    outline: none;
+    background: rgb(255, 255, 255) none;
     border-radius: 50%;
+    padding-bottom: 2px;
 }
 `;
 
 const PlusMinusButtonDisabled = styled.div`
     font-family: 'Airbnb Cereal App Light', sans-serif;
-    -moz-box-pack: center;
-    -moz-box-align: center;
-    -moz-box-flex: 0;
-    width: 32px;
-    height: 32px;
+    width: 30px;
+    height: 30px;
     flex-grow: 0;
     flex-shrink: 0;
     cursor: pointer;
-    display: inline-flex;
     margin: 0px;
     border-width: 1px;
     border-style: solid;
     border-color:  rgb(235, 235, 235);
     color:  rgb(235, 235, 235);
-    font-family: inherit;
     font-size: 25px;
-    outline: currentcolor none medium;
-    align-items: center;
-    justify-content: center;
-    background: rgb(255, 255, 255) none repeat scroll 0% 0%;
+    outline: none;
+    background: rgb(255, 255, 255) none;
     border-radius: 50%;
+    text-align: center;
+
 }
 `;
 

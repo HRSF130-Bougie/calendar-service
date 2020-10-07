@@ -2,7 +2,7 @@
 const dayjs = require('dayjs');
 const faker = require('faker');
 // eslint-disable-next-line no-unused-vars
-const db = require('./connectToDatabase.js');
+const db = require('./connectToDatabaseLocal.js');
 const schema = require('./schema.js');
 
 const reSeed = async () => {
@@ -14,7 +14,6 @@ const reSeed = async () => {
       const daysArray = [];
       const randomPrice = Math.floor(faker.random.number({ min: 75, max: 450 }));
       const weekendPricing = faker.random.boolean();
-
 
       const getLastDay = function (yy, mm) {
         return new Date(yy, mm + 1, 0).getDate();

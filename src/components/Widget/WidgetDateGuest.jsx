@@ -91,12 +91,10 @@ const DescriptionText = styled.span`
   font-family: 'Airbnb Cereal App Bold', sans-serif;
   font-size: 10px;
   line-height: 12px;
-  font-size: 10px;
-  line-height: 12px;
-  font-weight: 800;
   text-transform: uppercase;
   vertical-align: top;
   z-index: 4;
+  color: rgb(34, 34, 34);
 `;
 
 const DisplayText = styled.span`

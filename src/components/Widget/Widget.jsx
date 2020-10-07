@@ -91,8 +91,8 @@ class Widget extends React.Component {
           increaseGuestCount={increaseGuestCount}
           decreaseGuestCount={decreaseGuestCount}
         />
-        <MainButton />
-        <NoCharge>{`You won't be charged yet`}</NoCharge>
+        <MainButton checkOut={checkOut} />
+
         { (days && calendarModalVisible)
           && (
             <CalendarModal
@@ -133,6 +133,5 @@ Widget.propTypes = {
   hideCalendarModal: PropTypes.func.isRequired,
   calendarModalVisible: PropTypes.bool.isRequired,
   lastPossibleCheckOut: PropTypes.instanceOf(Date),
-  cleaningFee: PropTypes.number,
   fees: PropTypes.object,
 };
