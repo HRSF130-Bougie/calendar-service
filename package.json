@@ -5,7 +5,7 @@
   "main": "server/server.js",
   "scripts": {
     "clean": "rm dist/bundle.js",
-    "build-dev": "webpack -d --mode development --watch src/",
+    "build": "webpack -d --mode development --watch src/",
     "build-prod": "webpack -p --mode production",
     "test": "jest",
     "start": "nodemon server/server.js --watch",
