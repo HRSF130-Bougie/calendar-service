@@ -28,7 +28,6 @@ class Booking extends React.Component {
       currentListing: 0,
       days: [],
       reservations: [],
-      cleaningFee: 0,
       adults: 1,
       children: 0,
       infants: 0,
@@ -39,6 +38,8 @@ class Booking extends React.Component {
       checkInFormatted: 'Add date',
       checkOutFormatted: 'Add date',
       calendarModalVisible: false,
+      lastPossibleCheckOut: new Date(2030, 12),
+      fees: {},
     };
 
     this.selectDate = this.selectDate.bind(this);
@@ -48,47 +49,73 @@ class Booking extends React.Component {
     this.calcTotalGuests = this.calcTotalGuests.bind(this);
     this.hideCalendarModal = this.hideModal.bind(this);
     this.showCalendarModal = this.showModal.bind(this);
+    this.getSelectedDays = this.getSelectedDays.bind(this);
   }
 
   componentDidMount() {
     const listing = Math.floor((Math.random() * 100) + 1);
     this.setState({ currentListing: listing });
 
-    fetch(`/api/listing/${listing}`)
+    fetch(`http://localhost:3002/api/listing/${listing}`)
       .then((response) => response.json())
       .then((data) => {
         const {
           days, reservations, cleaningFee, weekendPricing,
         } = data;
         this.setState({
-          days, reservations, cleaningFee, weekendPricing,
+          days, reservations, weekendPricing, fees: { cleaningFee },
         });
       })
       .catch((error) => console.error('Fetch error: ', error));
   }
 
-  clearDates() {
+  getLastDayCheckOut(selectedMonthIndex, selectedDayIndex) {
+    const { days } = this.state;
+    for (let months = selectedMonthIndex; months < days.length; months += 1) {
+      for (let day = selectedDayIndex; day < days[months].length; day += 1) {
+        if (days[months][day].booked) {
+          return new Date(days[months][day - 1].date);
+        }
+      }
+    }
+    return null;
+  }
+
+  getSelectedDays(selectedMonthIndex, selectedDayIndex) {
+    const {
+      days, checkIn, checkOut, fees,
+    } = this.state;
+
+    const { cleaningFee } = fees;
+
+    // Calculate number of days in the reservation
+    const nightCount = Math.floor(
+      // eslint-disable-next-line max-len
+      (Date.UTC(checkOut.getFullYear(), checkOut.getMonth(), checkOut.getDate()) - Date.UTC(checkIn.getFullYear(), checkIn.getMonth(), checkIn.getDate())) / (1000 * 60 * 60 * 24),
+    ) + 1;
+
+    // Create an array of the date objects of all selected dates
+    const nights = [];
+    for (let months = selectedMonthIndex; months < days.length; months += 1) {
+      for (let day = selectedDayIndex; day < days[months].length; day += 1) {
+        if (nights.length < nightCount) {
+          nights.push(days[months][day - 2]);
+        }
+      }
+    }
+
+    const initial = 0;
+    // eslint-disable-next-line max-len
+    const basePrice = nights.reduce((accumulator, currentValue) => accumulator + currentValue.price, initial);
+    const serviceFee = Math.ceil(basePrice * 0.0148);
+    const taxes = Math.ceil(basePrice * 0.011);
+    const total = basePrice + cleaningFee + serviceFee + taxes;
+
     this.setState({
-      checkIn: null,
-      checkOut: null,
-      checkInFormatted: 'Add date',
-      checkOutFormatted: 'Add date',
+      fees: {
+        cleaningFee, nights, basePrice, serviceFee, taxes, total,
+      },
     });
-  }
-
-  calcTotalGuests() {
-    const { adults, children } = this.state;
-    this.setState({ totalGuests: adults + children });
-  }
-
-  increaseGuestCount(event) {
-    event.preventDefault();
-    const targetName = event.target.name;
-
-    this.setState(
-      (prevState) => ({ [targetName]: prevState[targetName] + 1 }),
-      () => { this.calcTotalGuests(); },
-    );
   }
 
   decreaseGuestCount(event) {
@@ -104,10 +131,7 @@ class Booking extends React.Component {
   // eslint-disable-next-line class-methods-use-this
   appendLeadingZeroes(n) {
     // TODO: Use a ternary when you want to return something
-    if (n <= 9) {
-      return `0${n}`;
-    }
-    return n;
+    return n <= 9 ? `0${n}` : n;
   }
 
   showModal(targetName, preFunct) {
@@ -124,34 +148,66 @@ class Booking extends React.Component {
     this.setState({ [targetName]: false });
   }
 
-  selectDate(date) {
+  increaseGuestCount(event) {
+    event.preventDefault();
+    const targetName = event.target.name;
+
+    this.setState(
+      (prevState) => ({ [targetName]: prevState[targetName] + 1 }),
+      () => { this.calcTotalGuests(); },
+    );
+  }
+
+  calcTotalGuests() {
+    const { adults, children } = this.state;
+    this.setState({ totalGuests: adults + children });
+  }
+
+  clearDates() {
+    this.setState({
+      checkIn: null,
+      checkOut: null,
+      checkInFormatted: 'Add date',
+      checkOutFormatted: 'Add date',
+      lastPossibleCheckOut: new Date(2030, 12),
+    });
+  }
+
+  selectDate(date, selectedMonthIndex, selectedDayIndex) {
     const formattedDate = `${this.appendLeadingZeroes(date.getMonth() + 1)}/${this.appendLeadingZeroes(date.getDate())}/${date.getFullYear()}`;
-    console.log(formattedDate);
     const { checkIn, checkOut } = this.state;
     if (!checkIn) {
       this.setState({
         checkIn: date,
         checkInFormatted: formattedDate,
-      });
+      }, () => this.setState({
+        lastPossibleCheckOut: this.getLastDayCheckOut(selectedMonthIndex, selectedDayIndex),
+      }));
     } else if (checkIn && !checkOut) {
       this.setState({
         checkOut: date,
         checkOutFormatted: formattedDate,
-      }, () => this.hideModal(null, 'calendarModalVisible'));
+      }, () => {
+        this.hideModal(null, 'calendarModalVisible');
+        this.getSelectedDays(selectedMonthIndex, selectedDayIndex);
+      });
     } else if (checkIn && checkOut) {
       this.clearDates();
       this.setState({
         checkIn: date,
         checkInFormatted: formattedDate,
+        lastPossibleCheckOut: this.getLastDayCheckOut(selectedMonthIndex, selectedDayIndex),
       });
     }
+    if (checkOut) { this.getSelectedDays(); }
   }
 
   render() {
     const guestType = 'adults';
     const {
       adults, children, infants, totalGuests, days, weekendPricing, checkIn, checkOut,
-      checkInFormatted, checkOutFormatted, calendarModalVisible,
+      checkInFormatted, checkOutFormatted, calendarModalVisible, lastPossibleCheckOut,
+      fees,
     } = this.state;
     return (
       <OuterPage>
@@ -176,6 +232,8 @@ class Booking extends React.Component {
             hideModal={this.hideModal}
             hideCalendarModal={this.hideCalendarModal}
             calendarModalVisible={calendarModalVisible}
+            lastPossibleCheckOut={lastPossibleCheckOut}
+            fees={fees}
           />
         </InnerPage>
       </OuterPage>

@@ -14,17 +14,13 @@ const CalendarWrapper = styled.div`
   `;
 
 const CalendarItem = ({
-  month, weekendPricing, selectDate, checkIn, checkOut,
+  month, weekendPricing, selectDate, checkIn, checkOut, monthIndex, lastPossibleCheckOut,
 }) => {
   const startingDay = new Date(month[0].date);
 
   const startDayOfWeek = startingDay.getDay();
 
   let fillMonthArray = [];
-
-  // for (let i = 0; i < startDayOfWeek; i += 1) {
-  //   fillMonthArray[i] = { _id: Math.random(), price: null };
-  // }
 
   // Fill in array with month data, placed in the correct days of the week
   for (let i = startDayOfWeek, j = 0; j < month.length; i += 1, j += 1) {
@@ -35,7 +31,7 @@ const CalendarItem = ({
 
   return (
     <CalendarWrapper>
-      {fillMonthArray.map((day) => (
+      {fillMonthArray.map((day, dayIndex) => (
         day._id !== undefined
           ? (
             <CalendarItemDays
@@ -45,6 +41,9 @@ const CalendarItem = ({
               selectDate={selectDate}
               checkIn={checkIn}
               checkOut={checkOut}
+              monthIndex={monthIndex}
+              dayIndex={dayIndex - startDayOfWeek}
+              lastPossibleCheckOut={lastPossibleCheckOut}
             />
           )
           : <div key={Math.random()} />
@@ -61,4 +60,6 @@ CalendarItem.propTypes = {
   selectDate: PropTypes.func.isRequired,
   checkIn: PropTypes.instanceOf(Date),
   checkOut: PropTypes.instanceOf(Date),
+  monthIndex: PropTypes.number.isRequired,
+  lastPossibleCheckOut: PropTypes.instanceOf(Date),
 };

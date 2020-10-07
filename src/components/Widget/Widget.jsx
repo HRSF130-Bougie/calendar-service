@@ -7,6 +7,7 @@ import WidgetDateGuest from './WidgetDateGuest';
 import GuestModal from './GuestModal';
 import MainButton from './MainButton';
 import CalendarModal from '../Calendar/CalendarModal';
+import Pricing from './Pricing';
 
 const WidgetWrapper = styled.div`
   grid-area: widget;
@@ -21,7 +22,18 @@ const WidgetWrapper = styled.div`
   border-radius: 12px;
   padding: 24px;
   box-shadow: rgba(0, 0, 0, 0.12) 0px 6px 16px;
-}
+`;
+
+const NoCharge = styled.div`
+  display: flex;
+  flex-direction: column;
+  color: rgb(34, 34, 34);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 18px;
+  margin-top: 8px;
+  padding: 0px;
+  text-align: center;
 `;
 
 class Widget extends React.Component {
@@ -41,10 +53,12 @@ class Widget extends React.Component {
 
   toggleGuestModal(event, bool) {
     // eslint-disable-next-line no-unused-expressions
-    // TODO: dont use ternary
-    bool !== undefined
-      ? this.setState({ guestModalVisible: bool })
-      : this.setState((prevState) => ({ guestModalVisible: !prevState.guestModalVisible }));
+
+    if (bool !== undefined) {
+      this.setState({ guestModalVisible: bool });
+    } else {
+      this.setState((prevState) => ({ guestModalVisible: !prevState.guestModalVisible }));
+    }
   }
 
   render() {
@@ -54,6 +68,7 @@ class Widget extends React.Component {
       days, weekendPricing, selectDate, clearDates,
       checkIn, checkOut, checkInFormatted, checkOutFormatted, calendarModalVisible,
       hideModal, hideCalendarModal, showModal, showCalendarModal,
+      lastPossibleCheckOut, fees,
     } = this.props;
 
     return (
@@ -76,19 +91,23 @@ class Widget extends React.Component {
           increaseGuestCount={increaseGuestCount}
           decreaseGuestCount={decreaseGuestCount}
         />
-        <MainButton />
+        <MainButton checkOut={checkOut} />
+
         { (days && calendarModalVisible)
           && (
             <CalendarModal
-            days={days}
+              days={days}
               weekendPricing={weekendPricing}
-            hideCalendarModal={hideCalendarModal}
+              lastPossibleCheckOut={lastPossibleCheckOut}
+              hideCalendarModal={hideCalendarModal}
               selectDate={selectDate}
               clearDates={clearDates}
               checkIn={checkIn}
               checkOut={checkOut}
             />
           )}
+        {fees.nights
+          && <Pricing fees={fees} />}
       </WidgetWrapper>
     );
   }
@@ -113,4 +132,6 @@ Widget.propTypes = {
   hideModal: PropTypes.func.isRequired,
   hideCalendarModal: PropTypes.func.isRequired,
   calendarModalVisible: PropTypes.bool.isRequired,
+  lastPossibleCheckOut: PropTypes.instanceOf(Date),
+  fees: PropTypes.object,
 };

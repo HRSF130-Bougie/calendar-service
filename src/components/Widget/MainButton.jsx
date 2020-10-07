@@ -25,8 +25,8 @@ const MainButtonStyled = styled.button`
   background-position: calc((100 - var(--mouse-x, 0)) * 1%) calc((100 - var(--mouse-y, 0)) * 1%);
 `;
 
-const MainButton = () => (
-  <MainButtonStyled>Check availability</MainButtonStyled>
+const MainButton = ({ checkOut }) => (
+  <MainButtonStyled>{checkOut ? 'Reserve' : 'Check availability'}</MainButtonStyled>
 );
 
 export default MainButton;
