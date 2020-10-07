@@ -7,6 +7,7 @@ import WidgetDateGuest from './WidgetDateGuest';
 import GuestModal from './GuestModal';
 import MainButton from './MainButton';
 import CalendarModal from '../Calendar/CalendarModal';
+import Pricing from './Pricing';
 
 const WidgetWrapper = styled.div`
   grid-area: widget;
@@ -21,7 +22,18 @@ const WidgetWrapper = styled.div`
   border-radius: 12px;
   padding: 24px;
   box-shadow: rgba(0, 0, 0, 0.12) 0px 6px 16px;
-}
+`;
+
+const NoCharge = styled.div`
+  display: flex;
+  flex-direction: column;
+  color: rgb(34, 34, 34);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 18px;
+  margin-top: 8px;
+  padding: 0px;
+  text-align: center;
 `;
 
 class Widget extends React.Component {
@@ -55,7 +67,8 @@ class Widget extends React.Component {
       guests, increaseGuestCount, decreaseGuestCount,
       days, weekendPricing, selectDate, clearDates,
       checkIn, checkOut, checkInFormatted, checkOutFormatted, calendarModalVisible,
-      hideModal, hideCalendarModal, showModal, showCalendarModal, lastPossibleCheckOut,
+      hideModal, hideCalendarModal, showModal, showCalendarModal,
+      lastPossibleCheckOut, fees,
     } = this.props;
 
     return (
@@ -79,12 +92,13 @@ class Widget extends React.Component {
           decreaseGuestCount={decreaseGuestCount}
         />
         <MainButton />
+        <NoCharge>{`You won't be charged yet`}</NoCharge>
         { (days && calendarModalVisible)
           && (
             <CalendarModal
               days={days}
               weekendPricing={weekendPricing}
-            lastPossibleCheckOut={lastPossibleCheckOut}
+              lastPossibleCheckOut={lastPossibleCheckOut}
               hideCalendarModal={hideCalendarModal}
               selectDate={selectDate}
               clearDates={clearDates}
@@ -92,6 +106,8 @@ class Widget extends React.Component {
               checkOut={checkOut}
             />
           )}
+        {fees.nights
+          && <Pricing fees={fees} />}
       </WidgetWrapper>
     );
   }
@@ -117,4 +133,6 @@ Widget.propTypes = {
   hideCalendarModal: PropTypes.func.isRequired,
   calendarModalVisible: PropTypes.bool.isRequired,
   lastPossibleCheckOut: PropTypes.instanceOf(Date),
+  cleaningFee: PropTypes.number,
+  fees: PropTypes.object,
 };

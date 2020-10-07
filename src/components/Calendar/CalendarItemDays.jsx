@@ -3,6 +3,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
+const DayCellWrapper = styled.div`
+  background: ${(props) => ((props.inBetween === 'inBetween' || (props.inBetween === 'selected' && props.inOrOut)) ? '#f7f7f7' : 'transparent')};
+  border-radius: 0;
+  border-radius: ${(props) => ((props.inOrOut === 'in') && '50% 0% 0% 50%')};
+  border-radius: ${(props) => ((props.inOrOut === 'out') && '0 50% 50% 0')};
+`;
+
 const DayCell = styled.div`
   font-family: 'Airbnb Cereal App Book', sans-serif;
   display: flex;
@@ -11,12 +18,13 @@ const DayCell = styled.div`
   font-size: 14px;
   line-height: 18px;
   color: rgb(34, 34, 34);
-  height: -webkit-fill-available;
+  height:-webkit-fill-available;
   justify-content: center;
   border-radius: 50%;
   width: -webkit-fill-available;
   &:hover {
     border: thin solid rgb(34,34,34);
+    background:white;
 }
 `;
 
@@ -24,6 +32,10 @@ const SelectedCheck = styled(DayCell)`
   background: black;
   color: white !important;
   border-radius: 50%;
+  &:hover {
+    border: thin solid white;
+    background:black;
+}
 `;
 
 const Available = styled.div`
@@ -37,6 +49,18 @@ const Available = styled.div`
 const Unavailable = styled(Available)`
   color: rgb(176, 176, 176);
   text-decoration: line-through;
+`;
+
+const InBetween = styled(Available)`
+  background: #f7f7f7;
+  height:-webkit-fill-available;
+  display: inline-flex;
+  justify-content: center;
+  &:hover {
+      border: thin solid black;
+      background:white;
+      border-radius:50%;
+  }
 `;
 
 const DateDisplay = styled.div`
@@ -70,10 +94,6 @@ class CalendarDayCell extends React.PureComponent {
     this.calcDayState();
   }
 
-  // componentDidUpdate() {
-  //   this.calcDayState();
-  // }
-
   calcDayState() {
     const { dayState } = this.state;
     const {
@@ -91,6 +111,8 @@ class CalendarDayCell extends React.PureComponent {
     } else if ((checkIn && thisCell.toUTCString() === checkIn.toUTCString())
       || (checkOut && thisCell.toUTCString() === checkOut.toUTCString())) {
       this.setState({ dayState: 'selected' });
+    } else if ((checkIn && checkOut) && (thisCell > checkIn) && (thisCell < checkOut)) {
+      this.setState({ dayState: 'inBetween' });
     } else if (dayInfo.booked === false && dayState !== 'selected') {
       this.setState({ dayState: 'available' });
     }
@@ -106,14 +128,25 @@ class CalendarDayCell extends React.PureComponent {
   }
 
   render() {
-    const { dayInfo, weekendPricing } = this.props;
+    const { dayInfo, weekendPricing, checkIn, checkOut } = this.props;
     const dateDisplay = dayInfo.date ? new Date(dayInfo.date).getDate() : null;
     const priceDisplay = dayInfo.price ? dayInfo.price : null;
     const { dayState } = this.state;
+    const thisCell = new Date(dayInfo.date);
+    let inOrOut = '';
+
+    if (checkOut) {
+      if (thisCell.toUTCString() === checkIn.toUTCString()) {
+        inOrOut = 'in';
+      } else if (thisCell.toUTCString() === checkOut.toUTCString()) {
+        inOrOut = 'out';
+      }
+    }
 
     return (
-      <DayCell cellState={dayState}>
-        { dayState === 'available'
+      <DayCellWrapper inBetween={dayState} inOrOut={inOrOut}>
+        <DayCell cellState={dayState}>
+          { dayState === 'available'
           && (
           <Available onClick={this.selectThisDate}>
             <DateDisplay>{dateDisplay}</DateDisplay>
@@ -126,13 +159,13 @@ class CalendarDayCell extends React.PureComponent {
                 )}
           </Available>
           )}
-        {
+          {
           (dayState === 'beforeToday' || dayState === 'booked')
           && (
             <Unavailable>{dateDisplay}</Unavailable>
           )
         }
-        {
+          {
           (dayState === 'selected')
           && (
             <SelectedCheck>
@@ -147,7 +180,22 @@ class CalendarDayCell extends React.PureComponent {
             </SelectedCheck>
           )
         }
-      </DayCell>
+          {dayState === 'inBetween'
+            && (
+              <InBetween onClick={this.selectThisDate}>
+                <DateDisplay>{dateDisplay}</DateDisplay>
+                { weekendPricing
+                  && (
+                    <PriceDisplay>
+                      $
+                      {priceDisplay}
+                    </PriceDisplay>
+                  )}
+              </InBetween>
+            )}
+
+        </DayCell>
+      </DayCellWrapper >
     );
   }
 }
