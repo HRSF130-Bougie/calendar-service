@@ -76,11 +76,15 @@ class CalendarDayCell extends React.PureComponent {
 
   calcDayState() {
     const { dayState } = this.state;
-    const { dayInfo, checkIn, checkOut } = this.props;
+    const {
+      dayInfo, checkIn, checkOut, lastPossibleCheckOut,
+    } = this.props;
     const today = new Date(Date.now());
     const thisCell = new Date(dayInfo.date);
 
-    if (thisCell <= today || (thisCell < checkIn && !checkOut)) {
+    if (thisCell <= today
+      || (thisCell < checkIn && !checkOut)
+      || (lastPossibleCheckOut !== null && !checkOut && (thisCell > lastPossibleCheckOut))) {
       this.setState({ dayState: 'beforeToday' });
     } else if (dayInfo.booked || dayInfo.booked === undefined) {
       this.setState({ dayState: 'booked' });
@@ -94,11 +98,11 @@ class CalendarDayCell extends React.PureComponent {
 
   selectThisDate() {
     const {
-      dayInfo, selectDate, checkIn, checkOut,
+      dayInfo, selectDate, monthIndex, dayIndex,
     } = this.props;
     const { dayState } = this.state;
     this.setState({ dayState: 'selected' });
-    selectDate(new Date(dayInfo.date));
+    selectDate(new Date(dayInfo.date), monthIndex, dayIndex);
   }
 
   render() {
@@ -111,8 +115,8 @@ class CalendarDayCell extends React.PureComponent {
       <DayCell cellState={dayState}>
         { dayState === 'available'
           && (
-            <Available onClick={this.selectThisDate}>
-              <DateDisplay>{dateDisplay}</DateDisplay>
+          <Available onClick={this.selectThisDate}>
+            <DateDisplay>{dateDisplay}</DateDisplay>
               { weekendPricing
                 && (
                   <PriceDisplay>
@@ -120,7 +124,7 @@ class CalendarDayCell extends React.PureComponent {
                     {priceDisplay}
                   </PriceDisplay>
                 )}
-            </Available>
+          </Available>
           )}
         {
           (dayState === 'beforeToday' || dayState === 'booked')
@@ -157,6 +161,9 @@ CalendarDayCell.propTypes = {
   selectDate: PropTypes.func.isRequired,
   checkIn: PropTypes.instanceOf(Date),
   checkOut: PropTypes.instanceOf(Date),
+  monthIndex: PropTypes.number.isRequired,
+  dayIndex: PropTypes.number.isRequired,
+  lastPossibleCheckOut: PropTypes.instanceOf(Date),
 };
 
 CalendarDayCell.defaultProps = {

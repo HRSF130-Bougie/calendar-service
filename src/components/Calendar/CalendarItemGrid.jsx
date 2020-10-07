@@ -14,7 +14,7 @@ const CalendarWrapper = styled.div`
   `;
 
 const CalendarItem = ({
-  month, weekendPricing, selectDate, checkIn, checkOut,
+  month, weekendPricing, selectDate, checkIn, checkOut, monthIndex, lastPossibleCheckOut,
 }) => {
   const startingDay = new Date(month[0].date);
 
@@ -29,17 +29,9 @@ const CalendarItem = ({
 
   fillMonthArray = fillMonthArray.fill(0, 0, startDayOfWeek);
 
-  const getLastCheckOutDay = () => {
-    if (checkIn) {
-      console.log(checkIn.toUTCString(), new Date(month[0].date).toUTCString());
-    }
-  };
-
-  getLastCheckOutDay();
-
   return (
     <CalendarWrapper>
-      {fillMonthArray.map((day) => (
+      {fillMonthArray.map((day, dayIndex) => (
         day._id !== undefined
           ? (
             <CalendarItemDays
@@ -49,6 +41,9 @@ const CalendarItem = ({
               selectDate={selectDate}
               checkIn={checkIn}
               checkOut={checkOut}
+              monthIndex={monthIndex}
+              dayIndex={dayIndex - startDayOfWeek}
+              lastPossibleCheckOut={lastPossibleCheckOut}
             />
           )
           : <div key={Math.random()} />
@@ -65,4 +60,6 @@ CalendarItem.propTypes = {
   selectDate: PropTypes.func.isRequired,
   checkIn: PropTypes.instanceOf(Date),
   checkOut: PropTypes.instanceOf(Date),
+  monthIndex: PropTypes.number.isRequired,
+  lastPossibleCheckOut: PropTypes.instanceOf(Date),
 };

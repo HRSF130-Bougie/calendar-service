@@ -39,6 +39,7 @@ class Booking extends React.Component {
       checkInFormatted: 'Add date',
       checkOutFormatted: 'Add date',
       calendarModalVisible: false,
+      lastPossibleCheckOut: new Date(2030, 12),
     };
 
     this.selectDate = this.selectDate.bind(this);
@@ -67,28 +68,17 @@ class Booking extends React.Component {
       .catch((error) => console.error('Fetch error: ', error));
   }
 
-  clearDates() {
-    this.setState({
-      checkIn: null,
-      checkOut: null,
-      checkInFormatted: 'Add date',
-      checkOutFormatted: 'Add date',
-    });
-  }
-
-  calcTotalGuests() {
-    const { adults, children } = this.state;
-    this.setState({ totalGuests: adults + children });
-  }
-
-  increaseGuestCount(event) {
-    event.preventDefault();
-    const targetName = event.target.name;
-
-    this.setState(
-      (prevState) => ({ [targetName]: prevState[targetName] + 1 }),
-      () => { this.calcTotalGuests(); },
-    );
+  getLastDayCheckOut(selectedMonthIndex, selectedDayIndex) {
+    const { days } = this.state;
+    for (let months = selectedMonthIndex; months < days.length; months += 1) {
+      for (let day = selectedDayIndex; day < days[months].length; day += 1) {
+        if (days[months][day].booked) {
+          console.log(days[months][day - 1].date);
+          return new Date(days[months][day - 1].date);
+        }
+      }
+    }
+    return null;
   }
 
   decreaseGuestCount(event) {
@@ -104,10 +94,7 @@ class Booking extends React.Component {
   // eslint-disable-next-line class-methods-use-this
   appendLeadingZeroes(n) {
     // TODO: Use a ternary when you want to return something
-    if (n <= 9) {
-      return `0${n}`;
-    }
-    return n;
+    return n <= 9 ? `0${n}` : n;
   }
 
   showModal(targetName, preFunct) {
@@ -124,25 +111,54 @@ class Booking extends React.Component {
     this.setState({ [targetName]: false });
   }
 
-  selectDate(date) {
+  increaseGuestCount(event) {
+    event.preventDefault();
+    const targetName = event.target.name;
+
+    this.setState(
+      (prevState) => ({ [targetName]: prevState[targetName] + 1 }),
+      () => { this.calcTotalGuests(); },
+    );
+  }
+
+  calcTotalGuests() {
+    const { adults, children } = this.state;
+    this.setState({ totalGuests: adults + children });
+  }
+
+  clearDates() {
+    this.setState({
+      checkIn: null,
+      checkOut: null,
+      checkInFormatted: 'Add date',
+      checkOutFormatted: 'Add date',
+      lastPossibleCheckOut: new Date(2030, 12),
+    });
+  }
+
+  selectDate(date, selectedMonthIndex, selectedDayIndex) {
     const formattedDate = `${this.appendLeadingZeroes(date.getMonth() + 1)}/${this.appendLeadingZeroes(date.getDate())}/${date.getFullYear()}`;
-    console.log(formattedDate);
     const { checkIn, checkOut } = this.state;
     if (!checkIn) {
       this.setState({
         checkIn: date,
         checkInFormatted: formattedDate,
-      });
+        checkInIndices: [selectedMonthIndex, selectedDayIndex],
+      }, () => this.setState({
+        lastPossibleCheckOut: this.getLastDayCheckOut(selectedMonthIndex, selectedDayIndex),
+      }));
     } else if (checkIn && !checkOut) {
       this.setState({
         checkOut: date,
         checkOutFormatted: formattedDate,
+        checkInIndices: [selectedMonthIndex, selectedDayIndex],
       }, () => this.hideModal(null, 'calendarModalVisible'));
     } else if (checkIn && checkOut) {
       this.clearDates();
       this.setState({
         checkIn: date,
         checkInFormatted: formattedDate,
+        checkInIndices: [selectedMonthIndex, selectedDayIndex],
       });
     }
   }
@@ -151,7 +167,7 @@ class Booking extends React.Component {
     const guestType = 'adults';
     const {
       adults, children, infants, totalGuests, days, weekendPricing, checkIn, checkOut,
-      checkInFormatted, checkOutFormatted, calendarModalVisible,
+      checkInFormatted, checkOutFormatted, calendarModalVisible, lastPossibleCheckOut,
     } = this.state;
     return (
       <OuterPage>
@@ -176,6 +192,7 @@ class Booking extends React.Component {
             hideModal={this.hideModal}
             hideCalendarModal={this.hideCalendarModal}
             calendarModalVisible={calendarModalVisible}
+            lastPossibleCheckOut={lastPossibleCheckOut}
           />
         </InnerPage>
       </OuterPage>

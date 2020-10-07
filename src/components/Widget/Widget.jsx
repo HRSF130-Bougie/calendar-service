@@ -41,10 +41,12 @@ class Widget extends React.Component {
 
   toggleGuestModal(event, bool) {
     // eslint-disable-next-line no-unused-expressions
-    // TODO: dont use ternary
-    bool !== undefined
-      ? this.setState({ guestModalVisible: bool })
-      : this.setState((prevState) => ({ guestModalVisible: !prevState.guestModalVisible }));
+
+    if (bool !== undefined) {
+      this.setState({ guestModalVisible: bool });
+    } else {
+      this.setState((prevState) => ({ guestModalVisible: !prevState.guestModalVisible }));
+    }
   }
 
   render() {
@@ -53,7 +55,7 @@ class Widget extends React.Component {
       guests, increaseGuestCount, decreaseGuestCount,
       days, weekendPricing, selectDate, clearDates,
       checkIn, checkOut, checkInFormatted, checkOutFormatted, calendarModalVisible,
-      hideModal, hideCalendarModal, showModal, showCalendarModal,
+      hideModal, hideCalendarModal, showModal, showCalendarModal, lastPossibleCheckOut,
     } = this.props;
 
     return (
@@ -80,9 +82,10 @@ class Widget extends React.Component {
         { (days && calendarModalVisible)
           && (
             <CalendarModal
-            days={days}
+              days={days}
               weekendPricing={weekendPricing}
-            hideCalendarModal={hideCalendarModal}
+            lastPossibleCheckOut={lastPossibleCheckOut}
+              hideCalendarModal={hideCalendarModal}
               selectDate={selectDate}
               clearDates={clearDates}
               checkIn={checkIn}
@@ -113,4 +116,5 @@ Widget.propTypes = {
   hideModal: PropTypes.func.isRequired,
   hideCalendarModal: PropTypes.func.isRequired,
   calendarModalVisible: PropTypes.bool.isRequired,
+  lastPossibleCheckOut: PropTypes.instanceOf(Date),
 };

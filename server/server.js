@@ -7,7 +7,7 @@ const orderRouter = require('./router.js');
 const db = require('../database/connectToDatabase.js');
 
 const app = express();
-const port = 3000;
+const port = 3002;
 
 app.use(bodyParser.json());
 

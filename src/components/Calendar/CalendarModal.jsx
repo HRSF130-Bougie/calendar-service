@@ -128,7 +128,7 @@ class CalendarModal extends React.PureComponent {
 
     const {
       days, weekendPricing, hideCalendarModal,
-      selectDate, clearDates, checkIn, checkOut,
+      selectDate, clearDates, checkIn, checkOut, lastPossibleCheckOut,
     } = this.props;
 
     const renderMonthName = (date) => {
@@ -137,8 +137,6 @@ class CalendarModal extends React.PureComponent {
     };
 
     return (
-      // calendarModalVisible
-      // &&
       (
         <CalendarPopUp>
           <CalendarHeaderRow>
@@ -167,7 +165,7 @@ class CalendarModal extends React.PureComponent {
 
           <CalendarGridRow>
             {
-              days.map((month) => (
+              days.map((month, monthIndex) => (
                 <CalendarItemGrid
                   key={Math.random()}
                   month={month}
@@ -175,6 +173,8 @@ class CalendarModal extends React.PureComponent {
                   selectDate={selectDate}
                   checkIn={checkIn}
                   checkOut={checkOut}
+                  monthIndex={monthIndex}
+                  lastPossibleCheckOut={lastPossibleCheckOut}
                 />
               ))
             }
@@ -201,4 +201,5 @@ CalendarModal.propTypes = {
   clearDates: PropTypes.func.isRequired,
   checkIn: PropTypes.instanceOf(Date),
   checkOut: PropTypes.instanceOf(Date),
+  lastPossibleCheckOut: PropTypes.instanceOf(Date),
 };
