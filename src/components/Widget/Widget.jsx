@@ -68,8 +68,10 @@ class Widget extends React.Component {
       days, weekendPricing, selectDate, clearDates,
       checkIn, checkOut, calendarModalVisible,
       hideModal, hideCalendarModal, showModal, showCalendarModal,
-      lastPossibleCheckOut, fees, appendLeadingZeroes
+      lastPossibleCheckOut, fees, appendLeadingZeroes,
     } = this.props;
+
+    const { nights } = fees;
 
     return (
       <WidgetWrapper>
@@ -105,6 +107,7 @@ class Widget extends React.Component {
               clearDates={clearDates}
               checkIn={checkIn}
               checkOut={checkOut}
+            nights={nights ? nights.length : 0}
             />
           )}
         {fees.nights

@@ -1,6 +1,7 @@
 /* eslint-disable react/require-default-props */
 import React from 'react';
 import PropTypes from 'prop-types';
+import dayjs from 'dayjs';
 import styled, { css } from 'styled-components';
 import Keyboard from '../../assets/svg/keyboard-regular.svg';
 
@@ -127,7 +128,7 @@ class CalendarModal extends React.PureComponent {
     const weekdays = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
 
     const {
-      days, weekendPricing, hideCalendarModal,
+      days, weekendPricing, hideCalendarModal, nights,
       selectDate, clearDates, checkIn, checkOut, lastPossibleCheckOut,
     } = this.props;
 
@@ -136,13 +137,20 @@ class CalendarModal extends React.PureComponent {
       return new Intl.DateTimeFormat('en-US', options).format(date);
     };
 
+    const formatMonthName = (date) => dayjs(date).format('MMM D, YYYY');
+
+    let selectDates = (checkIn && checkOut) ? `${nights - 1} nights` : 'Select Dates';
+    if (nights === 2) { selectDates = '1 night'; }
+
+    const selectDatesSubHeader = (checkIn && checkOut) ? `${formatMonthName(checkIn)} - ${formatMonthName(checkOut)}` : 'Entire house ∙ 1 bed ∙ 1 bath';
+
     return (
       (
         <CalendarPopUp>
           <CalendarHeaderRow>
             <CalendarHeaderRowLeft>
-              <SelectDates>Select dates</SelectDates>
-              <MinimumStay>Minimum stay: 2 nights</MinimumStay>
+              <SelectDates>{selectDates}</SelectDates>
+              <MinimumStay>{selectDatesSubHeader}</MinimumStay>
             </CalendarHeaderRowLeft>
           </CalendarHeaderRow>
 
@@ -202,4 +210,5 @@ CalendarModal.propTypes = {
   checkIn: PropTypes.instanceOf(Date),
   checkOut: PropTypes.instanceOf(Date),
   lastPossibleCheckOut: PropTypes.instanceOf(Date),
+  nights: PropTypes.number,
 };
