@@ -116,59 +116,52 @@ const AngleUp = styled.span`
   color: #484848;
 `;
 
-class WidgetDateGuest extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-    };
-  }
+const WidgetDateGuest = ({
+  toggleGuestModal, guestModalVisible, calendarModalVisible, guests,
+  checkIn, checkOut, showCalendarModal, appendLeadingZeroes,
+}) => {
+  let guestCount = '';
+  if (guests.totalGuests === 1) { guestCount = '1 guest'; } else { guestCount = `${guests.totalGuests} guests`; }
+  let infantCount = '';
+  if (guests.infants === 1) { infantCount = ', 1 infant'; } else if (guests.infants > 1) { infantCount = `, ${guests.infants} infants`; }
 
-  render() {
-    const {
-      toggleGuestModal, guestModalVisible, calendarModalVisible,
-      guests, checkInFormatted, checkOutFormatted, showCalendarModal,
-    } = this.props;
-    let guestCount = '';
-    if (guests.totalGuests === 1) { guestCount = '1 guest'; } else { guestCount = `${guests.totalGuests} guests`; }
-    let infantCount = '';
-    if (guests.infants === 1) { infantCount = ', 1 infant'; } else if (guests.infants > 1) { infantCount = `, ${guests.infants} infants`; }
+  const formatMMDDYYYY = (date) => `${appendLeadingZeroes(date.getMonth() + 1)}/${appendLeadingZeroes(date.getDate())}/${date.getFullYear()}`;
 
-    return (
-      <WidgetDateGuestWrapper>
-        <CheckInBox
-          onClick={() => showCalendarModal('calendarModalVisible', (e) => toggleGuestModal(e, false))}
-          calendarModalVisible={calendarModalVisible}
-        >
-          <DescriptionText>Check-in</DescriptionText>
-          <DisplayText>{checkInFormatted}</DisplayText>
-        </CheckInBox>
-        <CheckOutBox
-          onClick={() => showCalendarModal('calendarModalVisible', (e) => toggleGuestModal(e, false))}
-          calendarModalVisible={calendarModalVisible}
-        >
-          <DescriptionText>Check-out</DescriptionText>
-          <DisplayText>{checkOutFormatted}</DisplayText>
-        </CheckOutBox>
-        <GuestBox
-          onClick={toggleGuestModal}
-          focused={guestModalVisible}
-          guestModalVisible={guestModalVisible}
-        >
-          <div>
-            <DescriptionText>Guests</DescriptionText>
-            <GuestText>
-              {guestCount}
-              {infantCount}
-            </GuestText>
-          </div>
-          <div>
-            <AngleUp><FontAwesomeIcon icon={faAngleUp} size="2x" flip={guestModalVisible === true ? 'vertical' : null} /></AngleUp>
-          </div>
-        </GuestBox>
-      </WidgetDateGuestWrapper>
-    );
-  }
-}
+  return (
+    <WidgetDateGuestWrapper>
+      <CheckInBox
+        onClick={() => showCalendarModal('calendarModalVisible', (e) => toggleGuestModal(e, false))}
+        calendarModalVisible={calendarModalVisible}
+      >
+        <DescriptionText>Check-in</DescriptionText>
+        <DisplayText>{checkIn ? formatMMDDYYYY(checkIn) : 'Add date'}</DisplayText>
+      </CheckInBox>
+      <CheckOutBox
+        onClick={() => showCalendarModal('calendarModalVisible', (e) => toggleGuestModal(e, false))}
+        calendarModalVisible={calendarModalVisible}
+      >
+        <DescriptionText>Check-out</DescriptionText>
+        <DisplayText>{checkOut ? formatMMDDYYYY(checkOut) : 'Add date'}</DisplayText>
+      </CheckOutBox>
+      <GuestBox
+        onClick={toggleGuestModal}
+        focused={guestModalVisible}
+        guestModalVisible={guestModalVisible}
+      >
+        <div>
+          <DescriptionText>Guests</DescriptionText>
+          <GuestText>
+            {guestCount}
+            {infantCount}
+          </GuestText>
+        </div>
+        <div>
+          <AngleUp><FontAwesomeIcon icon={faAngleUp} size="2x" flip={guestModalVisible === true ? 'vertical' : null} /></AngleUp>
+        </div>
+      </GuestBox>
+    </WidgetDateGuestWrapper>
+  );
+};
 
 export default WidgetDateGuest;
 
@@ -178,6 +171,7 @@ WidgetDateGuest.propTypes = {
   calendarModalVisible: PropTypes.bool.isRequired,
   guests: PropTypes.objectOf(PropTypes.number).isRequired,
   showCalendarModal: PropTypes.func.isRequired,
-  checkInFormatted: PropTypes.string.isRequired,
-  checkOutFormatted: PropTypes.string.isRequired,
+  checkIn: PropTypes.instanceOf(Date),
+  checkOut: PropTypes.instanceOf(Date),
+  appendLeadingZeroes: PropTypes.func.isRequired,
 };
