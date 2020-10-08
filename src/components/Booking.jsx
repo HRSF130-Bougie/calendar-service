@@ -35,8 +35,6 @@ class Booking extends React.Component {
       weekendPricing: false,
       checkIn: null,
       checkOut: null,
-      checkInFormatted: 'Add date',
-      checkOutFormatted: 'Add date',
       calendarModalVisible: false,
       lastPossibleCheckOut: new Date(2030, 12),
       fees: {},
@@ -56,7 +54,7 @@ class Booking extends React.Component {
     const listing = Math.floor((Math.random() * 100) + 1);
     this.setState({ currentListing: listing });
 
-    fetch(`http://localhost:3002/api/listing/${listing}`)
+    fetch(`/api/listing/${listing}`)
       .then((response) => response.json())
       .then((data) => {
         const {
@@ -167,26 +165,21 @@ class Booking extends React.Component {
     this.setState({
       checkIn: null,
       checkOut: null,
-      checkInFormatted: 'Add date',
-      checkOutFormatted: 'Add date',
       lastPossibleCheckOut: new Date(2030, 12),
     });
   }
 
   selectDate(date, selectedMonthIndex, selectedDayIndex) {
-    const formattedDate = `${this.appendLeadingZeroes(date.getMonth() + 1)}/${this.appendLeadingZeroes(date.getDate())}/${date.getFullYear()}`;
     const { checkIn, checkOut } = this.state;
     if (!checkIn) {
       this.setState({
         checkIn: date,
-        checkInFormatted: formattedDate,
       }, () => this.setState({
         lastPossibleCheckOut: this.getLastDayCheckOut(selectedMonthIndex, selectedDayIndex),
       }));
     } else if (checkIn && !checkOut) {
       this.setState({
         checkOut: date,
-        checkOutFormatted: formattedDate,
       }, () => {
         this.hideModal(null, 'calendarModalVisible');
         this.getSelectedDays(selectedMonthIndex, selectedDayIndex);
@@ -195,7 +188,6 @@ class Booking extends React.Component {
       this.clearDates();
       this.setState({
         checkIn: date,
-        checkInFormatted: formattedDate,
         lastPossibleCheckOut: this.getLastDayCheckOut(selectedMonthIndex, selectedDayIndex),
       });
     }
@@ -206,7 +198,7 @@ class Booking extends React.Component {
     const guestType = 'adults';
     const {
       adults, children, infants, totalGuests, days, weekendPricing, checkIn, checkOut,
-      checkInFormatted, checkOutFormatted, calendarModalVisible, lastPossibleCheckOut,
+      calendarModalVisible, lastPossibleCheckOut,
       fees,
     } = this.state;
     return (
@@ -224,8 +216,6 @@ class Booking extends React.Component {
             selectDate={this.selectDate}
             checkIn={checkIn}
             checkOut={checkOut}
-            checkInFormatted={checkInFormatted}
-            checkOutFormatted={checkOutFormatted}
             clearDates={this.clearDates}
             showModal={this.showModal}
             showCalendarModal={this.showCalendarModal}
@@ -233,6 +223,7 @@ class Booking extends React.Component {
             hideCalendarModal={this.hideCalendarModal}
             calendarModalVisible={calendarModalVisible}
             lastPossibleCheckOut={lastPossibleCheckOut}
+            appendLeadingZeroes={this.appendLeadingZeroes}
             fees={fees}
           />
         </InnerPage>

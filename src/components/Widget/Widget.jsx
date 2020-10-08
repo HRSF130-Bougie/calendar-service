@@ -66,10 +66,12 @@ class Widget extends React.Component {
     const {
       guests, increaseGuestCount, decreaseGuestCount,
       days, weekendPricing, selectDate, clearDates,
-      checkIn, checkOut, checkInFormatted, checkOutFormatted, calendarModalVisible,
+      checkIn, checkOut, calendarModalVisible,
       hideModal, hideCalendarModal, showModal, showCalendarModal,
-      lastPossibleCheckOut, fees,
+      lastPossibleCheckOut, fees, appendLeadingZeroes,
     } = this.props;
+
+    const { nights } = fees;
 
     return (
       <WidgetWrapper>
@@ -80,8 +82,9 @@ class Widget extends React.Component {
           calendarModalVisible={calendarModalVisible}
           guests={guests}
           showCalendarModal={showCalendarModal}
-          checkInFormatted={checkInFormatted}
-          checkOutFormatted={checkOutFormatted}
+          appendLeadingZeroes={appendLeadingZeroes}
+          checkIn={checkIn}
+          checkOut={checkOut}
         />
         <GuestModal
           name="guestModalVisible"
@@ -104,6 +107,7 @@ class Widget extends React.Component {
               clearDates={clearDates}
               checkIn={checkIn}
               checkOut={checkOut}
+            nights={nights ? nights.length : 0}
             />
           )}
         {fees.nights
@@ -125,13 +129,12 @@ Widget.propTypes = {
   clearDates: PropTypes.func.isRequired,
   checkIn: PropTypes.instanceOf(Date),
   checkOut: PropTypes.instanceOf(Date),
-  checkInFormatted: PropTypes.string,
-  checkOutFormatted: PropTypes.string,
   showModal: PropTypes.func.isRequired,
   showCalendarModal: PropTypes.func.isRequired,
   hideModal: PropTypes.func.isRequired,
   hideCalendarModal: PropTypes.func.isRequired,
   calendarModalVisible: PropTypes.bool.isRequired,
   lastPossibleCheckOut: PropTypes.instanceOf(Date),
+  appendLeadingZeroes: PropTypes.func,
   fees: PropTypes.object,
 };
