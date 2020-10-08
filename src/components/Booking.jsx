@@ -54,7 +54,7 @@ class Booking extends React.Component {
     const listing = Math.floor((Math.random() * 100) + 1);
     this.setState({ currentListing: listing });
 
-    fetch(`/api/listing/${listing}`)
+    fetch(`/api/booking/listing/${listing}`)
       .then((response) => response.json())
       .then((data) => {
         const {
