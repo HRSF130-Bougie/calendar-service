@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import dayjs from 'dayjs';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import Keyboard from '../../assets/svg/keyboard-regular.svg';
 
 import CalendarItemWeek from './CalendarItemWeek';
@@ -19,14 +19,12 @@ const CalendarPopUp = styled.div`
   padding: 24px 32px 16px;
   margin: auto;
   position: absolute;
-  top: 100px;
-  right: 74px;
+  top: 102px;
+  right: 275px;
   width: 661px;
   z-index: 1;
   min-height: 460px;
   height: auto;
-  width: 597px;
-  ${'' /* background: rgb(255, 255, 255); */}
   border-radius: 16px;
   background: white;
 `;

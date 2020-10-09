@@ -55,7 +55,9 @@ const PlusMinusButton = styled.button`
     outline: none;
     background: rgb(255, 255, 255) none;
     border-radius: 50%;
-    padding-bottom: 2px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 `;
 

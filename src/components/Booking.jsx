@@ -7,17 +7,16 @@ import Widget from './Widget/Widget';
 
 const OuterPage = styled.div`
   width:100%;
-  max-width: 1280px;
+  min-width: 700px;
   position: relative ;
-  min-height: 100vh ;
+  min-height: 100vh;
 `;
 
 const InnerPage = styled.div`
   display: grid;
-  grid-template-areas: "space widget"
-                      "calendar calendar";
-  grid-template-columns: 1fr 500px;
-  grid-template-rows:auto auto;
+  grid-template-areas: "space widget";
+  grid-template-columns: 1fr 700px;
+  grid-template-rows:auto;
 `;
 
 class Booking extends React.Component {
