@@ -10,4 +10,8 @@ RUN yarn install --network-timeout 1000000
 
 COPY . /app
 
+RUN bash -l -c 'yarn run build'
+
 EXPOSE 3002
+
+CMD ["yarn", "start"]
