@@ -1,13 +1,13 @@
 FROM node:12.19.0-slim
 
-WORKDIR /usr/src/app
-COPY package.json .
-COPY yarn.lock .
+RUN mkdir -p /app
+
+WORKDIR /app
+COPY package.json /app
+COPY yarn.lock /app
 
 RUN yarn install --network-timeout 1000000
 
-COPY . .
+COPY . /app
 
 EXPOSE 3002
-
-CMD ["yarn", "build", "start"]
