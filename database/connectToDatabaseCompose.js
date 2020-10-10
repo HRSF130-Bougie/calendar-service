@@ -16,9 +16,9 @@ const { connection } = mongoose;
 connection.on('error', console.error.bind(console, 'connection error:'));
 connection.once('open', () => {
   // eslint-disable-next-line no-console
+  seed();
   console.log(`MongoDB database connection established successfully at ${connectionString}`);
 });
 
-seed();
 
 module.exports = connection;

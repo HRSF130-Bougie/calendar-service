@@ -71,6 +71,6 @@ const reSeed = async () => {
   }
 };
 
-reSeed();
+//reSeed();
 
 module.exports = reSeed;
