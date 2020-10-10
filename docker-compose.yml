@@ -2,16 +2,15 @@ version: '3'
 
 services:
     calendar:
-       container_name: elanadev/calendar-service
-       image: elanadev/calendar-service:latest
-       restart: always
-       build: ./
-       ports:
-       - '3002:3002'
-
+        container_name: elanadev/calendar-service-live
+        image: elanadev/calendar-service-live:latest
+        build: ./
+        restart: always
         # depends_on:
         #   - 'database'
-          #     command: sh -c "yarn start"
+        ports:
+          - '80:3002'
+        # command: sh -c "yarn start"
 
-          # database:
-            #   image: mongo:latest
+    database:
+      image: mongo:latest
