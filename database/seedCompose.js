@@ -2,7 +2,7 @@
 const dayjs = require('dayjs');
 const faker = require('faker');
 // eslint-disable-next-line no-unused-vars
-const db = require('./connectToDatabaseDocker.js');
+// const db = require('./connectToDatabaseCompose.js');
 const schema = require('./schema.js');
 
 const reSeed = async () => {

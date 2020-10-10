@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const connectionString = 'mongodb://localhost:27017/fec';
+const connectionString = 'mongodb://172.17.0.3:27017/fec';
 
 mongoose.connect(connectionString, {
   useNewUrlParser: true,
@@ -15,7 +15,7 @@ const { connection } = mongoose;
 connection.on('error', console.error.bind(console, 'connection error:'));
 connection.once('open', () => {
   // eslint-disable-next-line no-console
-  console.log(`MongoDB database connection established successfully at ${connectionString}`);
+  console.log(`MongoDB database connection established successfully at ${connectionString}!`);
 });
 
 module.exports = connection;

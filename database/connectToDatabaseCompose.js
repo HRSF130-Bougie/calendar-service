@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
+const seed = require('./seedCompose');
 
-const connectionString = 'mongodb://localhost:27017/fec';
+const connectionString = 'mongodb://database/fec';
 
 mongoose.connect(connectionString, {
   useNewUrlParser: true,
@@ -17,5 +18,7 @@ connection.once('open', () => {
   // eslint-disable-next-line no-console
   console.log(`MongoDB database connection established successfully at ${connectionString}`);
 });
+
+seed();
 
 module.exports = connection;

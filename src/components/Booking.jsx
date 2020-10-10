@@ -50,10 +50,12 @@ class Booking extends React.Component {
   }
 
   componentDidMount() {
+    const windowId = window.location.href.split('/')[4];
     const listing = Math.floor((Math.random() * 100) + 1);
-    this.setState({ currentListing: listing });
+    const param = windowId || listing;
+    this.setState({ currentListing: param });
 
-    fetch(`/api/booking/listing/${listing}`)
+    fetch(`/api/booking/listing/${param}`)
       .then((response) => response.json())
       .then((data) => {
         const {

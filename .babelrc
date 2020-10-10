@@ -11,6 +11,5 @@
         "ssr": false
       }
     ],
-    "react-hot-loader/babel"
   ]
 }
