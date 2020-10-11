@@ -15,6 +15,7 @@ const reSeed = async () => {
       const randomPrice = Math.floor(faker.random.number({ min: 75, max: 450 }));
       const weekendPricing = faker.random.boolean();
 
+      // eslint-disable-next-line func-names
       const getLastDay = function (yy, mm) {
         return new Date(yy, mm + 1, 0).getDate();
       };
@@ -71,6 +72,6 @@ const reSeed = async () => {
   }
 };
 
-//reSeed();
+// reSeed();
 
 module.exports = reSeed;

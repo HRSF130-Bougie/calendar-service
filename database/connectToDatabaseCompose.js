@@ -12,10 +12,8 @@ mongoose.connect(connectionString, {
 
 const { connection } = mongoose;
 
-// eslint-disable-next-line no-console
 connection.on('error', console.error.bind(console, 'connection error:'));
 connection.once('open', () => {
-  // eslint-disable-next-line no-console
   seed();
   console.log(`MongoDB database connection established successfully at ${connectionString}`);
 });
