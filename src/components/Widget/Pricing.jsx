@@ -73,7 +73,7 @@ const currencyFormat = (num) => `$${num.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d
 
 const Pricing = ({ fees }) => (
   <PriceWrap>
-    <NoCharge>You won't be charged yet</NoCharge>
+    <NoCharge>{`You won't be charged yet`}</NoCharge>
     <PriceRow>
       <PriceDescription>{`${currencyFormat(averagePerNight(fees.basePrice, fees.nights.length))} x ${fees.nights.length} nights`}</PriceDescription>
       <PriceFigure>{`${currencyFormat(fees.basePrice)}`}</PriceFigure>
