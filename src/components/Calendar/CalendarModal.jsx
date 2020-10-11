@@ -3,6 +3,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import dayjs from 'dayjs';
 import styled from 'styled-components';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faAngleLeft } from '@fortawesome/free-solid-svg-icons';
 import Keyboard from '../../assets/svg/keyboard-regular.svg';
 
 import CalendarItemWeek from './CalendarItemWeek';
@@ -11,7 +13,7 @@ import ModalCloseButton from '../ModalCloseButton';
 
 const CalendarPopUp = styled.div`
   grid-area: calendar;
-  box-sizing: box-border;
+  box-sizing: content-box;
   box-shadow: rgba(0, 0, 0, 0.2) 0px 6px 20px;
   display: grid;
   grid-template-rows: repeat(5, auto);
@@ -19,8 +21,8 @@ const CalendarPopUp = styled.div`
   padding: 24px 32px 16px;
   margin: auto;
   position: absolute;
-  top: 102px;
-  right: 275px;
+  top: 54px;
+  right: -5px;
   width: 597px;
   z-index: 1;
   min-height: 460px;
@@ -54,26 +56,63 @@ const MinimumStay = styled.div`
   line-height:18px;
 `;
 
-const MonthHeaderRow = styled.div`
+const CalendarGridRow = styled.div`
   display: flex;
   flex-flow: row;
   width: 100%;
+  scroll-snap-type: x mandatory;
+  transition: transform .5s;
+`;
+
+const CalendarWindow = styled.div`
+  display: flex;
+  flex-flow: row;
+  border: thin transparent solid;
+  width: 609px;
+  height: auto;
+  overflow: hidden;
+`;
+
+const ArrowWindow = styled.div`
+  display: grid;
+  width: 620px;
+  grid-templates-columns: "auto 1fr auto"
+`;
+
+const MonthWindow = styled(CalendarWindow)`
+  grid-column:2;
+  width: 510px;
+
+`;
+
+const LeftArrow = styled.button`
+  cursor: ${(props) => (props.xTransMonth === 0 ? 'not-allowed' : 'pointer')};
+  grid-column: 1;
+  font-size: 18px;
+  align-self: center;
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  background: transparent;
+  outline:none;
+  &:hover {
+    background: rgb(247,247,247);
+  }
+`;
+
+const RightArrow = styled(LeftArrow)`
+  grid-column: 3;
 `;
 
 const MonthHeaderTitle = styled.div`
   font-family: 'Airbnb Cereal App Medium', sans-serif;
   font-size: 16px !important;
   line-height: 20px margin!important;
-  width: 294px;
+  min-width: 185px;
   align-self: center;
   text-align: center;
   padding: 26px 0px;
-  margin-left: -10px;
-  margin-right: 40px;
-`;
-
-const CalendarGridRow = styled(MonthHeaderRow)`
-  background: transparent;
+  margin-right: 136px;
 `;
 
 const FooterRow = styled.div`
@@ -84,7 +123,10 @@ const FooterRow = styled.div`
   grid-template-columns: auto 1fr auto auto;
 `;
 
-const WeekdayRow = styled(MonthHeaderRow)`
+const WeekdayRow = styled.div`
+  display: flex;
+  flex-flow: row;
+  width: 100%;
 `;
 
 const PriceWarning = styled.div`
@@ -119,7 +161,20 @@ class CalendarModal extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
+      // renderedMonths: [0, 1, 2],
+      xTransMonth: 0,
+      xTransGrid: 0,
     };
+
+    this.moveRight = this.moveRight.bind(this);
+  }
+
+  moveRight() {
+    this.setState(
+      (prevState) => ({
+        xTransMonth: prevState.xTransMonth - 322,
+        xTransGrid: prevState.xTransGrid - 324,
+      }))
   }
 
   render() {
@@ -142,7 +197,17 @@ class CalendarModal extends React.PureComponent {
 
     const selectDatesSubHeader = (checkIn && checkOut) ? `${formatMonthName(checkIn)} - ${formatMonthName(checkOut)}` : 'Entire house ∙ 1 bed ∙ 1 bath';
 
+    const { xTransMonth, xTransGrid } = this.state;
+    const slideMonth = {
+      transform: `translate(${xTransMonth}px)`,
+    };
+
+    const slideGrid = {
+      transform: `translate(${xTransGrid}px)`,
+    };
+
     return (
+
       (
         <CalendarPopUp>
           <CalendarHeaderRow>
@@ -152,8 +217,11 @@ class CalendarModal extends React.PureComponent {
             </CalendarHeaderRowLeft>
           </CalendarHeaderRow>
 
-          <MonthHeaderRow>
-            {
+          <ArrowWindow>
+            <LeftArrow xTrans={xTransMonth}><FontAwesomeIcon icon={faAngleLeft} /></LeftArrow>
+            <MonthWindow>
+              <CalendarGridRow style={slideMonth}>
+                {
               days.map((month) => (
                 <MonthHeaderTitle key={Math.random()}>
                   {renderMonthName(new Date(month[0].date))}
@@ -162,15 +230,19 @@ class CalendarModal extends React.PureComponent {
                 </MonthHeaderTitle>
               ))
             }
-          </MonthHeaderRow>
+              </CalendarGridRow>
+            </MonthWindow>
+            <RightArrow onClick={this.moveRight}><FontAwesomeIcon icon={faAngleLeft} flip="horizontal" /></RightArrow>
+          </ArrowWindow>
 
           <WeekdayRow>
             <CalendarItemWeek weekdays={weekdays} />
             <CalendarItemWeek weekdays={weekdays} />
           </WeekdayRow>
 
-          <CalendarGridRow>
-            {
+          <CalendarWindow>
+            <CalendarGridRow style={slideGrid}>
+              {
               days.map((month, monthIndex) => (
                 <CalendarItemGrid
                   key={Math.random()}
@@ -183,8 +255,10 @@ class CalendarModal extends React.PureComponent {
                   lastPossibleCheckOut={lastPossibleCheckOut}
                 />
               ))
-            }
-          </CalendarGridRow>
+              }
+            </CalendarGridRow>
+          </CalendarWindow>
+
           <FooterRow>
             <KeyboardOuter><KeyboardInner><Keyboard /></KeyboardInner></KeyboardOuter>
             <PriceWarning>Prices on calendar do not include taxes and fees</PriceWarning>

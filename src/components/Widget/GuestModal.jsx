@@ -22,7 +22,7 @@ const GuestModalInnerWrapper = styled.div`
   padding: 16px;
   position: absolute;
   text-align: left;
-  z-index: 999;
+  z-index: 50;
   right: 0px;
   width: 100%;
   min-width: 280px;

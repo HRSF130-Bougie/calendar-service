@@ -48,9 +48,6 @@ const config = {
       '.jsx',
     ],
   },
-  devServer: {
-    contentBase: './dist',
-  },
 };
 
 module.exports = config;

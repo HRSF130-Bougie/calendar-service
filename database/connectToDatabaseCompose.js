@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const mongoose = require('mongoose');
 const seed = require('./seedCompose');
 
@@ -17,6 +18,5 @@ connection.once('open', () => {
   seed();
   console.log(`MongoDB database connection established successfully at ${connectionString}`);
 });
-
 
 module.exports = connection;

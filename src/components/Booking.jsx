@@ -5,19 +5,19 @@ import styled from 'styled-components';
 import GlobalFonts from '../assets/fonts/GlobalFonts';
 import Widget from './Widget/Widget';
 
-const OuterPage = styled.div`
-  width:100%;
-  min-width: 700px;
-  position: relative ;
-  min-height: 100vh;
-`;
+// const OuterPage = styled.div`
+//   width:100%;
+//   min-width: 300px;
+//   position: relative ;
+//   min-height: 100vh;
+// `;
 
-const InnerPage = styled.div`
-  display: grid;
-  grid-template-areas: "space widget";
-  grid-template-columns: 1fr 700px;
-  grid-template-rows:auto;
-`;
+// const InnerPage = styled.div`
+//   display: grid;
+//   grid-template-areas: "space widget";
+//   grid-template-columns: 1fr 700px;
+//   grid-template-rows:auto;
+// `;
 
 class Booking extends React.Component {
   constructor() {
@@ -34,7 +34,7 @@ class Booking extends React.Component {
       weekendPricing: false,
       checkIn: null,
       checkOut: null,
-      calendarModalVisible: false,
+      calendarModalVisible: true,
       lastPossibleCheckOut: new Date(2030, 12),
       fees: {},
     };
@@ -203,32 +203,32 @@ class Booking extends React.Component {
       fees,
     } = this.state;
     return (
-      <OuterPage>
+      // <OuterPage>
+      <>
         <GlobalFonts />
-        <InnerPage>
-          <Widget
-            guests={{
-              adults, children, infants, totalGuests,
-            }}
-            increaseGuestCount={this.increaseGuestCount}
-            decreaseGuestCount={this.decreaseGuestCount}
-            weekendPricing={weekendPricing}
-            days={days}
-            selectDate={this.selectDate}
-            checkIn={checkIn}
-            checkOut={checkOut}
-            clearDates={this.clearDates}
-            showModal={this.showModal}
-            showCalendarModal={this.showCalendarModal}
-            hideModal={this.hideModal}
-            hideCalendarModal={this.hideCalendarModal}
-            calendarModalVisible={calendarModalVisible}
-            lastPossibleCheckOut={lastPossibleCheckOut}
-            appendLeadingZeroes={this.appendLeadingZeroes}
-            fees={fees}
-          />
-        </InnerPage>
-      </OuterPage>
+        <Widget
+          guests={{
+            adults, children, infants, totalGuests,
+          }}
+          increaseGuestCount={this.increaseGuestCount}
+          decreaseGuestCount={this.decreaseGuestCount}
+          weekendPricing={weekendPricing}
+          days={days}
+          selectDate={this.selectDate}
+          checkIn={checkIn}
+          checkOut={checkOut}
+          clearDates={this.clearDates}
+          showModal={this.showModal}
+          showCalendarModal={this.showCalendarModal}
+          hideModal={this.hideModal}
+          hideCalendarModal={this.hideCalendarModal}
+          calendarModalVisible={calendarModalVisible}
+          lastPossibleCheckOut={lastPossibleCheckOut}
+          appendLeadingZeroes={this.appendLeadingZeroes}
+          fees={fees}
+        />
+      </>
+      // </OuterPage>
     );
   }
 }
