@@ -10,7 +10,6 @@ import CalendarModal from '../Calendar/CalendarModal';
 import Pricing from './Pricing';
 
 const WidgetWrapper = styled.div`
-  float:right;
   position: relative;
   box-sizing: border-box;
   -webkit-box-sizing: border-box;
@@ -21,7 +20,7 @@ const WidgetWrapper = styled.div`
   border-radius: 12px;
   padding: 24px;
   box-shadow: rgba(0, 0, 0, 0.12) 0px 6px 16px;
-  box-sizing: content-box;
+  margin: auto;
 `;
 
 const NoCharge = styled.div`

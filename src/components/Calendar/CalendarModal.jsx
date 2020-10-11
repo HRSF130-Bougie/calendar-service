@@ -3,8 +3,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import dayjs from 'dayjs';
 import styled from 'styled-components';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faAngleLeft } from '@fortawesome/free-solid-svg-icons';
 import Keyboard from '../../assets/svg/keyboard-regular.svg';
-import leftarrow from '../../assets/png/leftcircle.png';
 
 import CalendarItemWeek from './CalendarItemWeek';
 import CalendarItemGrid from './CalendarItemGrid';
@@ -12,7 +13,7 @@ import ModalCloseButton from '../ModalCloseButton';
 
 const CalendarPopUp = styled.div`
   grid-area: calendar;
-  box-sizing: box-border;
+  box-sizing: content-box;
   box-shadow: rgba(0, 0, 0, 0.2) 0px 6px 20px;
   display: grid;
   grid-template-rows: repeat(5, auto);
@@ -59,18 +60,17 @@ const CalendarGridRow = styled.div`
   display: flex;
   flex-flow: row;
   width: 100%;
+  scroll-snap-type: x mandatory;
+  transition: transform .5s;
 `;
 
-// const CalendarGridRow = styled(MonthHeaderRow)`
-//   background: transparent;
-// `;
 const CalendarWindow = styled.div`
   display: flex;
   flex-flow: row;
-  border: thick blue solid;
-  width: 622px;
+  border: thin transparent solid;
+  width: 609px;
   height: auto;
-  overflow: scroll;
+  overflow: hidden;
 `;
 
 const ArrowWindow = styled.div`
@@ -81,26 +81,38 @@ const ArrowWindow = styled.div`
 
 const MonthWindow = styled(CalendarWindow)`
   grid-column:2;
-  width: 571px;
+  width: 510px;
+
 `;
 
-const LeftArrow = styled.div`
+const LeftArrow = styled.button`
+  cursor: ${(props) => (props.xTransMonth === 0 ? 'not-allowed' : 'pointer')};
   grid-column: 1;
-  width: 25px;
-  height: 25px;
+  font-size: 18px;
   align-self: center;
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  background: transparent;
+  outline:none;
+  &:hover {
+    background: rgb(247,247,247);
+  }
+`;
+
+const RightArrow = styled(LeftArrow)`
+  grid-column: 3;
 `;
 
 const MonthHeaderTitle = styled.div`
   font-family: 'Airbnb Cereal App Medium', sans-serif;
   font-size: 16px !important;
   line-height: 20px margin!important;
-  min-width: 294px;
+  min-width: 185px;
   align-self: center;
   text-align: center;
   padding: 26px 0px;
-  margin-left: -10px;
-  margin-right: 40px;
+  margin-right: 136px;
 `;
 
 const FooterRow = styled.div`
@@ -149,7 +161,20 @@ class CalendarModal extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
+      // renderedMonths: [0, 1, 2],
+      xTransMonth: 0,
+      xTransGrid: 0,
     };
+
+    this.moveRight = this.moveRight.bind(this);
+  }
+
+  moveRight() {
+    this.setState(
+      (prevState) => ({
+        xTransMonth: prevState.xTransMonth - 322,
+        xTransGrid: prevState.xTransGrid - 324,
+      }))
   }
 
   render() {
@@ -172,7 +197,17 @@ class CalendarModal extends React.PureComponent {
 
     const selectDatesSubHeader = (checkIn && checkOut) ? `${formatMonthName(checkIn)} - ${formatMonthName(checkOut)}` : 'Entire house ∙ 1 bed ∙ 1 bath';
 
+    const { xTransMonth, xTransGrid } = this.state;
+    const slideMonth = {
+      transform: `translate(${xTransMonth}px)`,
+    };
+
+    const slideGrid = {
+      transform: `translate(${xTransGrid}px)`,
+    };
+
     return (
+
       (
         <CalendarPopUp>
           <CalendarHeaderRow>
@@ -183,9 +218,9 @@ class CalendarModal extends React.PureComponent {
           </CalendarHeaderRow>
 
           <ArrowWindow>
-            <LeftArrow><img src={leftarrow} /></LeftArrow>
+            <LeftArrow xTrans={xTransMonth}><FontAwesomeIcon icon={faAngleLeft} /></LeftArrow>
             <MonthWindow>
-              <CalendarGridRow>
+              <CalendarGridRow style={slideMonth}>
                 {
               days.map((month) => (
                 <MonthHeaderTitle key={Math.random()}>
@@ -197,7 +232,8 @@ class CalendarModal extends React.PureComponent {
             }
               </CalendarGridRow>
             </MonthWindow>
-          </ArrowWindow >
+            <RightArrow onClick={this.moveRight}><FontAwesomeIcon icon={faAngleLeft} flip="horizontal" /></RightArrow>
+          </ArrowWindow>
 
           <WeekdayRow>
             <CalendarItemWeek weekdays={weekdays} />
@@ -205,7 +241,7 @@ class CalendarModal extends React.PureComponent {
           </WeekdayRow>
 
           <CalendarWindow>
-            <CalendarGridRow>
+            <CalendarGridRow style={slideGrid}>
               {
               days.map((month, monthIndex) => (
                 <CalendarItemGrid

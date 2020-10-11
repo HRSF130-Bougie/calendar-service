@@ -34,7 +34,7 @@ class Booking extends React.Component {
       weekendPricing: false,
       checkIn: null,
       checkOut: null,
-      calendarModalVisible: false,
+      calendarModalVisible: true,
       lastPossibleCheckOut: new Date(2030, 12),
       fees: {},
     };
@@ -206,27 +206,27 @@ class Booking extends React.Component {
       // <OuterPage>
       <>
         <GlobalFonts />
-          <Widget
-            guests={{
-              adults, children, infants, totalGuests,
-            }}
-            increaseGuestCount={this.increaseGuestCount}
-            decreaseGuestCount={this.decreaseGuestCount}
-            weekendPricing={weekendPricing}
-            days={days}
-            selectDate={this.selectDate}
-            checkIn={checkIn}
-            checkOut={checkOut}
-            clearDates={this.clearDates}
-            showModal={this.showModal}
-            showCalendarModal={this.showCalendarModal}
-            hideModal={this.hideModal}
-            hideCalendarModal={this.hideCalendarModal}
-            calendarModalVisible={calendarModalVisible}
-            lastPossibleCheckOut={lastPossibleCheckOut}
-            appendLeadingZeroes={this.appendLeadingZeroes}
-            fees={fees}
-          />
+        <Widget
+          guests={{
+            adults, children, infants, totalGuests,
+          }}
+          increaseGuestCount={this.increaseGuestCount}
+          decreaseGuestCount={this.decreaseGuestCount}
+          weekendPricing={weekendPricing}
+          days={days}
+          selectDate={this.selectDate}
+          checkIn={checkIn}
+          checkOut={checkOut}
+          clearDates={this.clearDates}
+          showModal={this.showModal}
+          showCalendarModal={this.showCalendarModal}
+          hideModal={this.hideModal}
+          hideCalendarModal={this.hideCalendarModal}
+          calendarModalVisible={calendarModalVisible}
+          lastPossibleCheckOut={lastPossibleCheckOut}
+          appendLeadingZeroes={this.appendLeadingZeroes}
+          fees={fees}
+        />
       </>
       // </OuterPage>
     );

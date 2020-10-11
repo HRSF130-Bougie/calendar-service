@@ -37,17 +37,6 @@ const config = {
         },
       },
       {
-        test: /\.(png|jpe?g|gif)$/i,
-        use: [
-          {
-            loader: 'file-loader',
-            options: {
-              name: '[path][name].[ext]',
-            },
-          },
-        ],
-      },
-      {
         test: /\.svg$/,
         use: ['@svgr/webpack'],
       },
@@ -58,9 +47,6 @@ const config = {
       '.js',
       '.jsx',
     ],
-  },
-  devServer: {
-    contentBase: './dist',
   },
 };
 

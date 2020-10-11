@@ -18,6 +18,12 @@ const CheckInBoxPopUp = css`
   border-radius: 8px;
   width: 150px;
   margin-left: -41px;
+  ${(props) => (props.checkIn && css`
+      background: white;
+      border: 1px solid rgb(190,190,190);
+      border-radius: 8px;
+      z-index: 8;
+    }`)}
 `;
 
 const CheckInBox = styled.button`
@@ -47,6 +53,13 @@ const CheckOutBoxPopUp = css`
   padding-left: 26px;
   color: rgb(221, 221, 221);
   background: rgb(235, 235, 235);
+   ${(props) => (props.checkIn && css`
+      background: white;
+      border: 2px solid black;
+      border-radius: 8px;
+      z-index: 10;
+    }`)}
+
 `;
 
 const CheckOutBox = styled.div`
@@ -132,6 +145,7 @@ const WidgetDateGuest = ({
       <CheckInBox
         onClick={() => showCalendarModal('calendarModalVisible', (e) => toggleGuestModal(e, false))}
         calendarModalVisible={calendarModalVisible}
+        checkIn={checkIn}
       >
         <DescriptionText>Check-in</DescriptionText>
         <DisplayText>{checkIn ? formatMMDDYYYY(checkIn) : 'Add date'}</DisplayText>
@@ -139,6 +153,7 @@ const WidgetDateGuest = ({
       <CheckOutBox
         onClick={() => showCalendarModal('calendarModalVisible', (e) => toggleGuestModal(e, false))}
         calendarModalVisible={calendarModalVisible}
+        checkIn={checkIn}
       >
         <DescriptionText>Check-out</DescriptionText>
         <DisplayText>{checkOut ? formatMMDDYYYY(checkOut) : 'Add date'}</DisplayText>
