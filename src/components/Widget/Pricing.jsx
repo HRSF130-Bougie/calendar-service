@@ -101,5 +101,17 @@ const Pricing = ({ fees }) => (
 export default memo(Pricing);
 
 Pricing.propTypes = {
-  fees: PropTypes.object,
+  fees: PropTypes.shape({
+    cleaningFee: PropTypes.number,
+    nights: PropTypes.arrayOf(PropTypes.shape({
+      date: PropTypes.instanceOf(Date),
+      booked: PropTypes.bool,
+      price: PropTypes.number,
+      minimumNights: PropTypes.number,
+    })),
+    basePrice: PropTypes.number,
+    serviceFee: PropTypes.number,
+    taxes: PropTypes.number,
+    total: PropTypes.number,
+  }).isRequired,
 };

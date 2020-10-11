@@ -27,6 +27,9 @@ const listingSchema = new Schema({
   ],
   weekendPricing: Boolean,
   cleaningFee: Number,
+  lowestPrice: Number,
+  rating: Number,
+  reviews: Number,
 });
 
 const Listing = mongoose.model('Listing', listingSchema);

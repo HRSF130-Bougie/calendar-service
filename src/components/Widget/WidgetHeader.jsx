@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 
@@ -46,18 +47,30 @@ const Count = styled.span`
   color: rgb(113, 113, 113);
 `;
 
-const WidgetHeader = () => (
+const WidgetHeader = ({ headerInfo }) => (
   <WidgetHeaderWrapper>
     <div>
-      <Price>$236</Price>
+      <Price>{`$${headerInfo.lowestPrice}`}</Price>
       <PerNight> / night</PerNight>
     </div>
     <div>
       <Star><FontAwesomeIcon icon={faStar} /></Star>
-      <Score>4.89</Score>
-      <Count>(36)</Count>
+      <Score>{headerInfo.rating}</Score>
+      <Count>{`(${headerInfo.reviews})`}</Count>
     </div>
   </WidgetHeaderWrapper>
 );
 
 export default WidgetHeader;
+
+WidgetHeader.propTypes = {
+  headerInfo: PropTypes.objectOf(PropTypes.number),
+};
+
+WidgetHeader.defaultProps = {
+  headerInfo: {
+    lowestPrice: 236,
+    rating: 4.89,
+    reviews: 36,
+  },
+}

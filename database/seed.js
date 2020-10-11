@@ -2,7 +2,7 @@
 const dayjs = require('dayjs');
 const faker = require('faker');
 // eslint-disable-next-line no-unused-vars
-const db = require('./connectToDatabaseDocker.js');
+const db = require('./connectToDatabaseLocal.js');
 const schema = require('./schema.js');
 
 const reSeed = async () => {
@@ -14,6 +14,8 @@ const reSeed = async () => {
       const daysArray = [];
       const randomPrice = Math.floor(faker.random.number({ min: 75, max: 450 }));
       const weekendPricing = faker.random.boolean();
+      const randomRating = faker.finance.amount(3, 4, 2);
+      const randomReviews = faker.random.number({ min: 5, max: 1500 });
 
       // eslint-disable-next-line func-names
       const getLastDay = function (yy, mm) {
@@ -61,6 +63,9 @@ const reSeed = async () => {
         days: daysArray,
         cleaningFee: faker.random.number({ min: 50, max: 100 }),
         weekendPricing,
+        lowestPrice: randomPrice,
+        rating: randomRating,
+        reviews: randomReviews,
       });
 
       newListing.save();

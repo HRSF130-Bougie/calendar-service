@@ -61,7 +61,6 @@ const CalendarGridRow = styled.div`
   flex-flow: row;
   width: 100%;
   scroll-snap-type: x mandatory;
-  transition: ;
 `;
 
 const CalendarWindow = styled.div`
@@ -224,12 +223,12 @@ class CalendarModal extends React.PureComponent {
     const { xTransMonth, xTransGrid } = this.state;
     const slideMonth = {
       transform: `translate(${xTransMonth}px)`,
-      transition: 'ease-out .2s',
+      transition: 'all 125ms ease-in-out 0s',
     };
 
     const slideGrid = {
       transform: `translate(${xTransGrid}px)`,
-      transition: 'ease-in-out .2s',
+      transition: 'all 125ms ease-in-out 0s',
     };
 
     return (
@@ -244,7 +243,12 @@ class CalendarModal extends React.PureComponent {
           </CalendarHeaderRow>
 
           <ArrowWindow>
-            <LeftArrow xTrans={xTransMonth} onClick={this.moveLeft}><FontAwesomeIcon icon={faAngleLeft} /></LeftArrow>
+            <LeftArrow
+              xTrans={xTransMonth}
+              onClick={this.moveLeft}
+            >
+              <FontAwesomeIcon icon={faAngleLeft} />
+            </LeftArrow>
             <MonthWindow>
               <CalendarGridRow style={slideMonth}>
                 {
@@ -258,7 +262,11 @@ class CalendarModal extends React.PureComponent {
             }
               </CalendarGridRow>
             </MonthWindow>
-            <RightArrow onClick={this.moveRight}><FontAwesomeIcon icon={faAngleLeft} flip="horizontal" /></RightArrow>
+            <RightArrow
+              onClick={this.moveRight}
+            >
+              <FontAwesomeIcon icon={faAngleLeft} flip="horizontal" />
+            </RightArrow>
           </ArrowWindow>
 
           <WeekdayRow>

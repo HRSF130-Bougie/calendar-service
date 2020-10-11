@@ -5,20 +5,6 @@ import styled from 'styled-components';
 import GlobalFonts from '../assets/fonts/GlobalFonts';
 import Widget from './Widget/Widget';
 
-// const OuterPage = styled.div`
-//   width:100%;
-//   min-width: 300px;
-//   position: relative ;
-//   min-height: 100vh;
-// `;
-
-// const InnerPage = styled.div`
-//   display: grid;
-//   grid-template-areas: "space widget";
-//   grid-template-columns: 1fr 700px;
-//   grid-template-rows:auto;
-// `;
-
 class Booking extends React.Component {
   constructor() {
     super();
@@ -37,6 +23,12 @@ class Booking extends React.Component {
       calendarModalVisible: false,
       lastPossibleCheckOut: new Date(2030, 12),
       fees: {},
+      headerIfno: {
+        lowestPrice: null,
+        rating: null,
+        reviews: null,
+      },
+      bookHold: [],
     };
 
     this.selectDate = this.selectDate.bind(this);
@@ -59,10 +51,14 @@ class Booking extends React.Component {
       .then((response) => response.json())
       .then((data) => {
         const {
-          days, reservations, cleaningFee, weekendPricing,
+          days, reservations, cleaningFee, weekendPricing, lowestPrice, rating, reviews,
         } = data;
         this.setState({
-          days, reservations, weekendPricing, fees: { cleaningFee },
+          days,
+          reservations,
+          weekendPricing,
+          fees: { cleaningFee },
+          headerInfo: { lowestPrice, rating, reviews },
         });
       })
       .catch((error) => console.error('Fetch error: ', error));
@@ -95,10 +91,12 @@ class Booking extends React.Component {
 
     // Create an array of the date objects of all selected dates
     const nights = [];
+    const bookHold = [];
     for (let months = selectedMonthIndex; months < days.length; months += 1) {
       for (let day = selectedDayIndex; day < days[months].length; day += 1) {
         if (nights.length < nightCount) {
           nights.push(days[months][day - 2]);
+          bookHold.push([months, day - 2]);
         }
       }
     }
@@ -114,6 +112,7 @@ class Booking extends React.Component {
       fees: {
         cleaningFee, nights, basePrice, serviceFee, taxes, total,
       },
+      bookHold,
     });
   }
 
@@ -199,9 +198,9 @@ class Booking extends React.Component {
     const guestType = 'adults';
     const {
       adults, children, infants, totalGuests, days, weekendPricing, checkIn, checkOut,
-      calendarModalVisible, lastPossibleCheckOut,
-      fees,
+      calendarModalVisible, lastPossibleCheckOut, headerInfo, fees,
     } = this.state;
+
     return (
       // <OuterPage>
       <>
@@ -226,6 +225,7 @@ class Booking extends React.Component {
           lastPossibleCheckOut={lastPossibleCheckOut}
           appendLeadingZeroes={this.appendLeadingZeroes}
           fees={fees}
+          headerInfo={headerInfo}
         />
       </>
       // </OuterPage>

@@ -67,14 +67,16 @@ class Widget extends React.Component {
       days, weekendPricing, selectDate, clearDates,
       checkIn, checkOut, calendarModalVisible,
       hideModal, hideCalendarModal, showModal, showCalendarModal,
-      lastPossibleCheckOut, fees, appendLeadingZeroes,
+      lastPossibleCheckOut, fees, appendLeadingZeroes, headerInfo,
     } = this.props;
 
     const { nights } = fees;
 
     return (
       <WidgetWrapper>
-        <WidgetHeader />
+        <WidgetHeader
+          headerInfo={headerInfo}
+        />
         <WidgetDateGuest
           toggleGuestModal={this.toggleGuestModal}
           guestModalVisible={guestModalVisible}
@@ -84,6 +86,7 @@ class Widget extends React.Component {
           appendLeadingZeroes={appendLeadingZeroes}
           checkIn={checkIn}
           checkOut={checkOut}
+
         />
         <GuestModal
           name="guestModalVisible"
@@ -135,5 +138,18 @@ Widget.propTypes = {
   calendarModalVisible: PropTypes.bool.isRequired,
   lastPossibleCheckOut: PropTypes.instanceOf(Date),
   appendLeadingZeroes: PropTypes.func,
-  fees: PropTypes.object,
+  fees: PropTypes.shape({
+    cleaningFee: PropTypes.number,
+    nights: PropTypes.arrayOf(PropTypes.shape({
+      date: PropTypes.instanceOf(Date),
+      booked: PropTypes.bool,
+      price: PropTypes.number,
+      minimumNights: PropTypes.number,
+    })),
+    basePrice: PropTypes.number,
+    serviceFee: PropTypes.number,
+    taxes: PropTypes.number,
+    total: PropTypes.number,
+  }),
+  headerInfo: PropTypes.objectOf(PropTypes.number),
 };
