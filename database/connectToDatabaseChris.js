@@ -20,5 +20,4 @@ connection.once('open', () => {
   seed();
 });
 
-
 module.exports = connection;

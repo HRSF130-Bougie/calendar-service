@@ -30,6 +30,7 @@ const PriceRow = styled.div`
 `;
 
 const PriceDescription = styled.button`
+  font-family: inherit;
   color: inherit;
   font-size: 16px;
   line-height: 20px;
