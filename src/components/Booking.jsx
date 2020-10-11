@@ -5,19 +5,19 @@ import styled from 'styled-components';
 import GlobalFonts from '../assets/fonts/GlobalFonts';
 import Widget from './Widget/Widget';
 
-const OuterPage = styled.div`
-  width:100%;
-  min-width: 700px;
-  position: relative ;
-  min-height: 100vh;
-`;
+// const OuterPage = styled.div`
+//   width:100%;
+//   min-width: 300px;
+//   position: relative ;
+//   min-height: 100vh;
+// `;
 
-const InnerPage = styled.div`
-  display: grid;
-  grid-template-areas: "space widget";
-  grid-template-columns: 1fr 700px;
-  grid-template-rows:auto;
-`;
+// const InnerPage = styled.div`
+//   display: grid;
+//   grid-template-areas: "space widget";
+//   grid-template-columns: 1fr 700px;
+//   grid-template-rows:auto;
+// `;
 
 class Booking extends React.Component {
   constructor() {
@@ -203,9 +203,9 @@ class Booking extends React.Component {
       fees,
     } = this.state;
     return (
-      <OuterPage>
+      // <OuterPage>
+      <>
         <GlobalFonts />
-        <InnerPage>
           <Widget
             guests={{
               adults, children, infants, totalGuests,
@@ -227,8 +227,8 @@ class Booking extends React.Component {
             appendLeadingZeroes={this.appendLeadingZeroes}
             fees={fees}
           />
-        </InnerPage>
-      </OuterPage>
+      </>
+      // </OuterPage>
     );
   }
 }

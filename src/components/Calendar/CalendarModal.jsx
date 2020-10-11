@@ -19,8 +19,8 @@ const CalendarPopUp = styled.div`
   padding: 24px 32px 16px;
   margin: auto;
   position: absolute;
-  top: 102px;
-  right: 275px;
+  top: 54px;
+  right: -5px;
   width: 597px;
   z-index: 1;
   min-height: 460px;

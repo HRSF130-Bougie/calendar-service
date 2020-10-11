@@ -11,11 +11,11 @@ import Pricing from './Pricing';
 
 const WidgetWrapper = styled.div`
   grid-area: widget;
+  position: relative;
   box-sizing: border-box;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
-  min-width: 220px;
-  max-width: 372px;
+  width: 372px;
   height: auto;
   margin: 50px;
   border: 1px solid rgb(221, 221, 221);
