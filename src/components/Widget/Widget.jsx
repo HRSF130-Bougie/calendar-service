@@ -10,18 +10,18 @@ import CalendarModal from '../Calendar/CalendarModal';
 import Pricing from './Pricing';
 
 const WidgetWrapper = styled.div`
-  grid-area: widget;
+  float:right;
   position: relative;
   box-sizing: border-box;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   width: 372px;
   height: auto;
-  margin: 50px;
   border: 1px solid rgb(221, 221, 221);
   border-radius: 12px;
   padding: 24px;
   box-shadow: rgba(0, 0, 0, 0.12) 0px 6px 16px;
+  box-sizing: content-box;
 `;
 
 const NoCharge = styled.div`
