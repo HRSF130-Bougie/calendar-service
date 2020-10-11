@@ -34,7 +34,7 @@ class Booking extends React.Component {
       weekendPricing: false,
       checkIn: null,
       checkOut: null,
-      calendarModalVisible: true,
+      calendarModalVisible: false,
       lastPossibleCheckOut: new Date(2030, 12),
       fees: {},
     };

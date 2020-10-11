@@ -61,7 +61,7 @@ const CalendarGridRow = styled.div`
   flex-flow: row;
   width: 100%;
   scroll-snap-type: x mandatory;
-  transition: transform .5s;
+  transition: ;
 `;
 
 const CalendarWindow = styled.div`
@@ -71,6 +71,8 @@ const CalendarWindow = styled.div`
   width: 609px;
   height: auto;
   overflow: hidden;
+  margin-left: -10px;
+  padding-left: 10px;
 `;
 
 const ArrowWindow = styled.div`
@@ -164,17 +166,39 @@ class CalendarModal extends React.PureComponent {
       // renderedMonths: [0, 1, 2],
       xTransMonth: 0,
       xTransGrid: 0,
+      calendarLocation: 0,
+      calMax: 4,
     };
 
     this.moveRight = this.moveRight.bind(this);
+    this.moveLeft = this.moveLeft.bind(this);
+  }
+
+  moveLeft() {
+    const { calendarLocation } = this.state;
+    if (calendarLocation > 0) {
+      this.setState(
+        (prevState) => ({
+          xTransMonth: prevState.xTransMonth + 322,
+          xTransGrid: prevState.xTransGrid + 324,
+          calendarLocation: prevState.calendarLocation - 1,
+        }),
+      );
+    }
   }
 
   moveRight() {
-    this.setState(
-      (prevState) => ({
-        xTransMonth: prevState.xTransMonth - 322,
-        xTransGrid: prevState.xTransGrid - 324,
-      }))
+    const { calendarLocation, calMax } = this.state;
+
+    if (calendarLocation < calMax) {
+      this.setState(
+        (prevState) => ({
+          xTransMonth: prevState.xTransMonth - 322,
+          xTransGrid: prevState.xTransGrid - 324,
+          calendarLocation: prevState.calendarLocation + 1,
+        }),
+      );
+    }
   }
 
   render() {
@@ -200,10 +224,12 @@ class CalendarModal extends React.PureComponent {
     const { xTransMonth, xTransGrid } = this.state;
     const slideMonth = {
       transform: `translate(${xTransMonth}px)`,
+      transition: 'ease-out .2s',
     };
 
     const slideGrid = {
       transform: `translate(${xTransGrid}px)`,
+      transition: 'ease-in-out .2s',
     };
 
     return (
@@ -218,7 +244,7 @@ class CalendarModal extends React.PureComponent {
           </CalendarHeaderRow>
 
           <ArrowWindow>
-            <LeftArrow xTrans={xTransMonth}><FontAwesomeIcon icon={faAngleLeft} /></LeftArrow>
+            <LeftArrow xTrans={xTransMonth} onClick={this.moveLeft}><FontAwesomeIcon icon={faAngleLeft} /></LeftArrow>
             <MonthWindow>
               <CalendarGridRow style={slideMonth}>
                 {

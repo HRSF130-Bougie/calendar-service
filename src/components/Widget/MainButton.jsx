@@ -29,7 +29,3 @@ const MainButton = ({ checkOut }) => (
 );
 
 export default MainButton;
-
-MainButton.propTypes = {
-  checkOut: PropTypes.instanceOf(Date),
-}
