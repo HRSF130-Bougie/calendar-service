@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -61,7 +61,7 @@ const WidgetHeader = ({ headerInfo }) => (
   </WidgetHeaderWrapper>
 );
 
-export default WidgetHeader;
+export default memo(WidgetHeader);
 
 WidgetHeader.propTypes = {
   headerInfo: PropTypes.objectOf(PropTypes.number),
@@ -73,4 +73,4 @@ WidgetHeader.defaultProps = {
     rating: 4.89,
     reviews: 36,
   },
-}
+};

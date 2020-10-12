@@ -73,32 +73,38 @@ const averagePerNight = (base, nightCount) => base / nightCount;
 
 const currencyFormat = (num) => `$${num.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}`;
 
-const Pricing = ({ fees }) => (
-  <PriceWrap>
-    <NoCharge>{`You won't be charged yet`}</NoCharge>
-    <PriceRow>
-      <PriceDescription>{`${currencyFormat(averagePerNight(fees.basePrice, fees.nights.length))} x ${fees.nights.length} nights`}</PriceDescription>
-      <PriceFigure>{`${currencyFormat(fees.basePrice)}`}</PriceFigure>
-    </PriceRow>
-    <PriceRow>
-      <PriceDescription>Cleaning Fee</PriceDescription>
-      <PriceFigure>{`${currencyFormat(fees.cleaningFee)}`}</PriceFigure>
-    </PriceRow>
-    <PriceRow>
-      <PriceDescription>Service Fee</PriceDescription>
-      <PriceFigure>{`${currencyFormat(fees.serviceFee)}`}</PriceFigure>
-    </PriceRow>
-    <PriceRow>
-      <PriceDescription>Occupancy taxes and fees</PriceDescription>
-      <PriceFigure>{`${currencyFormat(fees.taxes)}`}</PriceFigure>
-    </PriceRow>
-    <BorderDiv />
-    <TotalRow>
-      <Total>Total</Total>
-      <PriceFigure><Total>{`${currencyFormat(fees.total)}`}</Total></PriceFigure>
-    </TotalRow>
-  </PriceWrap>
-);
+const Pricing = ({ fees }) => {
+  const { nights } = fees;
+
+  return (
+    nights !== undefined && (
+    <PriceWrap>
+      <NoCharge>{`You won't be charged yet`}</NoCharge>
+      <PriceRow>
+        <PriceDescription>{`${currencyFormat(averagePerNight(fees.basePrice, fees.nights.length))} x ${fees.nights.length} nights`}</PriceDescription>
+        <PriceFigure>{`${currencyFormat(fees.basePrice)}`}</PriceFigure>
+      </PriceRow>
+      <PriceRow>
+        <PriceDescription>Cleaning Fee</PriceDescription>
+        <PriceFigure>{`${currencyFormat(fees.cleaningFee)}`}</PriceFigure>
+      </PriceRow>
+      <PriceRow>
+        <PriceDescription>Service Fee</PriceDescription>
+        <PriceFigure>{`${currencyFormat(fees.serviceFee)}`}</PriceFigure>
+      </PriceRow>
+      <PriceRow>
+        <PriceDescription>Occupancy taxes and fees</PriceDescription>
+        <PriceFigure>{`${currencyFormat(fees.taxes)}`}</PriceFigure>
+      </PriceRow>
+      <BorderDiv />
+      <TotalRow>
+        <Total>Total</Total>
+        <PriceFigure><Total>{`${currencyFormat(fees.total)}`}</Total></PriceFigure>
+      </TotalRow>
+    </PriceWrap>
+    )
+  );
+};
 
 export default memo(Pricing);
 
@@ -115,21 +121,5 @@ Pricing.propTypes = {
     serviceFee: PropTypes.number,
     taxes: PropTypes.number,
     total: PropTypes.number,
-  }),
-};
-
-Pricing.defaultProps = {
-  fees: PropTypes.shape({
-    cleaningFee: null,
-    nights: PropTypes.arrayOf(PropTypes.shape({
-      date: null,
-      booked: null,
-      price: null,
-      minimumNights: null,
-    })),
-    basePrice: 100,
-    serviceFee: 100,
-    taxes: 100,
-    total: 100,
-  }),
+  }).isRequired,
 };
