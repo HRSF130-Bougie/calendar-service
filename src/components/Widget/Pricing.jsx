@@ -74,32 +74,30 @@ const averagePerNight = (base, nightCount) => base / nightCount;
 const currencyFormat = (num) => `$${num.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}`;
 
 const Pricing = ({ fees }) => (
-  averagePerNight !== undefined && (
   <PriceWrap>
-      <NoCharge>{`You won't be charged yet`}</NoCharge>
-      <PriceRow>
-        <PriceDescription>{`${currencyFormat(averagePerNight(fees.basePrice, fees.nights.length))} x ${fees.nights.length} nights`}</PriceDescription>
-        <PriceFigure>{`${currencyFormat(fees.basePrice)}`}</PriceFigure>
-      </PriceRow>
-      <PriceRow>
-        <PriceDescription>Cleaning Fee</PriceDescription>
-        <PriceFigure>{`${currencyFormat(fees.cleaningFee)}`}</PriceFigure>
-      </PriceRow>
-      <PriceRow>
-        <PriceDescription>Service Fee</PriceDescription>
-        <PriceFigure>{`${currencyFormat(fees.serviceFee)}`}</PriceFigure>
-      </PriceRow>
-      <PriceRow>
-        <PriceDescription>Occupancy taxes and fees</PriceDescription>
-        <PriceFigure>{`${currencyFormat(fees.taxes)}`}</PriceFigure>
-      </PriceRow>
-      <BorderDiv />
-      <TotalRow>
-        <Total>Total</Total>
-        <PriceFigure><Total>{`${currencyFormat(fees.total)}`}</Total></PriceFigure>
-      </TotalRow>
-    </PriceWrap>
-  )
+    <NoCharge>{`You won't be charged yet`}</NoCharge>
+    <PriceRow>
+      <PriceDescription>{`${currencyFormat(averagePerNight(fees.basePrice, fees.nights.length))} x ${fees.nights.length} nights`}</PriceDescription>
+      <PriceFigure>{`${currencyFormat(fees.basePrice)}`}</PriceFigure>
+    </PriceRow>
+    <PriceRow>
+      <PriceDescription>Cleaning Fee</PriceDescription>
+      <PriceFigure>{`${currencyFormat(fees.cleaningFee)}`}</PriceFigure>
+    </PriceRow>
+    <PriceRow>
+      <PriceDescription>Service Fee</PriceDescription>
+      <PriceFigure>{`${currencyFormat(fees.serviceFee)}`}</PriceFigure>
+    </PriceRow>
+    <PriceRow>
+      <PriceDescription>Occupancy taxes and fees</PriceDescription>
+      <PriceFigure>{`${currencyFormat(fees.taxes)}`}</PriceFigure>
+    </PriceRow>
+    <BorderDiv />
+    <TotalRow>
+      <Total>Total</Total>
+      <PriceFigure><Total>{`${currencyFormat(fees.total)}`}</Total></PriceFigure>
+    </TotalRow>
+  </PriceWrap>
 );
 
 export default memo(Pricing);
