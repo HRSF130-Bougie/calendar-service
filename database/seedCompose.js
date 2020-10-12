@@ -36,7 +36,7 @@ const reSeed = async () => {
 
         for (let day = 1; day <= lastDay; day += 1) {
           const date = {
-            date: dayjs(startDay).utc().add(day - 1, 'day').toDate(),
+            date: dayjs(startDay).utc().add(day - 1, 'day').add(12, 'hours').toDate(),
             booked: faker.random.boolean(),
             price: randomPrice,
             minimumNights: 1,
