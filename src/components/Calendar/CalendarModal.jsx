@@ -164,15 +164,26 @@ const CalendarModal = ({
 }) => {
   const calMax = 4;
 
+  let start = 0;
   if (checkIn) {
-    console.log(checkIn)
-    console.log(new Date(checkIn).getMonth())
-    console.log(for a commit)
+    const currentMonth = (new Date(Date.now()).getMonth());
+    const checkInMonth = (new Date(checkIn).getMonth());
+    if (checkInMonth > currentMonth) {
+      if (checkInMonth - currentMonth <= calMax) {
+        start = checkInMonth - currentMonth;
+      } else {
+        start = calMax;
+      }
+    } else if (12 - (currentMonth - checkInMonth) <= calMax) {
+      start = 12 - (currentMonth - checkInMonth);
+    } else {
+      start = calMax;
+    }
   }
 
-  let [xTransMonth, setXMonth] = useState(0);
-  let [xTransGrid, setXGrid] = useState(0);
-  let [calendarLocation, setCalendarLocation] = useState(0);
+  let [xTransMonth, setXMonth] = useState(start * -322);
+  let [xTransGrid, setXGrid] = useState(-324 * start);
+  let [calendarLocation, setCalendarLocation] = useState(start);
 
   const moveLeft = function () {
     if (calendarLocation > 0) {
@@ -199,8 +210,8 @@ const CalendarModal = ({
 
   const formatMonthName = (date) => dayjs(date).format('MMM D, YYYY');
 
-  let selectDates = (checkIn && checkOut) ? `${nights - 1} nights` : 'Select Dates';
-  if (nights === 2) { selectDates = '1 night'; }
+  let selectDates = (checkIn && checkOut) ? `${nights} nights` : 'Select Dates';
+  if (nights === 1) { selectDates = '1 night'; }
 
   const selectDatesSubHeader = (checkIn && checkOut) ? `${formatMonthName(checkIn)} - ${formatMonthName(checkOut)}` : 'Entire house ∙ 1 bed ∙ 1 bath';
 
