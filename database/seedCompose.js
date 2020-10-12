@@ -2,6 +2,7 @@
 const dayjs = require('dayjs');
 const faker = require('faker');
 const utc = require('dayjs/plugin/utc');
+
 dayjs.extend(utc);
 // eslint-disable-next-line no-unused-vars
 // const db = require('./connectToDatabaseCompose.js');
@@ -16,7 +17,7 @@ const reSeed = async () => {
       const daysArray = [];
       const randomPrice = Math.floor(faker.random.number({ min: 75, max: 450 }));
       const weekendPricing = faker.random.boolean();
-      const randomRating = faker.finance.amount(3, 4, 2)
+      const randomRating = faker.finance.amount(3, 4, 2);
       const randomReviews = faker.random.number({ min: 5, max: 1500 });
 
       // eslint-disable-next-line func-names
@@ -36,7 +37,8 @@ const reSeed = async () => {
 
         for (let day = 1; day <= lastDay; day += 1) {
           const date = {
-            date: dayjs(startDay).utc().add(day - 1, 'day').add(12, 'hours').toDate(),
+            date: dayjs(startDay).utc().add(day - 1, 'day').add(12, 'hours')
+              .toDate(),
             booked: faker.random.boolean(),
             price: randomPrice,
             minimumNights: 1,

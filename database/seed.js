@@ -36,14 +36,14 @@ const reSeed = async () => {
         const monthArray = [];
 
         for (let day = 1; day <= lastDay; day += 1) {
-          newDay = dayjs(startDay).utc().add(day - 1, 'day').add(6, 'hours').toDate();
+          const newDay = dayjs(startDay).utc().add(day - 1, 'day').add(6, 'hours').toDate();
           const date = {
             date: newDay,
             booked: faker.random.boolean(),
             price: randomPrice,
             minimumNights: 1,
           };
-// 2020-10-01T07:00:00.000+00:00
+
           if (weekendPricing) {
             // Make weekends more expensive
             if (newDay.getDay() >= 5) {
