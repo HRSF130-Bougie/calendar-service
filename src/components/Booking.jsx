@@ -101,6 +101,8 @@ class Booking extends React.Component {
       }
     }
 
+    nights.pop();
+
     const initial = 0;
     // eslint-disable-next-line max-len
     const basePrice = nights.reduce((accumulator, currentValue) => accumulator + currentValue.price, initial);
@@ -166,9 +168,8 @@ class Booking extends React.Component {
       checkIn: null,
       checkOut: null,
       lastPossibleCheckOut: new Date(2030, 12),
-      fees: {},
       bookHold: [],
-    });
+    }, () => this.setState((prevState) => { cleaningFee: prevState.cleaningFee }));
   }
 
   selectDate(date, selectedMonthIndex, selectedDayIndex) {
@@ -193,7 +194,7 @@ class Booking extends React.Component {
         lastPossibleCheckOut: this.getLastDayCheckOut(selectedMonthIndex, selectedDayIndex),
       });
     }
-    if (checkOut) { this.getSelectedDays(); }
+    //if (checkOut) { this.getSelectedDays(); }
   }
 
   render() {
