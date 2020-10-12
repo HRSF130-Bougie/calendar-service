@@ -1,5 +1,5 @@
 /* eslint-disable react/require-default-props */
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import dayjs from 'dayjs';
 import styled from 'styled-components';
@@ -158,100 +158,82 @@ const KeyboardOuter = styled.div`
     }
 `;
 
-class CalendarModal extends React.PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = {
-      // renderedMonths: [0, 1, 2],
-      xTransMonth: 0,
-      xTransGrid: 0,
-      calendarLocation: 0,
-      calMax: 4,
-    };
+const CalendarModal = ({
+  days, weekendPricing, hideCalendarModal, nights,
+  selectDate, clearDates, checkIn, checkOut, lastPossibleCheckOut,
+}) => {
+  const calMax = 4;
 
-    this.moveRight = this.moveRight.bind(this);
-    this.moveLeft = this.moveLeft.bind(this);
+  if (checkIn) {
+    console.log(checkIn)
+    console.log(new Date(checkIn).getMonth())
   }
 
-  moveLeft() {
-    const { calendarLocation } = this.state;
+  let [xTransMonth, setXMonth] = useState(0);
+  let [xTransGrid, setXGrid] = useState(0);
+  let [calendarLocation, setCalendarLocation] = useState(0);
+
+  const moveLeft = function () {
     if (calendarLocation > 0) {
-      this.setState(
-        (prevState) => ({
-          xTransMonth: prevState.xTransMonth + 322,
-          xTransGrid: prevState.xTransGrid + 324,
-          calendarLocation: prevState.calendarLocation - 1,
-        }),
-      );
+      setXMonth(xTransMonth += 322);
+      setXGrid(xTransGrid += 324);
+      setCalendarLocation(calendarLocation -= 1);
     }
-  }
+  };
 
-  moveRight() {
-    const { calendarLocation, calMax } = this.state;
-
+  const moveRight = function () {
     if (calendarLocation < calMax) {
-      this.setState(
-        (prevState) => ({
-          xTransMonth: prevState.xTransMonth - 322,
-          xTransGrid: prevState.xTransGrid - 324,
-          calendarLocation: prevState.calendarLocation + 1,
-        }),
-      );
+      setXMonth(xTransMonth -= 322);
+      setXGrid(xTransGrid -= 324);
+      setCalendarLocation(calendarLocation += 1);
     }
-  }
+  };
 
-  render() {
-    const weekdays = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
+  const weekdays = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
 
-    const {
-      days, weekendPricing, hideCalendarModal, nights,
-      selectDate, clearDates, checkIn, checkOut, lastPossibleCheckOut,
-    } = this.props;
+  const renderMonthName = (date) => {
+    const options = { month: 'long' };
+    return new Intl.DateTimeFormat('en-US', options).format(date);
+  };
 
-    const renderMonthName = (date) => {
-      const options = { month: 'long' };
-      return new Intl.DateTimeFormat('en-US', options).format(date);
-    };
+  const formatMonthName = (date) => dayjs(date).format('MMM D, YYYY');
 
-    const formatMonthName = (date) => dayjs(date).format('MMM D, YYYY');
+  let selectDates = (checkIn && checkOut) ? `${nights - 1} nights` : 'Select Dates';
+  if (nights === 2) { selectDates = '1 night'; }
 
-    let selectDates = (checkIn && checkOut) ? `${nights - 1} nights` : 'Select Dates';
-    if (nights === 2) { selectDates = '1 night'; }
+  const selectDatesSubHeader = (checkIn && checkOut) ? `${formatMonthName(checkIn)} - ${formatMonthName(checkOut)}` : 'Entire house ∙ 1 bed ∙ 1 bath';
 
-    const selectDatesSubHeader = (checkIn && checkOut) ? `${formatMonthName(checkIn)} - ${formatMonthName(checkOut)}` : 'Entire house ∙ 1 bed ∙ 1 bath';
+  const slideMonth = {
+    transform: `translate(${xTransMonth}px)`,
+    transition: 'all 125ms ease-in-out 0s',
+  };
 
-    const { xTransMonth, xTransGrid } = this.state;
-    const slideMonth = {
-      transform: `translate(${xTransMonth}px)`,
-      transition: 'all 125ms ease-in-out 0s',
-    };
+  const slideGrid = {
+    transform: `translate(${xTransGrid}px)`,
+    transition: 'all 125ms ease-in-out 0s',
+  };
 
-    const slideGrid = {
-      transform: `translate(${xTransGrid}px)`,
-      transition: 'all 125ms ease-in-out 0s',
-    };
+  return (
 
-    return (
+    (
+      <CalendarPopUp>
+        <CalendarHeaderRow>
+          <CalendarHeaderRowLeft>
+            <SelectDates>{selectDates}</SelectDates>
+            <MinimumStay>{selectDatesSubHeader}</MinimumStay>
+          </CalendarHeaderRowLeft>
+        </CalendarHeaderRow>
 
-      (
-        <CalendarPopUp>
-          <CalendarHeaderRow>
-            <CalendarHeaderRowLeft>
-              <SelectDates>{selectDates}</SelectDates>
-              <MinimumStay>{selectDatesSubHeader}</MinimumStay>
-            </CalendarHeaderRowLeft>
-          </CalendarHeaderRow>
-
-          <ArrowWindow>
-            <LeftArrow
-              xTrans={xTransMonth}
-              onClick={this.moveLeft}
-            >
-              <FontAwesomeIcon icon={faAngleLeft} />
-            </LeftArrow>
-            <MonthWindow>
-              <CalendarGridRow style={slideMonth}>
-                {
+        <ArrowWindow>
+          <LeftArrow
+            xTrans={xTransMonth}
+            onClick={moveLeft}
+          >
+            <FontAwesomeIcon icon={faAngleLeft} />
+          </LeftArrow>
+          <MonthWindow>
+            <CalendarGridRow style={slideMonth}>
+              {
               days.map((month) => (
                 <MonthHeaderTitle key={Math.random()}>
                   {renderMonthName(new Date(month[1].date))}
@@ -260,23 +242,23 @@ class CalendarModal extends React.PureComponent {
                 </MonthHeaderTitle>
               ))
             }
-              </CalendarGridRow>
-            </MonthWindow>
-            <RightArrow
-              onClick={this.moveRight}
-            >
-              <FontAwesomeIcon icon={faAngleLeft} flip="horizontal" />
-            </RightArrow>
-          </ArrowWindow>
+            </CalendarGridRow>
+          </MonthWindow>
+          <RightArrow
+            onClick={moveRight}
+          >
+            <FontAwesomeIcon icon={faAngleLeft} flip="horizontal" />
+          </RightArrow>
+        </ArrowWindow>
 
-          <WeekdayRow>
-            <CalendarItemWeek weekdays={weekdays} />
-            <CalendarItemWeek weekdays={weekdays} />
-          </WeekdayRow>
+        <WeekdayRow>
+          <CalendarItemWeek weekdays={weekdays} />
+          <CalendarItemWeek weekdays={weekdays} />
+        </WeekdayRow>
 
-          <CalendarWindow>
-            <CalendarGridRow style={slideGrid}>
-              {
+        <CalendarWindow>
+          <CalendarGridRow style={slideGrid}>
+            {
               days.map((month, monthIndex) => (
                 <CalendarItemGrid
                   key={Math.random()}
@@ -290,20 +272,19 @@ class CalendarModal extends React.PureComponent {
                 />
               ))
               }
-            </CalendarGridRow>
-          </CalendarWindow>
+          </CalendarGridRow>
+        </CalendarWindow>
 
-          <FooterRow>
-            <KeyboardOuter><KeyboardInner><Keyboard /></KeyboardInner></KeyboardOuter>
-            <PriceWarning>Prices on calendar do not include taxes and fees</PriceWarning>
-            <ModalCloseButton name="clearDates" text="Clear dates" funct={clearDates} clear />
-            <ModalCloseButton name="calendarModalVisible" funct={hideCalendarModal} calendar />
-          </FooterRow>
-        </CalendarPopUp>
-      )
-    );
-  }
-}
+        <FooterRow>
+          <KeyboardOuter><KeyboardInner><Keyboard /></KeyboardInner></KeyboardOuter>
+          <PriceWarning>Prices on calendar do not include taxes and fees</PriceWarning>
+          <ModalCloseButton name="clearDates" text="Clear dates" funct={clearDates} clear />
+          <ModalCloseButton name="calendarModalVisible" funct={hideCalendarModal} calendar />
+        </FooterRow>
+      </CalendarPopUp>
+    )
+  );
+};
 
 export default CalendarModal;
 

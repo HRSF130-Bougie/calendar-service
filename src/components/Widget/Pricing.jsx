@@ -77,11 +77,11 @@ const Pricing = ({ fees }) => {
   const { nights } = fees;
 
   return (
-    nights !== undefined && (
+    nights !== undefined &&
     <PriceWrap>
       <NoCharge>{`You won't be charged yet`}</NoCharge>
       <PriceRow>
-        <PriceDescription>{`${currencyFormat(averagePerNight(fees.basePrice, fees.nights.length))} x ${fees.nights.length} nights`}</PriceDescription>
+          <PriceDescription>{`${currencyFormat(averagePerNight(fees.basePrice, fees.nights.length))} x ${fees.nights.length} nights`}</PriceDescription>
         <PriceFigure>{`${currencyFormat(fees.basePrice)}`}</PriceFigure>
       </PriceRow>
       <PriceRow>
@@ -103,7 +103,7 @@ const Pricing = ({ fees }) => {
       </TotalRow>
     </PriceWrap>
     )
-  );
+
 };
 
 export default memo(Pricing);
