@@ -24,18 +24,6 @@ const WidgetWrapper = styled.div`
   margin: auto;
 `;
 
-// const NoCharge = styled.div`
-//   display: flex;
-//   flex-direction: column;
-//   color: rgb(34, 34, 34);
-//   font-weight: 400;
-//   font-size: 14px;
-//   line-height: 18px;
-//   margin-top: 8px;
-//   padding: 0px;
-//   text-align: center;
-// `;
-
 class Widget extends React.Component {
   constructor(props) {
     super(props);
@@ -67,6 +55,7 @@ class Widget extends React.Component {
       guests, increaseGuestCount, decreaseGuestCount,
       days, weekendPricing, selectDate, clearDates,
       checkIn, checkOut, calendarModalVisible,
+      // eslint-disable-next-line no-unused-vars
       hideModal, hideCalendarModal, showModal, showCalendarModal,
       lastPossibleCheckOut, fees, appendLeadingZeroes, headerInfo,
     } = this.props;

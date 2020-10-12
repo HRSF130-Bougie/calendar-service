@@ -1,6 +1,8 @@
+/* eslint-disable quotes */
+/* eslint-disable react/jsx-curly-brace-presence */
 import React, { memo } from 'react';
 import PropTypes from 'prop-types';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
 const NoCharge = styled.div`
   display: flex;
