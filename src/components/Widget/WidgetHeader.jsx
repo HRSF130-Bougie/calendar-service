@@ -50,7 +50,7 @@ const Count = styled.span`
 const WidgetHeader = ({ headerInfo }) => (
   <WidgetHeaderWrapper>
     <div>
-      <Price>{`$${headerInfo.lowestPrice}`}</Price>
+      <Price id="priceForHarris">{`$${headerInfo.lowestPrice}`}</Price>
       <PerNight> / night</PerNight>
     </div>
     <div>

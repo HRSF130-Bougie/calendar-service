@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 const MainButtonStyled = styled.button`
@@ -9,7 +9,6 @@ const MainButtonStyled = styled.button`
   position: relative;
   text-align: center;
   text-decoration: none;
-  touch-action: manipulation;
   font-size: 16px;
   line-height: 20px;
   border-radius: 8px;
@@ -20,12 +19,29 @@ const MainButtonStyled = styled.button`
   color: rgb(255, 255, 255);
   width: 100%;
   transition: none 0s ease 0s;
-  background: rgb(185,29,88);
   background: linear-gradient(90deg, rgba(185,29,88,1) 0%, rgba(136,21,81,1) 31%);
+  &:hover {
+    background: radial-gradient(circle at center center, rgba(185,29,88,1) 0%, rgba(136,21,81,1) 31%);
+    background-position: var(--x) var(--y);
+  }
 `;
 
-const MainButton = ({ checkOut }) => (
-  <MainButtonStyled>{checkOut ? 'Reserve' : 'Check availability'}</MainButtonStyled>
-);
+const MainButton = ({ checkOut }) => {
+  const [[x, y], setXY] = useState([0, 0]);
+  const handleXY = (event) => {
+    const width = event.target.clientWidth;
+    const height = event.target.clientHeight;
+    const eventOffsetX = event.nativeEvent.offsetX + (width / 2);
+    const eventOffsetY = event.nativeEvent.offsetY + (height / 2)
+    setXY([eventOffsetX, eventOffsetY]);
+  };
+
+  const style = {
+    '--x': `${x}px`,
+    '--y': `${y}px`,
+  }
+
+  return (<MainButtonStyled onMouseMove={(event) => handleXY(event)} style={style}>{checkOut ? 'Reserve' : 'Check availability'}</MainButtonStyled>);
+};
 
 export default MainButton;
