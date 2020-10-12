@@ -176,6 +176,8 @@ const CalendarModal = ({
       }
     } else if (12 - (currentMonth - checkInMonth) <= calMax) {
       start = 12 - (currentMonth - checkInMonth);
+    } else if (checkInMonth === currentMonth) {
+      start = 0;
     } else {
       start = calMax;
     }
