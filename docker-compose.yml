@@ -2,12 +2,16 @@ version: '3'
 
 services:
   calendar:
-    image: elanadev/calendar:latest
+    build: ./
     #build: .
     depends_on:
       - 'database'
     ports:
       - 80:3002
+    environment:
+      TZ: "America/Los_Angeles"
 
   database:
     image: mongo:latest
+    environment:
+      TZ: "America/Los_Angeles"

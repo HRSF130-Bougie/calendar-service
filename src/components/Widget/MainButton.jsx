@@ -15,7 +15,6 @@ const MainButtonStyled = styled.button`
   border-radius: 8px;
   outline: currentcolor none medium;
   padding: 14px 24px;
-  transition: box-shadow 0.2s ease 0s, -ms-transform 0.1s ease 0s, transform 0.1s ease 0s, transform 0.1s ease 0s;
   border: medium none;
   color: rgb(255, 255, 255);
   width: 100%;
@@ -48,6 +47,7 @@ const MainButton = ({ checkOut, showCalendarModal }) => {
 
   return (
     <MainButtonStyled
+      // eslint-disable-next-line no-console
       onClick={!checkOut ? () => showCalendarModal('calendarModalVisible') : () => console.log('Clicked!')}
       onMouseMove={(event) => handleXY(event)}
       style={style}
@@ -60,7 +60,7 @@ const MainButton = ({ checkOut, showCalendarModal }) => {
 export default MainButton;
 
 MainButton.propTypes = {
-  checkOut: PropTypes.string,
+  checkOut: PropTypes.instanceOf(Date),
   showCalendarModal: PropTypes.func,
 };
 

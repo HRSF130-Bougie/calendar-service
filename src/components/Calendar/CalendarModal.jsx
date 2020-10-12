@@ -254,7 +254,7 @@ class CalendarModal extends React.PureComponent {
                 {
               days.map((month) => (
                 <MonthHeaderTitle key={Math.random()}>
-                  {renderMonthName(new Date(month[0].date))}
+                  {renderMonthName(new Date(month[1].date))}
                   {' '}
                   {new Date(month[0].date).getFullYear()}
                 </MonthHeaderTitle>

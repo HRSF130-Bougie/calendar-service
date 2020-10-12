@@ -102,7 +102,7 @@ class Widget extends React.Component {
               nights={nights ? nights.length : 0}
             />
           )}
-        {fees.nights
+        {checkOut
           && <Pricing fees={fees} />}
       </WidgetWrapper>
     );

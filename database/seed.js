@@ -1,8 +1,11 @@
 /* eslint-disable no-console */
 const dayjs = require('dayjs');
 const faker = require('faker');
+const utc = require('dayjs/plugin/utc');
+dayjs.extend(utc);
+
 // eslint-disable-next-line no-unused-vars
-const db = require('./connectToDatabaseLocal.js');
+const db = require('./connectToDatabaseRemote.js');
 const schema = require('./schema.js');
 
 const reSeed = async () => {
@@ -33,21 +36,22 @@ const reSeed = async () => {
         const monthArray = [];
 
         for (let day = 1; day <= lastDay; day += 1) {
+          newDay = dayjs(startDay).utc().add(day - 1, 'day').toDate();
           const date = {
-            date: dayjs(startDay).add(day - 1, 'day').toDate(),
+            date: newDay,
             booked: faker.random.boolean(),
             price: randomPrice,
             minimumNights: 1,
           };
-
+// 2020-10-01T07:00:00.000+00:00
           if (weekendPricing) {
             // Make weekends more expensive
-            if (date.date.getDay() >= 5) {
+            if (newDay.getDay() >= 5) {
               date.price = Math.floor(Number(date.price * 1.2));
             }
 
             // Make a two day minimum on Fridays
-            if (date.date.getDay() === 5) {
+            if (newDay.getDay() === 5) {
               date.minimumNights = 2;
             }
           }

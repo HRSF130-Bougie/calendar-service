@@ -1,6 +1,8 @@
 /* eslint-disable no-console */
 const dayjs = require('dayjs');
 const faker = require('faker');
+const utc = require('dayjs/plugin/utc');
+dayjs.extend(utc);
 // eslint-disable-next-line no-unused-vars
 // const db = require('./connectToDatabaseCompose.js');
 const schema = require('./schema.js');
@@ -25,7 +27,7 @@ const reSeed = async () => {
       for (let month = 1; month <= 6; month += 1) {
         // Construct day object to be pushed to array, 6 months worth of days
 
-        const startDay = dayjs().startOf('month').add(month - 1, 'month').toDate();
+        const startDay = dayjs.utc().startOf('month').add(month - 1, 'month').toDate();
         const startMonth = startDay.getMonth();
         const startYear = startDay.getFullYear();
         const lastDay = getLastDay(startYear, startMonth);
@@ -34,7 +36,7 @@ const reSeed = async () => {
 
         for (let day = 1; day <= lastDay; day += 1) {
           const date = {
-            date: dayjs(startDay).add(day - 1, 'day').toDate(),
+            date: dayjs(startDay).utc().add(day - 1, 'day').toDate(),
             booked: faker.random.boolean(),
             price: randomPrice,
             minimumNights: 1,

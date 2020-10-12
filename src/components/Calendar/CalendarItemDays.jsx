@@ -122,7 +122,6 @@ class CalendarDayCell extends React.PureComponent {
     const {
       dayInfo, selectDate, monthIndex, dayIndex,
     } = this.props;
-    const { dayState } = this.state;
     this.setState({ dayState: 'selected' });
     selectDate(new Date(dayInfo.date), monthIndex, dayIndex);
   }
