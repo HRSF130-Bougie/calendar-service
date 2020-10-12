@@ -166,6 +166,7 @@ class Booking extends React.Component {
       checkIn: null,
       checkOut: null,
       lastPossibleCheckOut: new Date(2030, 12),
+      fees: {},
     });
   }
 
