@@ -97,7 +97,7 @@ class Widget extends React.Component {
           increaseGuestCount={increaseGuestCount}
           decreaseGuestCount={decreaseGuestCount}
         />
-        <MainButton checkOut={checkOut} />
+        <MainButton checkOut={checkOut} showCalendarModal={showCalendarModal} />
 
         { (days && calendarModalVisible)
           && (
@@ -142,7 +142,7 @@ Widget.propTypes = {
   fees: PropTypes.shape({
     cleaningFee: PropTypes.number,
     nights: PropTypes.arrayOf(PropTypes.shape({
-      date: PropTypes.instanceOf(Date),
+      date: PropTypes.string,
       booked: PropTypes.bool,
       price: PropTypes.number,
       minimumNights: PropTypes.number,

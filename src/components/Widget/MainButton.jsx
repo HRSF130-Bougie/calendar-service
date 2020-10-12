@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const MainButtonStyled = styled.button`
@@ -30,7 +31,8 @@ const MainButtonStyled = styled.button`
   }
 `;
 
-const MainButton = ({ checkOut }) => {
+const MainButton = ({ checkOut, showCalendarModal }) => {
+
   const [[x, y], setXY] = useState([0, 0]);
   const handleXY = (event) => {
     const width = event.target.clientWidth;
@@ -45,7 +47,13 @@ const MainButton = ({ checkOut }) => {
     '--y': `${y}px`,
   }
 
-  return (<MainButtonStyled onMouseMove={(event) => handleXY(event)} style={style}>{checkOut ? 'Reserve' : 'Check availability'}</MainButtonStyled>);
+  return (
+    <MainButtonStyled
+      onClick={!checkOut ? () => showCalendarModal('calendarModalVisible') : () => console.log('Clicked!')}
+      onMouseMove={(event) => handleXY(event)}
+      style={style}>{checkOut ? 'Reserve' : 'Check availability'}
+    </MainButtonStyled>
+  );
 };
 
 export default MainButton;

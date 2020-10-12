@@ -104,7 +104,7 @@ Pricing.propTypes = {
   fees: PropTypes.shape({
     cleaningFee: PropTypes.number,
     nights: PropTypes.arrayOf(PropTypes.shape({
-      date: PropTypes.instanceOf(Date),
+      date: PropTypes.string,
       booked: PropTypes.bool,
       price: PropTypes.number,
       minimumNights: PropTypes.number,
