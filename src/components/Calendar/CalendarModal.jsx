@@ -167,6 +167,7 @@ const CalendarModal = ({
   if (checkIn) {
     console.log(checkIn)
     console.log(new Date(checkIn).getMonth())
+    console.log(for a commit)
   }
 
   let [xTransMonth, setXMonth] = useState(0);
