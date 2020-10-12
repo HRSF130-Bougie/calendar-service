@@ -18,11 +18,15 @@ const MainButtonStyled = styled.button`
   border: medium none;
   color: rgb(255, 255, 255);
   width: 100%;
-  transition: none 0s ease 0s;
   background: linear-gradient(90deg, rgba(185,29,88,1) 0%, rgba(136,21,81,1) 31%);
   &:hover {
-    background: radial-gradient(circle at center center, rgba(185,29,88,1) 0%, rgba(136,21,81,1) 31%);
+    background: radial-gradient(circle at center, #BD1E59 0%, #92174D 35%, #861453 50%, #6C0D63 100% );
     background-position: var(--x) var(--y);
+  }
+  &:active {
+    background: radial-gradient(circle at center, #FF385C 0%, #E61E4D 27.5%, #E31C5F 40%, #D70466 57.5%, #BD1E59 75%, #BD1E59 100%);
+    transform: scale(.95);
+    transition: all 100ms ease-out 0s;
   }
 `;
 
@@ -32,7 +36,7 @@ const MainButton = ({ checkOut }) => {
     const width = event.target.clientWidth;
     const height = event.target.clientHeight;
     const eventOffsetX = event.nativeEvent.offsetX + (width / 2);
-    const eventOffsetY = event.nativeEvent.offsetY + (height / 2)
+    const eventOffsetY = event.nativeEvent.offsetY + (height / 2);
     setXY([eventOffsetX, eventOffsetY]);
   };
 

@@ -41,7 +41,11 @@ const GlobalFonts = createGlobalStyle`
     color: rgb(34, 34, 34);
     -moz-osx-font-smoothing: auto;
     -webkit-font-smoothing: auto;
-}
+  }
+
+  button {
+    outline: none
+  }
 `;
 
 export default GlobalFonts;

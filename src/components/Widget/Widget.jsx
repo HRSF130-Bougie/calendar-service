@@ -14,7 +14,8 @@ const WidgetWrapper = styled.div`
   box-sizing: border-box;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
-  width: 372px;
+  min-width: 220px;
+  max-width: 372px;
   height: auto;
   border: 1px solid rgb(221, 221, 221);
   border-radius: 12px;
