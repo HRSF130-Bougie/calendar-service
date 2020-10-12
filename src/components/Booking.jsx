@@ -169,7 +169,7 @@ class Booking extends React.Component {
       checkOut: null,
       lastPossibleCheckOut: new Date(2030, 12),
       bookHold: [],
-    }, () => this.setState((prevState) => { cleaningFee: prevState.cleaningFee }));
+    }, () => this.setState((prevState) => { prevState.cleaningFee; }));
   }
 
   selectDate(date, selectedMonthIndex, selectedDayIndex) {
@@ -194,7 +194,7 @@ class Booking extends React.Component {
         lastPossibleCheckOut: this.getLastDayCheckOut(selectedMonthIndex, selectedDayIndex),
       });
     }
-    //if (checkOut) { this.getSelectedDays(); }
+    // if (checkOut) { this.getSelectedDays(); }
   }
 
   render() {
