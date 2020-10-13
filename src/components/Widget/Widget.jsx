@@ -58,6 +58,7 @@ class Widget extends React.Component {
       // eslint-disable-next-line no-unused-vars
       hideModal, hideCalendarModal, showModal, showCalendarModal,
       lastPossibleCheckOut, fees, appendLeadingZeroes, headerInfo,
+      addReservation,
     } = this.props;
 
     const { nights } = fees;
@@ -86,7 +87,11 @@ class Widget extends React.Component {
           increaseGuestCount={increaseGuestCount}
           decreaseGuestCount={decreaseGuestCount}
         />
-        <MainButton checkOut={checkOut} showCalendarModal={showCalendarModal} />
+        <MainButton
+          checkOut={checkOut}
+          showCalendarModal={showCalendarModal}
+          addReservation={addReservation}
+        />
 
         { (days && calendarModalVisible)
           && (
@@ -142,4 +147,5 @@ Widget.propTypes = {
     total: PropTypes.number,
   }),
   headerInfo: PropTypes.objectOf(PropTypes.number),
+  addReservation: PropTypes.func.isRequired,
 };

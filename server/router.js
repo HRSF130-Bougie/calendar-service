@@ -15,4 +15,17 @@ router.route('/listing/:listingId').get((req, res) => {
     .catch((err) => res.status(400).send(`Error: ${err}`));
 });
 
+router.route('/listing/reservation/:listingId').patch((req, res) => {
+  const { listingId } = req.params;
+  const newListing = req.body;
+
+  schema.Listing.updateOne(
+    { listing_id: listingId },
+    { $push: { reservations: newListing } },
+    { returnNewDocument: true },
+  )
+    .then((updated) => res.status(200).send(updated))
+    .catch((err) => res.status(400).send(`Error: ${err}`));
+});
+
 module.exports = router;

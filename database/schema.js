@@ -15,13 +15,19 @@ const listingSchema = new Schema({
   ],
   reservations: [
     {
-      res_id: Number,
-      checkIn: Number,
-      checkOut: Number,
+      checkIn: String,
+      checkOut: String,
       guests: {
         adults: Number,
         children: Number,
         infants: Number,
+      },
+      fees: {
+        cleaningFee: Number,
+        basePrice: Number,
+        serviceFee: Number,
+        taxes: Number,
+        total: Number,
       },
     },
   ],

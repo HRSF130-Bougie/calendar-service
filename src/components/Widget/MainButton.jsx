@@ -30,7 +30,7 @@ const MainButtonStyled = styled.button`
   }
 `;
 
-const MainButton = ({ checkOut, showCalendarModal }) => {
+const MainButton = ({ checkOut, showCalendarModal, addReservation }) => {
   const [[x, y], setXY] = useState([0, 0]);
   const handleXY = (event) => {
     const width = event.target.clientWidth;
@@ -48,7 +48,7 @@ const MainButton = ({ checkOut, showCalendarModal }) => {
   return (
     <MainButtonStyled
       // eslint-disable-next-line no-console
-      onClick={!checkOut ? () => showCalendarModal('calendarModalVisible') : () => console.log('Clicked!')}
+      onClick={!checkOut ? () => showCalendarModal('calendarModalVisible') : addReservation}
       onMouseMove={(event) => handleXY(event)}
       style={style}
     >
@@ -62,6 +62,7 @@ export default MainButton;
 MainButton.propTypes = {
   checkOut: PropTypes.instanceOf(Date),
   showCalendarModal: PropTypes.func,
+  addReservation: PropTypes.func.isRequired,
 };
 
 MainButton.defaultProps = {

@@ -39,6 +39,7 @@ class Booking extends React.Component {
     this.hideCalendarModal = this.hideModal.bind(this);
     this.showCalendarModal = this.showModal.bind(this);
     this.getSelectedDays = this.getSelectedDays.bind(this);
+    this.addReservation = this.addReservation.bind(this);
   }
 
   componentDidMount() {
@@ -172,6 +173,15 @@ class Booking extends React.Component {
     }, () => this.setState((prevState) => { prevState.cleaningFee; }));
   }
 
+  clearGuests() {
+    this.setState({
+      adults: 0,
+      children: 0,
+      infants: 0,
+      totalGuests: 1,
+    });
+  }
+
   selectDate(date, selectedMonthIndex, selectedDayIndex) {
     const { checkIn, checkOut } = this.state;
     if (!checkIn) {
@@ -195,6 +205,46 @@ class Booking extends React.Component {
       });
     }
     // if (checkOut) { this.getSelectedDays(); }
+  }
+
+  addReservation() {
+    const {
+      currentListing, checkIn, checkOut, adults, children, infants, fees, days,
+    } = this.state;
+    const {
+      cleaningFee, basePrice, serviceFee, taxes, total,
+    } = fees;
+
+    const newBooking = {
+      checkIn,
+      checkOut,
+      guests: {
+        adults,
+        children,
+        infants,
+      },
+      fees: {
+        cleaningFee,
+        basePrice,
+        serviceFee,
+        taxes,
+        total,
+      },
+    }
+
+    console.log('hit add');
+
+    fetch(`api/booking/listing/reservation/${currentListing}`, {
+      method: 'PATCH', // or 'PUT'
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newBooking),
+    })
+      .then((response) => response.json())
+      .then(() => this.clearDates())
+      .then(() => this.clearGuests())
+      .catch((error) => console.error('Fetch error: ', error));
   }
 
   render() {
@@ -229,6 +279,7 @@ class Booking extends React.Component {
           appendLeadingZeroes={this.appendLeadingZeroes}
           fees={fees}
           headerInfo={headerInfo}
+          addReservation={this.addReservation}
         />
       </>
       // </OuterPage>

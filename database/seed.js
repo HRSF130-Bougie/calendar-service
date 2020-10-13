@@ -2,6 +2,7 @@
 const dayjs = require('dayjs');
 const faker = require('faker');
 const utc = require('dayjs/plugin/utc');
+
 dayjs.extend(utc);
 
 // eslint-disable-next-line no-unused-vars
@@ -36,7 +37,8 @@ const reSeed = async () => {
         const monthArray = [];
 
         for (let day = 1; day <= lastDay; day += 1) {
-          const newDay = dayjs(startDay).utc().add(day - 1, 'day').add(6, 'hours').toDate();
+          const newDay = dayjs(startDay).utc().add(day - 1, 'day').add(6, 'hours')
+            .toDate();
           const date = {
             date: newDay,
             booked: faker.random.boolean(),
