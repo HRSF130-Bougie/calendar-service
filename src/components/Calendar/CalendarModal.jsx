@@ -1,3 +1,4 @@
+/* eslint-disable prefer-const */
 /* eslint-disable react/require-default-props */
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
@@ -187,7 +188,7 @@ const CalendarModal = ({
   let [xTransGrid, setXGrid] = useState(-324 * start);
   let [calendarLocation, setCalendarLocation] = useState(start);
 
-  const moveLeft = function () {
+  const moveLeft = function moveLeft() {
     if (calendarLocation > 0) {
       setXMonth(xTransMonth += 322);
       setXGrid(xTransGrid += 324);
@@ -195,7 +196,7 @@ const CalendarModal = ({
     }
   };
 
-  const moveRight = function () {
+  const moveRight = function moveRight() {
     if (calendarLocation < calMax) {
       setXMonth(xTransMonth -= 322);
       setXGrid(xTransGrid -= 324);
