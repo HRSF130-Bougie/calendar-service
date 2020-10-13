@@ -209,7 +209,7 @@ class Booking extends React.Component {
 
   addReservation() {
     const {
-      currentListing, checkIn, checkOut, adults, children, infants, fees, days,
+      currentListing, checkIn, checkOut, adults, children, infants, fees, days, bookHold,
     } = this.state;
     const {
       cleaningFee, basePrice, serviceFee, taxes, total,
@@ -230,7 +230,18 @@ class Booking extends React.Component {
         taxes,
         total,
       },
-    }
+    };
+
+    let daysCopy = days
+
+    bookHold.forEach((resDay) => {
+      console.log(resDay)
+      const month = resDay[0]
+      const day = resDay[1] + 1
+      daysCopy[month][day].booked = true;
+    });
+
+    this.setState({ days: daysCopy });
 
     console.log('hit add');
 
@@ -239,7 +250,7 @@ class Booking extends React.Component {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(newBooking),
+      body: JSON.stringify(newBooking, days),
     })
       .then((response) => response.json())
       .then(() => this.clearDates())
