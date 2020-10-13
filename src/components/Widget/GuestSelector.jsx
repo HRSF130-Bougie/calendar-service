@@ -43,42 +43,26 @@ const PlusMinusButton = styled.button`
     font-family: 'Airbnb Cereal App Light', sans-serif;
     width: 32px;
     height: 32px;
-    flex-grow: 0;
-    flex-shrink: 0;
     cursor: pointer;
-    margin: 0px;
+    border-radius: 50%;
     border-width: 1px;
     border-style: solid;
     border-color: rgb(176, 176, 176);
     color: rgb(113, 113, 113);
+    background: rgb(255, 255, 255);
     font-size: 25px;
     outline: none;
-    background: rgb(255, 255, 255) none;
-    border-radius: 50%;
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    padding-bottom: 5px;
 }
 `;
 
-const PlusMinusButtonDisabled = styled.div`
-    font-family: 'Airbnb Cereal App Light', sans-serif;
-    width: 30px;
-    height: 30px;
-    flex-grow: 0;
-    flex-shrink: 0;
-    cursor: pointer;
-    margin: 0px;
-    border-width: 1px;
-    border-style: solid;
+const PlusMinusButtonDisabled = styled(PlusMinusButton)`
     border-color:  rgb(235, 235, 235);
     color:  rgb(235, 235, 235);
-    font-size: 25px;
-    outline: none;
-    background: rgb(255, 255, 255) none;
-    border-radius: 50%;
-    text-align: center;
-
+    cursor: not-allowed;
 }
 `;
 
