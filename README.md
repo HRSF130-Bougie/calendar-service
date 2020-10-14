@@ -49,6 +49,13 @@ To run server
 npm start-dev
 ```
 
+To run MongoDB
+
+```sh
+mkdir data
+mongod --dbpath data
+```
+
 To seed database
 
 ```sh
