@@ -122,12 +122,12 @@ router.route("/listing/reservation/:listingId").patch((req, res) => {
     { $push: { reservations: newListing }, days },
     { returnNewDocument: true }
   )
-    .then((updateMetadata) =>
-      res.status(204).send({
+    .then((updateMetadata) => {
+      res.status(200).send({
         success: true,
         updatedCount: updateMetadata.nModified,
-      })
-    )
+      });
+    })
     .catch((err) => res.status(400).send(`Error: ${err}`));
 });
 
@@ -135,7 +135,7 @@ router.route("/listing/reservation/:listingId").patch((req, res) => {
 router.route("/listings/").delete((req, res) => {
   schema.Listing.deleteMany({})
     .then((deletionMetadata) => {
-      res.status(204).send({
+      res.status(200).send({
         success: true,
         deletedCount: deletionMetadata.deletedCount,
       });

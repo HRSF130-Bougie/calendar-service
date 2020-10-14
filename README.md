@@ -87,13 +87,30 @@ npm install
 **Returns:** JSON
 
 ```json
-{
-  "_id": "5f875e9c2eccda0e6ea0d4f5",
-  "date": "2020-10-01T13:00:00.000Z",
-  "booked": false,
-  "price": 249,
-  "minimumNights": 1
-}
+[
+  {
+    "days": [
+      [
+        {
+          "_id": "5f87877a925bba0f2706b108",
+          "date": "2021-03-31T14:00:00.000Z",
+          "booked": true,
+          "price": 180,
+          "minimumNights": 1
+        }
+      ]
+    ],
+    "_id": "5f87877a925bba0f2706b052",
+    "listing_id": 1,
+    "cleaningFee": 70,
+    "weekendPricing": true,
+    "lowestPrice": 180,
+    "rating": 3.94,
+    "reviews": 745,
+    "reservations": [],
+    "__v": 0
+  }
+]
 ```
 
 ### Get all dates
@@ -105,13 +122,30 @@ npm install
 **Returns:** JSON
 
 ```json
-{
-  "_id": "5f874671d0a9767a5e69ab37",
-  "date": "2020-10-01T13:00:00.000Z",
-  "booked": false,
-  "price": 248,
-  "minimumNights": 1
-}
+[
+  {
+    "days": [
+      [
+        {
+          "_id": "5f87877a925bba0f2706b108",
+          "date": "2021-03-31T14:00:00.000Z",
+          "booked": true,
+          "price": 180,
+          "minimumNights": 1
+        }
+      ]
+    ],
+    "_id": "5f87877a925bba0f2706b052",
+    "listing_id": 1,
+    "cleaningFee": 70,
+    "weekendPricing": true,
+    "lowestPrice": 180,
+    "rating": 3.94,
+    "reviews": 745,
+    "reservations": [],
+    "__v": 0
+  }
+]
 ```
 
 ### Get date ID
@@ -127,13 +161,30 @@ npm install
 **Returns:** JSON
 
 ```json
-{
-  "_id": "5f874672d0a9767a5e69eb8d",
-  "date": "2020-10-01T13:00:00.000Z",
-  "booked": true,
-  "price": 119,
-  "minimumNights": 1
-}
+[
+  {
+    "days": [
+      [
+        {
+          "_id": "5f87877a925bba0f2706b108",
+          "date": "2021-03-31T14:00:00.000Z",
+          "booked": true,
+          "price": 180,
+          "minimumNights": 1
+        }
+      ]
+    ],
+    "_id": "5f87877a925bba0f2706b052",
+    "listing_id": 1,
+    "cleaningFee": 70,
+    "weekendPricing": true,
+    "lowestPrice": 180,
+    "rating": 3.94,
+    "reviews": 745,
+    "reservations": [],
+    "__v": 0
+  }
+]
 ```
 
 ### Update date availability
