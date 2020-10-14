@@ -93,16 +93,26 @@ class Booking extends React.Component {
     // Create an array of the date objects of all selected dates
     const nights = [];
     const bookHold = [];
-    for (let months = selectedMonthIndex; months < days.length; months += 1) {
-      for (let day = selectedDayIndex; day < days[months].length; day += 1) {
-        if (nights.length < nightCount) {
-          nights.push(days[months][day - 2]);
-          bookHold.push([months, day - 1]);
-        }
-      }
-    }
 
-    nights.pop();
+    let count = nightCount
+    let monthCounter = selectedMonthIndex
+    let dayCounter = selectedDayIndex
+
+    while (count > 0) {
+      console.log({ count, monthCounter } + ' ' + dayCounter - 2)
+      if (dayCounter < days[monthCounter].length) {
+        nights.push(days[monthCounter][dayCounter - 2])
+        bookHold.push([monthCounter, dayCounter - 2])
+        dayCounter += 1
+      } else if (dayCounter === days[monthCounter].length) {
+        nights.push(days[monthCounter][dayCounter - 2])
+        dayCounter = 1
+        monthCounter += 1
+      }
+      count -= 1
+    }
+    console.log(nights, bookHold)
+
 
     const initial = 0;
     // eslint-disable-next-line max-len

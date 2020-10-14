@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import React from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 
@@ -36,7 +36,7 @@ const ModalCloseButton = ({
   <ModalCloseButtonStyle type="button" onClick={funct} name={name} calendar={calendar} clear={clear}>{text}</ModalCloseButtonStyle>
 );
 
-export default ModalCloseButton;
+export default memo(ModalCloseButton);
 
 ModalCloseButton.propTypes = {
   funct: PropTypes.func,

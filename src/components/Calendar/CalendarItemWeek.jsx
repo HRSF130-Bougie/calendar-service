@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -29,7 +29,7 @@ const CalendarItemWeek = ({ weekdays }) => (
   </WeekWrapper>
 );
 
-export default CalendarItemWeek;
+export default memo(CalendarItemWeek);
 
 CalendarItemWeek.propTypes = {
   weekdays: PropTypes.arrayOf(PropTypes.string),

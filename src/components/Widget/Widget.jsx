@@ -1,5 +1,5 @@
 /* eslint-disable react/require-default-props */
-import React from 'react';
+import React, { memo } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import WidgetHeader from './WidgetHeader';
@@ -24,7 +24,7 @@ const WidgetWrapper = styled.div`
   margin: auto;
 `;
 
-class Widget extends React.Component {
+class Widget extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -114,7 +114,7 @@ class Widget extends React.Component {
   }
 }
 
-export default Widget;
+export default memo(Widget);
 
 Widget.propTypes = {
   guests: PropTypes.objectOf(PropTypes.number).isRequired,

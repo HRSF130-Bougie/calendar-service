@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 /* eslint-disable object-curly-newline */
-import React from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -111,7 +111,7 @@ const GuestSelector = ({ target, currentValue, increaseGuestCount, decreaseGuest
   );
 };
 
-export default GuestSelector;
+export default memo(GuestSelector);
 
 GuestSelector.propTypes = {
   target: PropTypes.objectOf(PropTypes.string, PropTypes.string).isRequired,

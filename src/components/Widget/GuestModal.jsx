@@ -1,5 +1,5 @@
 /* eslint-disable object-curly-newline */
-import React from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import ModalCloseButton from '../ModalCloseButton';
@@ -85,7 +85,7 @@ const GuestModal = ({ hideGuestModal, show, guests, increaseGuestCount, decrease
   </GuestModalWrapper>
 );
 
-export default GuestModal;
+export default memo(GuestModal);
 
 GuestModal.propTypes = {
   hideGuestModal: PropTypes.func.isRequired,

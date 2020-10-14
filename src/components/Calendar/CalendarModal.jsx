@@ -1,6 +1,6 @@
 /* eslint-disable prefer-const */
 /* eslint-disable react/require-default-props */
-import React, { useState } from 'react';
+import React, { memo, useState } from 'react';
 import PropTypes from 'prop-types';
 import dayjs from 'dayjs';
 import styled from 'styled-components';
@@ -301,7 +301,7 @@ const CalendarModal = ({
   );
 };
 
-export default CalendarModal;
+export default memo(CalendarModal);
 
 CalendarModal.propTypes = {
   days: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.object)).isRequired,

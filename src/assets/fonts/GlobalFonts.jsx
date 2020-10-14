@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { createGlobalStyle } from 'styled-components';
 
 import AirbnbCerealBold from './AirbnbCerealBold.woff';
@@ -48,4 +48,4 @@ const GlobalFonts = createGlobalStyle`
   }
 `;
 
-export default GlobalFonts;
+export default memo(GlobalFonts);

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, memo } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -57,7 +57,7 @@ const MainButton = ({ checkOut, showCalendarModal, addReservation }) => {
   );
 };
 
-export default MainButton;
+export default memo(MainButton);
 
 MainButton.propTypes = {
   checkOut: PropTypes.instanceOf(Date),
