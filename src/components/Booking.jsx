@@ -97,7 +97,7 @@ class Booking extends React.Component {
       for (let day = selectedDayIndex; day < days[months].length; day += 1) {
         if (nights.length < nightCount) {
           nights.push(days[months][day - 2]);
-          bookHold.push([months, day - 2]);
+          bookHold.push([months, day - 1]);
         }
       }
     }
@@ -232,12 +232,14 @@ class Booking extends React.Component {
       },
     };
 
-    let daysCopy = days
+    const daysCopy = days;
 
     bookHold.forEach((resDay) => {
-      console.log(resDay)
-      const month = resDay[0]
-      const day = resDay[1] + 1
+      console.log(resDay);
+      const month = resDay[0];
+      const day = resDay[1];
+      console.log(month, day);
+      console.log(daysCopy[month][day])
       daysCopy[month][day].booked = true;
     });
 
