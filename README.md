@@ -65,7 +65,7 @@ npm run seed
 To run tests
 
 ```sh
-npm test
+npm run test
 ```
 
 ### Installing Dependencies
