@@ -154,10 +154,6 @@ npm install
 
 **Success Status Code:** `204`
 
-### Add image to restaurant
-
-- POST `/api/restaurants/:restaurantId/images`
-
 **Returns:** JSON
 
 ```json
