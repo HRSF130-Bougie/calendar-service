@@ -21,4 +21,4 @@ $ yarn build
 $ yarn seed
 $ yarn start
 
-It should be available on localhost:3002
+Once everything is running, go to http://localhost:3002 
