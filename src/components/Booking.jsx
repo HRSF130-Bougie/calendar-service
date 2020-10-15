@@ -94,24 +94,24 @@ class Booking extends React.Component {
     const nights = [];
     const bookHold = [];
 
-    let count = nightCount
-    let monthCounter = selectedMonthIndex
-    let dayCounter = selectedDayIndex
+    let count = nightCount;
+    let monthCounter = selectedMonthIndex;
+    let dayCounter = selectedDayIndex;
 
     while (count > 0) {
-      console.log({ count, monthCounter } + ' ' + dayCounter - 2)
+      console.log({ count, monthCounter, dayCounter });
       if (dayCounter < days[monthCounter].length) {
-        nights.push(days[monthCounter][dayCounter - 2])
-        bookHold.push([monthCounter, dayCounter - 2])
+        nights.push(days[monthCounter][dayCounter - 3]);
+        bookHold.push([monthCounter, dayCounter - 3]);
         dayCounter += 1
       } else if (dayCounter === days[monthCounter].length) {
-        nights.push(days[monthCounter][dayCounter - 2])
-        dayCounter = 1
-        monthCounter += 1
+        nights.push(days[monthCounter][dayCounter - 3]);
+        dayCounter = 1;
+        monthCounter += 1;
       }
-      count -= 1
+      count -= 1;
     }
-    console.log(nights, bookHold)
+    console.log(nights, bookHold);
 
 
     const initial = 0;
@@ -196,7 +196,7 @@ class Booking extends React.Component {
     const { checkIn, checkOut } = this.state;
     if (!checkIn) {
       this.setState({
-        checkIn: date,
+        checkIn: new Date(date),
       }, () => this.setState({
         lastPossibleCheckOut: this.getLastDayCheckOut(selectedMonthIndex, selectedDayIndex),
       }));
@@ -251,6 +251,7 @@ class Booking extends React.Component {
       console.log(month, day);
       console.log(daysCopy[month][day])
       daysCopy[month][day].booked = true;
+      console.log(daysCopy[month][day].booked)
     });
 
     this.setState({ days: daysCopy });

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import styled, { css } from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleUp } from '@fortawesome/free-solid-svg-icons';
@@ -178,7 +178,7 @@ const WidgetDateGuest = ({
   );
 };
 
-export default WidgetDateGuest;
+export default memo(WidgetDateGuest);
 
 WidgetDateGuest.propTypes = {
   toggleGuestModal: PropTypes.func.isRequired,

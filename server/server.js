@@ -5,7 +5,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const router = require('./router.js');
 // eslint-disable-next-line no-unused-vars
-const db = require('../database/connectToDatabaseRemote.js');
+const db = require('../database/connectToDatabaseLocal.js');
 
 const app = express();
 const port = 3002;
