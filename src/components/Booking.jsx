@@ -23,7 +23,7 @@ class Booking extends React.Component {
       calendarModalVisible: false,
       lastPossibleCheckOut: new Date(2030, 12),
       fees: {},
-      headerIfno: {
+      headerInfo: {
         lowestPrice: null,
         rating: null,
         reviews: null,
@@ -180,7 +180,7 @@ class Booking extends React.Component {
       checkOut: null,
       lastPossibleCheckOut: new Date(2030, 12),
       bookHold: [],
-    }, () => this.setState((prevState) => { prevState.cleaningFee; }));
+    }, () => this.setState((prevState) => ({ fees: { cleaningFee: prevState.fees.cleaningFee } })));
   }
 
   clearGuests() {
