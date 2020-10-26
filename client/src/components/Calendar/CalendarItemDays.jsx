@@ -103,8 +103,6 @@ class CalendarDayCell extends React.PureComponent {
     const today = new Date(Date.now());
     const thisCell = new Date(year, month, day);
 
-    console.log('thisCell: ', thisCell);
-
     if (thisCell < today) {
       this.setState({ dayState: 'beforeToday' });
     }

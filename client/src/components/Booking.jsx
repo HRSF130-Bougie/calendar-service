@@ -68,9 +68,12 @@ class Booking extends React.Component {
   getLastDayCheckOut(selectedMonthIndex, selectedDayIndex) {
     const { calendar } = this.state;
     for (let months = selectedMonthIndex; months < calendar.length; months += 1) {
-      for (let day = selectedDayIndex; day < calendar[months].length; day += 1) {
-        if (calendar[months][day].booked) {
-          return new Date(calendar[months][day - 1].date);
+      for (let days = selectedDayIndex; days < calendar[months].length; days += 1) {
+        console.log({ months, days});
+        if (calendar[months][days].booked) {
+          console.log('calendar[months][day] ', calendar[months][days - 1].date);
+          const { year, month, day } = calendar[months][days - 1].date;
+          return new Date(year, month, day);
         }
       }
     }
