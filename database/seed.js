@@ -2,11 +2,13 @@
 const dayjs = require('dayjs');
 const faker = require('faker');
 const utc = require('dayjs/plugin/utc');
+const toObject = require('dayjs/plugin/toObject');
 
 dayjs.extend(utc);
+dayjs.extend(toObject);
 
 // eslint-disable-next-line no-unused-vars
-const db = require('./connectToDatabaseRemote.js');
+const db = require('./connectToDatabaseLocal.js');
 const schema = require('./schema.js');
 
 const reSeed = async () => {
@@ -37,10 +39,13 @@ const reSeed = async () => {
         const monthArray = [];
 
         for (let day = 1; day <= lastDay; day += 1) {
-          const newDay = dayjs(startDay).utc().add(day - 1, 'day').add(6, 'hours')
-            .toDate();
+          const genDay = dayjs(startDay).utc().add(day - 1, 'day').add(6, 'hours');
+          const newDay = genDay.toDate();
+          const objDay = genDay.toObject();
+          console.log(objDay);
+
           const date = {
-            date: newDay,
+            date: {year: objDay.years, month: objDay.months, day: objDay.date },
             booked: faker.random.boolean(),
             price: randomPrice,
             minimumNights: 1,

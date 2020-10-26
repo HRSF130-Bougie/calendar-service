@@ -7,7 +7,7 @@ const listingSchema = new Schema({
   listing_id: Number,
   days: [
     [{
-      date: Date,
+      date: { year: Number, month: Number, Day: Number },
       booked: Boolean,
       price: Number,
       minimumNights: Number,
