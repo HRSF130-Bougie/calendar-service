@@ -20,6 +20,8 @@ class Booking extends React.Component {
       weekendPricing: false,
       checkIn: null,
       checkOut: null,
+      checkInIndex: {},
+      checkOutIndex: [],
       calendarModalVisible: false,
       lastPossibleCheckOut: new Date(2030, 12),
       fees: {},
@@ -69,9 +71,7 @@ class Booking extends React.Component {
     const { calendar } = this.state;
     for (let months = selectedMonthIndex; months < calendar.length; months += 1) {
       for (let days = selectedDayIndex; days < calendar[months].length; days += 1) {
-        console.log({ months, days});
         if (calendar[months][days].booked) {
-          console.log('calendar[months][day] ', calendar[months][days - 1].date);
           const { year, month, day } = calendar[months][days - 1].date;
           return new Date(year, month, day);
         }
@@ -85,9 +85,9 @@ class Booking extends React.Component {
     return null;
   }
 
-  getSelectedDays(selectedMonthIndex, selectedDayIndex) {
+  getSelectedDays() {
     const {
-      calendar, checkIn, checkOut, fees,
+      calendar, checkIn, checkOut, checkInIndex, checkOutIndex, fees,
     } = this.state;
 
     const { cleaningFee } = fees;
@@ -101,25 +101,43 @@ class Booking extends React.Component {
     // Create an array of the date objects of all selected dates
     const nights = [];
     const bookHold = [];
-
     let count = nightCount;
-    let monthCounter = selectedMonthIndex;
-    let dayCounter = selectedDayIndex;
+    // let monthCounter = selectedMonthIndex;
+    // let dayCounter = selectedDayIndex;
 
-    while (count > 0) {
-      console.log({ count, monthCounter, dayCounter });
-      if (dayCounter < calendar[monthCounter].length) {
-        nights.push(calendar[monthCounter][dayCounter - 3]);
-        bookHold.push([monthCounter, dayCounter - 3]);
-        dayCounter += 1;
-      } else if (dayCounter === calendar[monthCounter].length) {
-        nights.push(calendar[monthCounter][dayCounter - 3]);
-        dayCounter = 1;
-        monthCounter += 1;
+    // Collect arrays of dates and price for fee calculations and to block out the dates
+
+    for (let months = checkInIndex.monthIndex; months <= checkOutIndex.monthIndex; months += 1) {
+      let dayLimit = calendar[months].length - 1;
+      console.log({ months, dayLimit });
+      for (let days = checkInIndex.dayIndex; days < dayLimit; days += 1) {
+        console.log({ months, days })
+        if (months === checkOutIndex.monthIndex) {
+          dayLimit = checkOutIndex.dayIndex + 1;
+        }
+        if (days === calendar[months].length - 1) {
+          days = -1;
+          months += 1;
+        } else {
+          bookHold.push([months, days]);
+        }
+        // Go to the start of the next month if end of current is reached
       }
-      count -= 1;
     }
-    console.log(nights, bookHold);
+
+    // while (count > 0) {
+    //   console.log({ count, monthCounter, dayCounter });
+    //   if (dayCounter < calendar[monthCounter].length) {
+    //     nights.push(calendar[monthCounter][dayCounter-3]);
+    //     bookHold.push([monthCounter, dayCounter]);
+    //     dayCounter += 1;
+    //   } else if (dayCounter === calendar[monthCounter].length) {
+    //     nights.push(calendar[monthCounter][dayCounter-3]);
+    //     dayCounter = 1;
+    //     monthCounter += 1;
+    //   }
+    //   count -= 1;
+    // }
 
     const initial = 0;
     // eslint-disable-next-line max-len
@@ -201,24 +219,21 @@ class Booking extends React.Component {
 
   selectDate(date, selectedMonthIndex, selectedDayIndex) {
     const { checkIn, checkOut } = this.state;
-    if (!checkIn) {
+    if (!checkIn || (checkIn && checkOut)) {
+      if (checkOut) { this.clearDates(); }
       this.setState({
         checkIn: date,
+        checkInIndex: { monthIndex: selectedMonthIndex, dayIndex: selectedDayIndex },
       }, () => this.setState({
         lastPossibleCheckOut: this.getLastDayCheckOut(selectedMonthIndex, selectedDayIndex),
       }));
     } else if (checkIn && !checkOut) {
       this.setState({
         checkOut: date,
+        checkOutIndex: { monthIndex: selectedMonthIndex, dayIndex: selectedDayIndex },
       }, () => {
         this.hideModal(null, 'calendarModalVisible');
-        this.getSelectedDays(selectedMonthIndex, selectedDayIndex);
-      });
-    } else if (checkIn && checkOut) {
-      this.clearDates();
-      this.setState({
-        checkIn: date,
-        lastPossibleCheckOut: this.getLastDayCheckOut(selectedMonthIndex, selectedDayIndex),
+        this.getSelectedDays();
       });
     }
   }
