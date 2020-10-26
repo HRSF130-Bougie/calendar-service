@@ -105,19 +105,23 @@ class CalendarDayCell extends React.PureComponent {
 
     console.log('thisCell: ', thisCell);
 
-    if (thisCell <= today
-      || (thisCell < checkIn && !checkOut)
-      || (lastPossibleCheckOut !== null && !checkOut && (thisCell > lastPossibleCheckOut))) {
+    if (thisCell < today) {
       this.setState({ dayState: 'beforeToday' });
-    } else if (dayInfo.booked || dayInfo.booked === undefined) {
-      this.setState({ dayState: 'booked' });
-    } else if ((checkIn && thisCell.toUTCString() === checkIn.toUTCString())
-      || (checkOut && thisCell.toUTCString() === checkOut.toUTCString())) {
-      this.setState({ dayState: 'selected' });
-    } else if ((checkIn && checkOut) && (thisCell > checkIn) && (thisCell < checkOut)) {
-      this.setState({ dayState: 'inBetween' });
-    } else if (dayInfo.booked === false && dayState !== 'selected') {
-      this.setState({ dayState: 'available' });
+    }
+    if (thisCell >= today) {
+      if ((thisCell < checkIn && !checkOut)
+        || (lastPossibleCheckOut !== null && !checkOut && (thisCell > lastPossibleCheckOut))) {
+        this.setState({ dayState: 'beforeToday' });
+      } else if (dayInfo.booked || dayInfo.booked === undefined) {
+        this.setState({ dayState: 'booked' });
+      } else if ((checkIn && thisCell.toDateString() === checkIn.toDateString())
+        || (checkOut && thisCell.toDateString() === checkOut.toDateString())) {
+        this.setState({ dayState: 'selected' });
+      } else if ((checkIn && checkOut) && (thisCell > checkIn) && (thisCell < checkOut)) {
+        this.setState({ dayState: 'inBetween' });
+      } else if (dayInfo.booked === false && dayState !== 'selected') {
+        this.setState({ dayState: 'available' });
+      }
     }
   }
 
@@ -125,8 +129,10 @@ class CalendarDayCell extends React.PureComponent {
     const {
       dayInfo, selectDate, monthIndex, dayIndex,
     } = this.props;
+    const { year, month, day } = dayInfo.date;
+    const thisCell = new Date(year, month, day);
     this.setState({ dayState: 'selected' });
-    selectDate(new Date(dayInfo.date), monthIndex, dayIndex);
+    selectDate(thisCell, monthIndex, dayIndex);
   }
 
   render() {
@@ -141,9 +147,9 @@ class CalendarDayCell extends React.PureComponent {
     let inOrOut = '';
 
     if (checkOut) {
-      if (thisCell.toUTCString() === checkIn.toUTCString()) {
+      if (thisCell.toDateString() === checkIn.toDateString()) {
         inOrOut = 'in';
-      } else if (thisCell.toUTCString() === checkOut.toUTCString()) {
+      } else if (thisCell.toDateString() === checkOut.toDateString()) {
         inOrOut = 'out';
       }
     }
