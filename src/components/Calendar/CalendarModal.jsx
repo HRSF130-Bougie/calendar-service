@@ -210,11 +210,6 @@ const CalendarModal = ({
 
   const weekdays = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
 
-  const renderMonthName = (date) => {
-    const options = { month: 'long' };
-    return new Intl.DateTimeFormat('en-US', options).format(date);
-  };
-
   const formatMonthName = (date) => dayjs(date).format('MMM D, YYYY');
 
   let selectDates = (checkIn && checkOut) ? `${nights} nights` : 'Select Dates';
@@ -233,7 +228,6 @@ const CalendarModal = ({
   };
 
   return (
-
     (
       <CalendarPopUp>
         <CalendarHeaderRow>
@@ -255,9 +249,9 @@ const CalendarModal = ({
               {
               calendar.map((month) => (
                 <MonthHeaderTitle key={Math.random()}>
-                  {dayjs(month[0].year, month[0].month, month[0].day).format('MMMM')}
+                  {dayjs(new Date(month[0].date.year, month[0].date.month, month[0].date.day)).format('MMMM')}
                   {' '}
-                  {dayjs(month[0].year, month[0].month, month[0].day).format('YYYY')}
+                  {month[0].date.year}
                 </MonthHeaderTitle>
               ))
             }

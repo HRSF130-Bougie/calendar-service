@@ -16,8 +16,8 @@ const CalendarWrapper = styled.div`
 const CalendarItem = ({
   month, weekendPricing, selectDate, checkIn, checkOut, monthIndex, lastPossibleCheckOut,
 }) => {
-  const startingDay = new Date(month[0].date);
 
+  const startingDay = new Date(month[0].date.year, month[0].date.month, month[0].date.day);
   const startDayOfWeek = startingDay.getDay();
 
   let fillMonthArray = [];
