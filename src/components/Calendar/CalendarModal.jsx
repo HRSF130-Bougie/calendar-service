@@ -160,15 +160,18 @@ const KeyboardOuter = styled.div`
 `;
 
 const CalendarModal = ({
-  days, weekendPricing, hideCalendarModal, nights,
+  calendar, weekendPricing, hideCalendarModal, nights,
   selectDate, clearDates, checkIn, checkOut, lastPossibleCheckOut,
 }) => {
   const calMax = 4;
 
+  // Calculate which month the calendar should open to when a checkIn
+  // date has already been selected
+
   let start = 0;
   if (checkIn) {
     const currentMonth = (new Date(Date.now()).getMonth());
-    const checkInMonth = (new Date(checkIn).getMonth());
+    const checkInMonth = (checkIn.month);
     if (checkInMonth > currentMonth) {
       if (checkInMonth - currentMonth <= calMax) {
         start = checkInMonth - currentMonth;
@@ -184,6 +187,7 @@ const CalendarModal = ({
     }
   }
 
+  // Hooks to keep track of calendar position
   let [xTransMonth, setXMonth] = useState(start * -322);
   let [xTransGrid, setXGrid] = useState(-324 * start);
   let [calendarLocation, setCalendarLocation] = useState(start);
@@ -249,11 +253,11 @@ const CalendarModal = ({
           <MonthWindow>
             <CalendarGridRow style={slideMonth}>
               {
-              days.map((month) => (
+              calendar.map((month) => (
                 <MonthHeaderTitle key={Math.random()}>
-                  {renderMonthName(new Date(month[1].date))}
+                  {dayjs(month[0].year, month[0].month, month[0].day).format('MMMM')}
                   {' '}
-                  {new Date(month[0].date).getFullYear()}
+                  {`${month[0].year}`}
                 </MonthHeaderTitle>
               ))
             }
@@ -274,7 +278,7 @@ const CalendarModal = ({
         <CalendarWindow>
           <CalendarGridRow style={slideGrid}>
             {
-              days.map((month, monthIndex) => (
+              calendar.map((month, monthIndex) => (
                 <CalendarItemGrid
                   key={Math.random()}
                   month={month}
@@ -304,7 +308,7 @@ const CalendarModal = ({
 export default memo(CalendarModal);
 
 CalendarModal.propTypes = {
-  days: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.object)).isRequired,
+  calendar: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.object)).isRequired,
   weekendPricing: PropTypes.bool.isRequired,
   hideCalendarModal: PropTypes.func.isRequired,
   selectDate: PropTypes.func.isRequired,

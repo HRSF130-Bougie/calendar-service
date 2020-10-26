@@ -53,7 +53,7 @@ class Widget extends React.PureComponent {
     const { guestModalVisible } = this.state;
     const {
       guests, increaseGuestCount, decreaseGuestCount,
-      days, weekendPricing, selectDate, clearDates,
+      calendar, weekendPricing, selectDate, clearDates,
       checkIn, checkOut, calendarModalVisible,
       // eslint-disable-next-line no-unused-vars
       hideModal, hideCalendarModal, showModal, showCalendarModal,
@@ -93,10 +93,10 @@ class Widget extends React.PureComponent {
           addReservation={addReservation}
         />
 
-        { (days && calendarModalVisible)
+        { (calendar && calendarModalVisible)
           && (
             <CalendarModal
-              days={days}
+              calendar={calendar}
               weekendPricing={weekendPricing}
               lastPossibleCheckOut={lastPossibleCheckOut}
               hideCalendarModal={hideCalendarModal}
@@ -120,7 +120,7 @@ Widget.propTypes = {
   guests: PropTypes.objectOf(PropTypes.number).isRequired,
   increaseGuestCount: PropTypes.func.isRequired,
   decreaseGuestCount: PropTypes.func.isRequired,
-  days: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.object)).isRequired,
+  calendar: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.object)).isRequired,
   weekendPricing: PropTypes.bool.isRequired,
   selectDate: PropTypes.func.isRequired,
   clearDates: PropTypes.func.isRequired,

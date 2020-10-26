@@ -11,7 +11,7 @@ class Booking extends React.Component {
     this.state = {
       // eslint-disable-next-line react/no-unused-state
       currentListing: 0,
-      days: [],
+      calendar: [],
       reservations: [],
       adults: 1,
       children: 0,
@@ -52,10 +52,10 @@ class Booking extends React.Component {
       .then((response) => response.json())
       .then((data) => {
         const {
-          days, reservations, cleaningFee, weekendPricing, lowestPrice, rating, reviews,
+          calendar, reservations, cleaningFee, weekendPricing, lowestPrice, rating, reviews,
         } = data;
         this.setState({
-          days,
+          calendar,
           reservations,
           weekendPricing,
           fees: { cleaningFee },
@@ -66,11 +66,11 @@ class Booking extends React.Component {
   }
 
   getLastDayCheckOut(selectedMonthIndex, selectedDayIndex) {
-    const { days } = this.state;
-    for (let months = selectedMonthIndex; months < days.length; months += 1) {
-      for (let day = selectedDayIndex; day < days[months].length; day += 1) {
-        if (days[months][day].booked) {
-          return new Date(days[months][day - 1].date);
+    const { calendar } = this.state;
+    for (let months = selectedMonthIndex; months < calendar.length; months += 1) {
+      for (let day = selectedDayIndex; day < calendar[months].length; day += 1) {
+        if (calendar[months][day].booked) {
+          return new Date(calendar[months][day - 1].date);
         }
       }
     }
@@ -79,7 +79,7 @@ class Booking extends React.Component {
 
   getSelectedDays(selectedMonthIndex, selectedDayIndex) {
     const {
-      days, checkIn, checkOut, fees,
+      calendar, checkIn, checkOut, fees,
     } = this.state;
 
     const { cleaningFee } = fees;
@@ -100,12 +100,12 @@ class Booking extends React.Component {
 
     while (count > 0) {
       console.log({ count, monthCounter, dayCounter });
-      if (dayCounter < days[monthCounter].length) {
-        nights.push(days[monthCounter][dayCounter - 3]);
+      if (dayCounter < calendar[monthCounter].length) {
+        nights.push(calendar[monthCounter][dayCounter - 3]);
         bookHold.push([monthCounter, dayCounter - 3]);
         dayCounter += 1;
-      } else if (dayCounter === days[monthCounter].length) {
-        nights.push(days[monthCounter][dayCounter - 3]);
+      } else if (dayCounter === calendar[monthCounter].length) {
+        nights.push(calendar[monthCounter][dayCounter - 3]);
         dayCounter = 1;
         monthCounter += 1;
       }
@@ -218,7 +218,7 @@ class Booking extends React.Component {
 
   addReservation() {
     const {
-      currentListing, checkIn, checkOut, adults, children, infants, fees, days, bookHold,
+      currentListing, checkIn, checkOut, adults, children, infants, fees, calendar, bookHold,
     } = this.state;
     const {
       cleaningFee, basePrice, serviceFee, taxes, total,
@@ -241,7 +241,7 @@ class Booking extends React.Component {
       },
     };
 
-    const daysCopy = days;
+    const daysCopy = calendar;
 
     bookHold.forEach((resDay) => {
       console.log(resDay);
@@ -253,7 +253,7 @@ class Booking extends React.Component {
       console.log(daysCopy[month][day].booked);
     });
 
-    this.setState({ days: daysCopy });
+    this.setState({ calendar: daysCopy });
 
     console.log('hit add');
 
@@ -262,7 +262,7 @@ class Booking extends React.Component {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(newBooking, days),
+      body: JSON.stringify(newBooking, calendar),
     })
       .then((response) => response.json())
       .then(() => this.clearDates())
@@ -273,7 +273,7 @@ class Booking extends React.Component {
   render() {
     const guestType = 'adults';
     const {
-      adults, children, infants, totalGuests, days, weekendPricing, checkIn, checkOut,
+      adults, children, infants, totalGuests, calendar, weekendPricing, checkIn, checkOut,
       calendarModalVisible, lastPossibleCheckOut, headerInfo, fees,
     } = this.state;
 
@@ -288,7 +288,7 @@ class Booking extends React.Component {
           increaseGuestCount={this.increaseGuestCount}
           decreaseGuestCount={this.decreaseGuestCount}
           weekendPricing={weekendPricing}
-          days={days}
+          calendar={calendar}
           selectDate={this.selectDate}
           checkIn={checkIn}
           checkOut={checkOut}

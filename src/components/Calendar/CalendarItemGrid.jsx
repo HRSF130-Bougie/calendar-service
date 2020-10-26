@@ -22,7 +22,7 @@ const CalendarItem = ({
 
   let fillMonthArray = [];
 
-  // Fill in array with month data, placed in the correct days of the week
+  // Fill in array with month data, placed in the correct calendar of the week
   for (let i = startDayOfWeek, j = 0; j < month.length; i += 1, j += 1) {
     fillMonthArray[i] = month[j];
   }
