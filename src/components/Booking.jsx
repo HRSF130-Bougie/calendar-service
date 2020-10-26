@@ -103,7 +103,7 @@ class Booking extends React.Component {
       if (dayCounter < days[monthCounter].length) {
         nights.push(days[monthCounter][dayCounter - 3]);
         bookHold.push([monthCounter, dayCounter - 3]);
-        dayCounter += 1
+        dayCounter += 1;
       } else if (dayCounter === days[monthCounter].length) {
         nights.push(days[monthCounter][dayCounter - 3]);
         dayCounter = 1;
@@ -112,7 +112,6 @@ class Booking extends React.Component {
       count -= 1;
     }
     console.log(nights, bookHold);
-
 
     const initial = 0;
     // eslint-disable-next-line max-len
@@ -249,9 +248,9 @@ class Booking extends React.Component {
       const month = resDay[0];
       const day = resDay[1];
       console.log(month, day);
-      console.log(daysCopy[month][day])
+      console.log(daysCopy[month][day]);
       daysCopy[month][day].booked = true;
-      console.log(daysCopy[month][day].booked)
+      console.log(daysCopy[month][day].booked);
     });
 
     this.setState({ days: daysCopy });
