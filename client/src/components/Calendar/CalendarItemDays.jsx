@@ -99,8 +99,11 @@ class CalendarDayCell extends React.PureComponent {
     const {
       dayInfo, checkIn, checkOut, lastPossibleCheckOut,
     } = this.props;
+    const { year, month, day } = dayInfo.date;
     const today = new Date(Date.now());
-    const thisCell = new Date(dayInfo.date);
+    const thisCell = new Date(year, month, day);
+
+    console.log('thisCell: ', thisCell);
 
     if (thisCell <= today
       || (thisCell < checkIn && !checkOut)
@@ -130,10 +133,11 @@ class CalendarDayCell extends React.PureComponent {
     const {
       dayInfo, weekendPricing, checkIn, checkOut,
     } = this.props;
-    const dateDisplay = dayInfo.date ? new Date(dayInfo.date).getDate() : null;
+    const { year, month, day } = dayInfo.date;
+    const dateDisplay = dayInfo ? day : null;
     const priceDisplay = dayInfo.price ? dayInfo.price : null;
     const { dayState } = this.state;
-    const thisCell = new Date(dayInfo.date);
+    const thisCell = new Date(year, month, day);
     let inOrOut = '';
 
     if (checkOut) {
