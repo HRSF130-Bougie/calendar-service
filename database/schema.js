@@ -5,9 +5,9 @@ const { Schema } = mongoose;
 
 const listingSchema = new Schema({
   listing_id: Number,
-  days: [
+  calendar: [
     [{
-      date: { year: Number, month: Number, Day: Number },
+      date: { year: Number, month: Number, day: Number },
       booked: Boolean,
       price: Number,
       minimumNights: Number,

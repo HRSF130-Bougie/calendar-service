@@ -42,10 +42,9 @@ const reSeed = async () => {
           const genDay = dayjs(startDay).utc().add(day - 1, 'day').add(6, 'hours');
           const newDay = genDay.toDate();
           const objDay = genDay.toObject();
-          console.log(objDay);
 
           const date = {
-            date: {year: objDay.years, month: objDay.months, day: objDay.date },
+            date: { year: objDay.years, month: objDay.months, day: objDay.date },
             booked: faker.random.boolean(),
             price: randomPrice,
             minimumNights: 1,
@@ -71,7 +70,7 @@ const reSeed = async () => {
 
       const newListing = new schema.Listing({
         listing_id: listCount,
-        days: daysArray,
+        calendar: daysArray,
         cleaningFee: faker.random.number({ min: 50, max: 100 }),
         weekendPricing,
         lowestPrice: randomPrice,
