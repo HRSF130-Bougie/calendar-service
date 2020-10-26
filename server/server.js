@@ -13,7 +13,7 @@ app.use(cors());
 
 app.use(bodyParser.json());
 
-app.use('/', express.static(path.join(__dirname, '../dist')));
+app.use('/', express.static(path.join(__dirname, '../client/dist')));
 app.use('/api/booking', router);
 
 app.listen(port, () => {
