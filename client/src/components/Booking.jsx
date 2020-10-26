@@ -136,6 +136,16 @@ class Booking extends React.Component {
     });
   }
 
+  increaseGuestCount(event) {
+    event.preventDefault();
+    const targetName = event.target.name;
+
+    this.setState(
+      (prevState) => ({ [targetName]: prevState[targetName] + 1 }),
+      () => { this.calcTotalGuests(); },
+    );
+  }
+
   decreaseGuestCount(event) {
     event.preventDefault();
     const targetName = event.target.name;
@@ -144,6 +154,11 @@ class Booking extends React.Component {
       (prevState) => ({ [targetName]: prevState[targetName] - 1 }),
       () => { this.calcTotalGuests(); },
     );
+  }
+
+  calcTotalGuests() {
+    const { adults, children } = this.state;
+    this.setState({ totalGuests: adults + children });
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -164,21 +179,6 @@ class Booking extends React.Component {
       targetName = event.target.name;
     }
     this.setState({ [targetName]: false });
-  }
-
-  increaseGuestCount(event) {
-    event.preventDefault();
-    const targetName = event.target.name;
-
-    this.setState(
-      (prevState) => ({ [targetName]: prevState[targetName] + 1 }),
-      () => { this.calcTotalGuests(); },
-    );
-  }
-
-  calcTotalGuests() {
-    const { adults, children } = this.state;
-    this.setState({ totalGuests: adults + children });
   }
 
   clearDates() {
@@ -203,7 +203,7 @@ class Booking extends React.Component {
     const { checkIn, checkOut } = this.state;
     if (!checkIn) {
       this.setState({
-        checkIn: new Date(date),
+        checkIn: date,
       }, () => this.setState({
         lastPossibleCheckOut: this.getLastDayCheckOut(selectedMonthIndex, selectedDayIndex),
       }));
@@ -221,7 +221,6 @@ class Booking extends React.Component {
         lastPossibleCheckOut: this.getLastDayCheckOut(selectedMonthIndex, selectedDayIndex),
       });
     }
-    // if (checkOut) { this.getSelectedDays(); }
   }
 
   addReservation() {
