@@ -75,6 +75,11 @@ class Booking extends React.Component {
           const { year, month, day } = calendar[months][days - 1].date;
           return new Date(year, month, day);
         }
+        // Go to the start of the next month if end of current is reached
+        if (days === calendar[months].length - 1) {
+          days = 0;
+          months += 1;
+        }
       }
     }
     return null;
