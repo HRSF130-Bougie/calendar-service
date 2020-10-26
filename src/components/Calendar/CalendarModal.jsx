@@ -257,7 +257,7 @@ const CalendarModal = ({
                 <MonthHeaderTitle key={Math.random()}>
                   {dayjs(month[0].year, month[0].month, month[0].day).format('MMMM')}
                   {' '}
-                  {`${month[0].year}`}
+                  {dayjs(month[0].year, month[0].month, month[0].day).format('YYYY')}
                 </MonthHeaderTitle>
               ))
             }
