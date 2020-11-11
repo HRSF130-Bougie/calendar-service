@@ -91,11 +91,13 @@ class CalendarDayCell extends React.PureComponent {
   }
 
   componentDidMount() {
-    this.calcDayState();
+    this.setState({
+      dayState: this.calcDayState()
+    })
   }
 
   calcDayState() {
-    const { dayState } = this.state;
+    let dayStatus = 'available'
     const {
       dayInfo, checkIn, checkOut, lastPossibleCheckOut,
     } = this.props;
@@ -103,32 +105,30 @@ class CalendarDayCell extends React.PureComponent {
     const today = new Date(Date.now());
     const thisCell = new Date(year, month, day);
 
-    console.log({ dayState, checkIn, today, thisCell, checkThisToday: thisCell < today, checkInTest: thisCell < checkIn })
+    console.log({ dayStatus, checkIn, today, thisCell, checkThisToday: thisCell < today, checkInTest: thisCell < checkIn })
 
     if (thisCell < today) {
-      this.setState({ dayState: 'beforeToday' }, () => {
-        console.log('hi from the before callback')
-        console.log({ dayState })
-      });
+      dayStatus = 'beforeToday'
+      console.log({ dayStatus })
     }
 
     if (thisCell >= today) {
       if ((checkIn !== null && thisCell < checkIn && !checkOut)
         || (lastPossibleCheckOut !== null && !checkOut && (thisCell > lastPossibleCheckOut))) {
-        this.setState({ dayState: 'beforeToday' });
+        dayStatus = 'beforeToday'
       } else if (dayInfo.booked || dayInfo.booked === undefined) {
-        this.setState({ dayState: 'booked' });
+        dayStatus = 'booked'
       } else if ((checkIn && thisCell.toDateString() === checkIn.toDateString())
         || (checkOut && thisCell.toDateString() === checkOut.toDateString())) {
-        this.setState({ dayState: 'selected' });
+        dayStatus = 'selected'
       } else if ((checkIn && checkOut) && (thisCell > checkIn) && (thisCell < checkOut)) {
-        this.setState({ dayState: 'inBetween' });
-      } else if (dayInfo.booked === false && dayState !== 'selected') {
-        this.setState({ dayState: 'available' });
+        dayStatus = 'inBetween'
+      } else if (dayInfo.booked === false && dayStatus !== 'selected') {
+        dayStatus = 'available'
       }
     }
 
-    return dayState
+    return dayStatus
   }
 
   selectThisDate() {
