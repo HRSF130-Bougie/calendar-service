@@ -104,7 +104,7 @@ class Widget extends React.PureComponent {
               clearDates={clearDates}
               checkIn={checkIn}
               checkOut={checkOut}
-              nights={nights ? nights.length : 0}
+
             />
           )}
         {checkOut

@@ -211,8 +211,9 @@ const CalendarModal = ({
   const weekdays = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
 
   const formatMonthName = (date) => dayjs(date).format('MMM D, YYYY');
+  const calcNights = (inDate, outDate) => dayjs(outDate).diff(dayjs(inDate), 'day');
 
-  let selectDates = (checkIn && checkOut) ? `${nights} nights` : 'Select Dates';
+  let selectDates = (checkIn && checkOut) ? `${calcNights(checkIn, checkOut)} nights` : 'Select Dates';
   if (nights === 1) { selectDates = '1 night'; }
 
   const selectDatesSubHeader = (checkIn && checkOut) ? `${formatMonthName(checkIn)} - ${formatMonthName(checkOut)}` : 'Entire house ∙ 1 bed ∙ 1 bath';
@@ -310,5 +311,4 @@ CalendarModal.propTypes = {
   checkIn: PropTypes.instanceOf(Date),
   checkOut: PropTypes.instanceOf(Date),
   lastPossibleCheckOut: PropTypes.instanceOf(Date),
-  nights: PropTypes.number,
 };
