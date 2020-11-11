@@ -103,11 +103,17 @@ class CalendarDayCell extends React.PureComponent {
     const today = new Date(Date.now());
     const thisCell = new Date(year, month, day);
 
+    console.log({ dayState, checkIn, today, thisCell, checkThisToday: thisCell < today, checkInTest: thisCell < checkIn })
+
     if (thisCell < today) {
-      this.setState({ dayState: 'beforeToday' });
+      this.setState({ dayState: 'beforeToday' }, () => {
+        console.log('hi from the before callback')
+        console.log({ dayState })
+      });
     }
+
     if (thisCell >= today) {
-      if ((thisCell < checkIn && !checkOut)
+      if ((checkIn !== null && thisCell < checkIn && !checkOut)
         || (lastPossibleCheckOut !== null && !checkOut && (thisCell > lastPossibleCheckOut))) {
         this.setState({ dayState: 'beforeToday' });
       } else if (dayInfo.booked || dayInfo.booked === undefined) {
@@ -121,6 +127,8 @@ class CalendarDayCell extends React.PureComponent {
         this.setState({ dayState: 'available' });
       }
     }
+
+    return dayState
   }
 
   selectThisDate() {
@@ -155,40 +163,40 @@ class CalendarDayCell extends React.PureComponent {
     return (
       <DayCellWrapper inBetween={dayState} inOrOut={inOrOut}>
         <DayCell cellState={dayState}>
-          { dayState === 'available'
-          && (
-          <Available onClick={this.selectThisDate}>
-            <DateDisplay>{dateDisplay}</DateDisplay>
-              { weekendPricing
-                && (
-                  <PriceDisplay>
-                    $
-                    {priceDisplay}
-                  </PriceDisplay>
-                )}
-          </Available>
-          )}
+          {dayState === 'available'
+            && (
+              <Available onClick={this.selectThisDate}>
+                <DateDisplay>{dateDisplay}</DateDisplay>
+                { weekendPricing
+                  && (
+                    <PriceDisplay>
+                      $
+                      {priceDisplay}
+                    </PriceDisplay>
+                  )}
+              </Available>
+            )}
           {
-          (dayState === 'beforeToday' || dayState === 'booked')
-          && (
-            <Unavailable>{dateDisplay}</Unavailable>
-          )
-        }
+            (dayState === 'beforeToday' || dayState === 'booked')
+            && (
+              <Unavailable>{dateDisplay}</Unavailable>
+            )
+          }
           {
-          (dayState === 'selected')
-          && (
-            <SelectedCheck>
-              <DateDisplay>{dateDisplay}</DateDisplay>
-              { weekendPricing
-                && (
-                  <PriceDisplay selected={dayState}>
-                    $
-                    {priceDisplay}
-                  </PriceDisplay>
-                )}
-            </SelectedCheck>
-          )
-        }
+            (dayState === 'selected')
+            && (
+              <SelectedCheck>
+                <DateDisplay>{dateDisplay}</DateDisplay>
+                { weekendPricing
+                  && (
+                    <PriceDisplay selected={dayState}>
+                      $
+                      {priceDisplay}
+                    </PriceDisplay>
+                  )}
+              </SelectedCheck>
+            )
+          }
           {dayState === 'inBetween'
             && (
               <InBetween onClick={this.selectThisDate}>

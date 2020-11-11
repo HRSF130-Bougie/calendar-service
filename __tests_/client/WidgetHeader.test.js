@@ -16,15 +16,15 @@ describe('<WidgetHeader />', () => {
     expect(wrapper.prop('headerInfo')).toEqual({ lowestPrice: 236, rating: 4.89, reviews: 36 })
   })
 
-  it('renders with the lowest price in the right div', () => {
+  it('renders with the lowest price in the price ', () => {
     expect(wrapper.find('Price').text()).toBe(`$236`)
   })
 
-  it('renders with the lowest price in the right div', () => {
+  it('renders with the rating score in the rating div', () => {
     expect(wrapper.find('Score').text()).toBe(`4.89`)
   })
 
-  it('renders with the lowest price in the right div', () => {
+  it('renders with the ratings count in the ratings div', () => {
     expect(wrapper.find('Count').text()).toBe(`(36)`)
   })
 })
