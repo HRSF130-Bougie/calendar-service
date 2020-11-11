@@ -2,10 +2,13 @@
 const dayjs = require('dayjs');
 const faker = require('faker');
 const utc = require('dayjs/plugin/utc');
+const toObject = require('dayjs/plugin/toObject');
 
 dayjs.extend(utc);
+dayjs.extend(toObject);
+
 // eslint-disable-next-line no-unused-vars
-// const db = require('./connectToDatabaseCompose.js');
+// const dconst db = require('./connectToDatabaseLocal.js');b = require('./connectToDatabaseCompose.js');
 const schema = require('./schema.js');
 
 const reSeed = async () => {
@@ -28,7 +31,7 @@ const reSeed = async () => {
       for (let month = 1; month <= 6; month += 1) {
         // Construct day object to be pushed to array, 6 months worth of days
 
-        const startDay = dayjs.utc().startOf('month').add(month - 1, 'month').toDate();
+        const startDay = dayjs().startOf('month').add(month - 1, 'month').toDate();
         const startMonth = startDay.getMonth();
         const startYear = startDay.getFullYear();
         const lastDay = getLastDay(startYear, startMonth);
@@ -36,9 +39,12 @@ const reSeed = async () => {
         const monthArray = [];
 
         for (let day = 1; day <= lastDay; day += 1) {
+          const genDay = dayjs(startDay).utc().add(day - 1, 'day').add(6, 'hours');
+          const newDay = genDay.toDate();
+          const objDay = genDay.toObject();
+
           const date = {
-            date: dayjs(startDay).utc().add(day - 1, 'day').add(12, 'hours')
-              .toDate(),
+            date: { year: objDay.years, month: objDay.months, day: objDay.date },
             booked: faker.random.boolean(),
             price: randomPrice,
             minimumNights: 1,
@@ -46,12 +52,12 @@ const reSeed = async () => {
 
           if (weekendPricing) {
             // Make weekends more expensive
-            if (date.date.getDay() >= 5) {
+            if (newDay.getDay() >= 5) {
               date.price = Math.floor(Number(date.price * 1.2));
             }
 
             // Make a two day minimum on Fridays
-            if (date.date.getDay() === 5) {
+            if (newDay.getDay() === 5) {
               date.minimumNights = 2;
             }
           }
@@ -64,7 +70,7 @@ const reSeed = async () => {
 
       const newListing = new schema.Listing({
         listing_id: listCount,
-        days: daysArray,
+        calendar: daysArray,
         cleaningFee: faker.random.number({ min: 50, max: 100 }),
         weekendPricing,
         lowestPrice: randomPrice,

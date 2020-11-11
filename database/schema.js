@@ -24,6 +24,7 @@ const listingSchema = new Schema({
       },
       fees: {
         cleaningFee: Number,
+        pricesByNight: Array,
         basePrice: Number,
         serviceFee: Number,
         taxes: Number,
