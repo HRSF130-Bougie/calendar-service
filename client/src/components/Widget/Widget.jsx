@@ -61,8 +61,6 @@ class Widget extends React.PureComponent {
       addReservation,
     } = this.props;
 
-    const { nights } = fees;
-
     return (
       <WidgetWrapper>
         <WidgetHeader
@@ -104,7 +102,7 @@ class Widget extends React.PureComponent {
               clearDates={clearDates}
               checkIn={checkIn}
               checkOut={checkOut}
-              nights={nights ? nights.length : 0}
+
             />
           )}
         {checkOut
@@ -135,12 +133,7 @@ Widget.propTypes = {
   appendLeadingZeroes: PropTypes.func,
   fees: PropTypes.shape({
     cleaningFee: PropTypes.number,
-    nights: PropTypes.arrayOf(PropTypes.shape({
-      // date: PropTypes.string,
-      booked: PropTypes.bool,
-      price: PropTypes.number,
-      minimumNights: PropTypes.number,
-    })),
+    nightCount: PropTypes.number,
     basePrice: PropTypes.number,
     serviceFee: PropTypes.number,
     taxes: PropTypes.number,

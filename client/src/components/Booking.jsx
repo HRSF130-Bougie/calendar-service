@@ -2,6 +2,7 @@
 /* eslint-disable no-console */
 import React from 'react';
 import styled from 'styled-components';
+import dayjs from 'dayjs';
 import GlobalFonts from '../assets/fonts/GlobalFonts';
 import Widget from './Widget/Widget';
 
@@ -93,25 +94,20 @@ class Booking extends React.Component {
     const { cleaningFee } = fees;
 
     // Calculate number of days in the reservation
-    const nightCount = Math.floor(
-      // eslint-disable-next-line max-len
-      (Date.UTC(checkOut.getFullYear(), checkOut.getMonth(), checkOut.getDate()) - Date.UTC(checkIn.getFullYear(), checkIn.getMonth(), checkIn.getDate())) / (1000 * 60 * 60 * 24),
-    ) + 1;
+    const nightCount = dayjs(checkOut).diff(dayjs(checkIn), 'day');
+    // eslint-disable-next-line max-len
 
     // Create an array of the date objects of all selected dates
-    const nights = [];
+    const prices = [];
     const bookHold = [];
-    let count = nightCount;
-    // let monthCounter = selectedMonthIndex;
-    // let dayCounter = selectedDayIndex;
+    const count = nightCount;
 
     // Collect arrays of dates and price for fee calculations and to block out the dates
-
     for (let months = checkInIndex.monthIndex; months <= checkOutIndex.monthIndex; months += 1) {
       let dayLimit = calendar[months].length - 1;
       console.log({ months, dayLimit });
       for (let days = checkInIndex.dayIndex; days < dayLimit; days += 1) {
-        console.log({ months, days })
+        console.log({ months, days });
         if (months === checkOutIndex.monthIndex) {
           dayLimit = checkOutIndex.dayIndex + 1;
         }
@@ -119,36 +115,21 @@ class Booking extends React.Component {
           days = -1;
           months += 1;
         } else {
-          bookHold.push([months, days]);
+          const { price } = calendar[months][days];
+          prices.push(price);
+          bookHold.push(months, days, price);
         }
-        // Go to the start of the next month if end of current is reached
       }
     }
 
-    // while (count > 0) {
-    //   console.log({ count, monthCounter, dayCounter });
-    //   if (dayCounter < calendar[monthCounter].length) {
-    //     nights.push(calendar[monthCounter][dayCounter-3]);
-    //     bookHold.push([monthCounter, dayCounter]);
-    //     dayCounter += 1;
-    //   } else if (dayCounter === calendar[monthCounter].length) {
-    //     nights.push(calendar[monthCounter][dayCounter-3]);
-    //     dayCounter = 1;
-    //     monthCounter += 1;
-    //   }
-    //   count -= 1;
-    // }
-
-    const initial = 0;
-    // eslint-disable-next-line max-len
-    const basePrice = nights.reduce((accumulator, currentValue) => accumulator + currentValue.price, initial);
+    const basePrice = prices.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
     const serviceFee = Math.ceil(basePrice * 0.0148);
     const taxes = Math.ceil(basePrice * 0.011);
     const total = basePrice + cleaningFee + serviceFee + taxes;
 
     this.setState({
       fees: {
-        cleaningFee, nights, basePrice, serviceFee, taxes, total,
+        cleaningFee, nightCount, basePrice, serviceFee, taxes, total,
       },
       bookHold,
     });

@@ -74,15 +74,15 @@ const averagePerNight = (base, nightCount) => base / nightCount;
 const currencyFormat = (num) => `$${num.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}`;
 
 const Pricing = ({ fees }) => {
-  const { nights } = fees;
+  const { nightCount } = fees;
 
   return (
-    nights !== undefined
+    nightCount !== undefined
     && (
     <PriceWrap>
       <NoCharge>{`You won't be charged yet`}</NoCharge>
       <PriceRow>
-        <PriceDescription>{`${currencyFormat(averagePerNight(fees.basePrice, fees.nights.length))} x ${fees.nights.length} nights`}</PriceDescription>
+          <PriceDescription>{`${currencyFormat(averagePerNight(fees.basePrice, nightCount))} x ${nightCount} nights`}</PriceDescription>
         <PriceFigure>{`${currencyFormat(fees.basePrice)}`}</PriceFigure>
       </PriceRow>
       <PriceRow>
@@ -112,12 +112,7 @@ export default memo(Pricing);
 Pricing.propTypes = {
   fees: PropTypes.shape({
     cleaningFee: PropTypes.number,
-    nights: PropTypes.arrayOf(PropTypes.shape({
-      // date: PropTypes.objectOf(PropTypes.number),
-      booked: PropTypes.bool,
-      price: PropTypes.number,
-      minimumNights: PropTypes.number,
-    })),
+    nightCount: PropTypes.number,
     basePrice: PropTypes.number,
     serviceFee: PropTypes.number,
     taxes: PropTypes.number,

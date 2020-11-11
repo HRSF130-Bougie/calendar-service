@@ -160,7 +160,7 @@ const KeyboardOuter = styled.div`
 `;
 
 const CalendarModal = ({
-  calendar, weekendPricing, hideCalendarModal, nights,
+  calendar, weekendPricing, hideCalendarModal,
   selectDate, clearDates, checkIn, checkOut, lastPossibleCheckOut,
 }) => {
   const calMax = 4;
@@ -211,9 +211,10 @@ const CalendarModal = ({
   const weekdays = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
 
   const formatMonthName = (date) => dayjs(date).format('MMM D, YYYY');
+  const nightCount = dayjs(checkOut).diff(dayjs(checkIn), 'day');
 
-  let selectDates = (checkIn && checkOut) ? `${nights} nights` : 'Select Dates';
-  if (nights === 1) { selectDates = '1 night'; }
+  let selectDates = (checkIn && checkOut) ? `${nightCount} nights` : 'Select Dates';
+  if (nightCount === 1) { selectDates = '1 night'; }
 
   const selectDatesSubHeader = (checkIn && checkOut) ? `${formatMonthName(checkIn)} - ${formatMonthName(checkOut)}` : 'Entire house ∙ 1 bed ∙ 1 bath';
 
@@ -310,5 +311,4 @@ CalendarModal.propTypes = {
   checkIn: PropTypes.instanceOf(Date),
   checkOut: PropTypes.instanceOf(Date),
   lastPossibleCheckOut: PropTypes.instanceOf(Date),
-  nights: PropTypes.number,
 };
