@@ -95,19 +95,16 @@ class Booking extends React.Component {
 
     // Calculate number of days in the reservation
     const nightCount = dayjs(checkOut).diff(dayjs(checkIn), 'day');
-    // eslint-disable-next-line max-len
 
     // Create an array of the date objects of all selected dates
-    const prices = [];
+    const pricesByNight = [];
     const bookHold = [];
     const count = nightCount;
 
     // Collect arrays of dates and price for fee calculations and to block out the dates
     for (let months = checkInIndex.monthIndex; months <= checkOutIndex.monthIndex; months += 1) {
       let dayLimit = calendar[months].length - 1;
-      console.log({ months, dayLimit });
       for (let days = checkInIndex.dayIndex; days < dayLimit; days += 1) {
-        console.log({ months, days });
         if (months === checkOutIndex.monthIndex) {
           dayLimit = checkOutIndex.dayIndex + 1;
         }
@@ -116,20 +113,20 @@ class Booking extends React.Component {
           months += 1;
         } else {
           const { price } = calendar[months][days];
-          prices.push(price);
-          bookHold.push(months, days, price);
+          pricesByNight.push(price);
+          bookHold.push([months, days]);
         }
       }
     }
 
-    const basePrice = prices.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+    const basePrice = pricesByNight.reduce((total, add) => total + add, 0);
     const serviceFee = Math.ceil(basePrice * 0.0148);
     const taxes = Math.ceil(basePrice * 0.011);
     const total = basePrice + cleaningFee + serviceFee + taxes;
 
     this.setState({
       fees: {
-        cleaningFee, nightCount, basePrice, serviceFee, taxes, total,
+        cleaningFee, pricesByNight, nightCount, basePrice, serviceFee, taxes, total,
       },
       bookHold,
     });
@@ -223,9 +220,6 @@ class Booking extends React.Component {
     const {
       currentListing, checkIn, checkOut, adults, children, infants, fees, calendar, bookHold,
     } = this.state;
-    const {
-      cleaningFee, basePrice, serviceFee, taxes, total,
-    } = fees;
 
     const newBooking = {
       checkIn,
@@ -235,30 +229,18 @@ class Booking extends React.Component {
         children,
         infants,
       },
-      fees: {
-        cleaningFee,
-        basePrice,
-        serviceFee,
-        taxes,
-        total,
-      },
+      fees,
     };
 
     const daysCopy = calendar;
 
     bookHold.forEach((resDay) => {
-      console.log(resDay);
       const month = resDay[0];
       const day = resDay[1];
-      console.log(month, day);
-      console.log(daysCopy[month][day]);
       daysCopy[month][day].booked = true;
-      console.log(daysCopy[month][day].booked);
     });
 
     this.setState({ calendar: daysCopy });
-
-    console.log('hit add');
 
     fetch(`api/booking/listing/reservation/${currentListing}`, {
       method: 'PATCH', // or 'PUT'
