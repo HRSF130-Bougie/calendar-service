@@ -171,7 +171,7 @@ const CalendarModal = ({
   let start = 0;
   if (checkIn) {
     const currentMonth = (new Date(Date.now()).getMonth());
-    const checkInMonth = (checkIn.month);
+    const checkInMonth = checkIn.getMonth();
     if (checkInMonth > currentMonth) {
       if (checkInMonth - currentMonth <= calMax) {
         start = checkInMonth - currentMonth;
