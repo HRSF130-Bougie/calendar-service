@@ -112,18 +112,18 @@ class CalendarDayCell extends React.PureComponent {
     const isBooked = dayInfo.booked || dayInfo.booked === undefined
     const isCheckInOnly = checkIn !== null && thisCell < checkIn && !checkOut
     const isAfterLastPossibleCheckOut = thisCell > lastPossibleCheckOut
-    const isThisCheckIn = checkIn && thisCell.toDateString() === checkIn.toDateString()
-    const isThisCheckOut = checkOut && thisCell.toDateString() === checkOut.toDateString()
+    const isCheckIn = checkIn && thisCell.toDateString() === checkIn.toDateString()
+    const isCheckOut = checkOut && thisCell.toDateString() === checkOut.toDateString()
     const isBetweenSelected = (checkIn && checkOut) && (thisCell > checkIn) && (thisCell < checkOut)
     const isNotBooked = dayInfo.booked === false
     const isNotSelected = dayStatus !== 'selected'
 
     if (thisCell >= today) {
       if (isCheckInOnly || isAfterLastPossibleCheckOut) {
-        dayStatus = 'beforeToday'
+        dayStatus = 'unavailable'
       } else if (isBooked) {
         dayStatus = 'booked'
-      } else if (isThisCheckIn || isThisCheckOut) {
+      } else if (isCheckIn || isCheckOut) {
         dayStatus = 'selected'
       } else if (isBetweenSelected) {
         dayStatus = 'inBetween'
@@ -181,7 +181,7 @@ class CalendarDayCell extends React.PureComponent {
               </Available>
             )}
           {
-            (dayState === 'beforeToday' || dayState === 'booked')
+            (dayState === 'beforeToday' || dayState === 'booked' || dayState === 'unavailable')
             && (
               <Unavailable>{dateDisplay}</Unavailable>
             )
