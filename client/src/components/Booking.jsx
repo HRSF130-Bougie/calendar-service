@@ -209,6 +209,7 @@ class Booking extends React.Component {
       this.setState({
         checkOut: date,
         checkOutIndex: { monthIndex: selectedMonthIndex, dayIndex: selectedDayIndex },
+        lastPossibleCheckOut: new Date(2030, 12)
       }, () => {
         this.hideModal(null, 'calendarModalVisible');
         this.getSelectedDays();

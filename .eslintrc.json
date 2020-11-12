@@ -16,8 +16,11 @@
         "sourceType": "module"
     },
     "plugins": [
-        "react"
+        "react", "jest-formatting"
     ],
     "rules": {
+        "extends": [
+            "plugin:jest-formatting/recommended"
+        ]
     }
 }
