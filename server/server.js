@@ -1,11 +1,12 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
 const express = require('express');
 const path = require('path');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const router = require('./router.js');
-// eslint-disable-next-line no-unused-vars
-const db = require('../database/connectToDatabaseLocal.js');
+// const db = require('../database/connectToDatabaseLocal.js');
+const db = require('../database/connectToDatabaseCompose.js');
 
 const app = express();
 const port = 3002;
