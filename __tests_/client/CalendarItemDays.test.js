@@ -51,5 +51,28 @@ describe('Calendar Item Days', () => {
 
       expect(testValue).not.toBe('beforeToday')
     })
+
+    it(`if cell date is booked`, () => {
+      const wrapper = shallow(<CalendarDayCell
+        dayInfo={{
+          date: { year: 2020, month: 11, day: 1 },
+          price: 0,
+          booked: true,
+          minimumNights: 0,
+        }}
+        weekendPricing={true}
+        selectDate={() => { }}
+        checkIn={null}
+        checkOut={null}
+        monthIndex={1}
+        dayIndex={1}
+        lastPossibleCheckOut={new Date(2030, 12)}
+      />)
+
+      let instance = wrapper.instance()
+      let testValue = instance.calcDayState()
+
+      expect(testValue).toBe('booked')
+    })
   })
 })

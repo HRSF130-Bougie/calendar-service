@@ -118,6 +118,8 @@ class CalendarDayCell extends React.PureComponent {
     const isNotBooked = dayInfo.booked === false
     const isNotSelected = dayStatus !== 'selected'
 
+    console.log({ thisCell, lastPossibleCheckOut, isBooked, isCheckInOnly, isAfterLastPossibleCheckOut, isCheckIn, isCheckOut, isBetweenSelected, isNotBooked, isNotSelected })
+
     if (thisCell >= today) {
       if (isCheckInOnly || isAfterLastPossibleCheckOut) {
         dayStatus = 'unavailable'
