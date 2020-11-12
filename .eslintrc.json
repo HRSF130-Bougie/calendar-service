@@ -6,7 +6,8 @@
     },
     "extends": [
         "plugin:react/recommended",
-        "airbnb"
+        "airbnb",
+        "plugin:jest-formatting/recommended"
     ],
     "parserOptions": {
         "ecmaFeatures": {
@@ -16,11 +17,7 @@
         "sourceType": "module"
     },
     "plugins": [
-        "react", "jest-formatting"
-    ],
-    "rules": {
-        "extends": [
-            "plugin:jest-formatting/recommended"
-        ]
-    }
+        "react",
+        "jest-formatting"
+    ]
 }

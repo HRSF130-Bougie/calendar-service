@@ -82,7 +82,7 @@ const Pricing = ({ fees }) => {
     <PriceWrap>
       <NoCharge>{`You won't be charged yet`}</NoCharge>
       <PriceRow>
-          <PriceDescription>{`${currencyFormat(averagePerNight(fees.basePrice, nightCount))} x ${nightCount} nights`}</PriceDescription>
+        <PriceDescription>{`${currencyFormat(averagePerNight(fees.basePrice, nightCount))} x ${nightCount} nights`}</PriceDescription>
         <PriceFigure>{`${currencyFormat(fees.basePrice)}`}</PriceFigure>
       </PriceRow>
       <PriceRow>

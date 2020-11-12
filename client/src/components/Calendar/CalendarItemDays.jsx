@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable react/require-default-props */
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -92,12 +93,12 @@ class CalendarDayCell extends React.PureComponent {
 
   componentDidMount() {
     this.setState({
-      dayState: this.calcDayState()
-    })
+      dayState: this.calcDayState(),
+    });
   }
 
   calcDayState() {
-    let dayStatus = 'available'
+    let dayStatus = 'available';
     const {
       dayInfo, checkIn, checkOut, lastPossibleCheckOut,
     } = this.props;
@@ -106,35 +107,33 @@ class CalendarDayCell extends React.PureComponent {
     const thisCell = new Date(year, month, day);
 
     if (thisCell < today) {
-      dayStatus = 'beforeToday'
+      dayStatus = 'beforeToday';
     }
 
-    const isBooked = dayInfo.booked || dayInfo.booked === undefined
-    const isCheckInOnly = checkIn !== null && thisCell < checkIn && !checkOut
-    const isAfterLastPossibleCheckOut = thisCell > lastPossibleCheckOut
-    const isCheckIn = checkIn && thisCell.toDateString() === checkIn.toDateString()
-    const isCheckOut = checkOut && thisCell.toDateString() === checkOut.toDateString()
-    const isBetweenSelected = (checkIn && checkOut) && (thisCell > checkIn) && (thisCell < checkOut)
-    const isNotBooked = dayInfo.booked === false
-    const isNotSelected = dayStatus !== 'selected'
-
-    console.log({ thisCell, lastPossibleCheckOut, isBooked, isCheckInOnly, isAfterLastPossibleCheckOut, isCheckIn, isCheckOut, isBetweenSelected, isNotBooked, isNotSelected })
+    const isBooked = dayInfo.booked || dayInfo.booked === undefined;
+    const isCheckInOnly = checkIn !== null && thisCell < checkIn && !checkOut;
+    const isAfterLastPossibleCheckOut = thisCell > lastPossibleCheckOut;
+    const isCheckIn = checkIn && thisCell.toDateString() === checkIn.toDateString();
+    const isCheckOut = checkOut && thisCell.toDateString() === checkOut.toDateString();
+    const isBetweenSelected = (checkIn && checkOut) && (thisCell > checkIn) && (thisCell < checkOut);
+    const isNotBooked = dayInfo.booked === false;
+    const isNotSelected = dayStatus !== 'selected';
 
     if (thisCell >= today) {
       if (isCheckInOnly || isAfterLastPossibleCheckOut) {
-        dayStatus = 'unavailable'
+        dayStatus = 'unavailable';
       } else if (isBooked) {
-        dayStatus = 'booked'
+        dayStatus = 'booked';
       } else if (isCheckIn || isCheckOut) {
-        dayStatus = 'selected'
+        dayStatus = 'selected';
       } else if (isBetweenSelected) {
-        dayStatus = 'inBetween'
+        dayStatus = 'inBetween';
       } else if (isNotBooked && isNotSelected) {
-        dayStatus = 'available'
+        dayStatus = 'available';
       }
     }
 
-    return dayStatus
+    return dayStatus;
   }
 
   selectThisDate() {
