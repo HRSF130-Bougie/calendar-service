@@ -4,7 +4,7 @@ const path = require('path');
 
 const config = {
   entry: [
-    '.client/src/index.jsx',
+    './client/src/index.jsx',
   ],
   output: {
     path: path.resolve(__dirname, './client/dist'),
