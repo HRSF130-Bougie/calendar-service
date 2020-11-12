@@ -105,25 +105,29 @@ class CalendarDayCell extends React.PureComponent {
     const today = new Date(Date.now());
     const thisCell = new Date(year, month, day);
 
-    console.log({ dayStatus, checkIn, today, thisCell, checkThisToday: thisCell < today, checkInTest: thisCell < checkIn })
-
     if (thisCell < today) {
       dayStatus = 'beforeToday'
-      console.log({ dayStatus })
     }
 
+    const isBooked = dayInfo.booked || dayInfo.booked === undefined
+    const isCheckInOnly = checkIn !== null && thisCell < checkIn && !checkOut
+    const isAfterLastPossibleCheckOut = thisCell > lastPossibleCheckOut
+    const isThisCheckIn = checkIn && thisCell.toDateString() === checkIn.toDateString()
+    const isThisCheckOut = checkOut && thisCell.toDateString() === checkOut.toDateString()
+    const isBetweenSelected = (checkIn && checkOut) && (thisCell > checkIn) && (thisCell < checkOut)
+    const isNotBooked = dayInfo.booked === false
+    const isNotSelected = dayStatus !== 'selected'
+
     if (thisCell >= today) {
-      if ((checkIn !== null && thisCell < checkIn && !checkOut)
-        || (lastPossibleCheckOut !== null && !checkOut && (thisCell > lastPossibleCheckOut))) {
+      if (isCheckInOnly || isAfterLastPossibleCheckOut) {
         dayStatus = 'beforeToday'
-      } else if (dayInfo.booked || dayInfo.booked === undefined) {
+      } else if (isBooked) {
         dayStatus = 'booked'
-      } else if ((checkIn && thisCell.toDateString() === checkIn.toDateString())
-        || (checkOut && thisCell.toDateString() === checkOut.toDateString())) {
+      } else if (isThisCheckIn || isThisCheckOut) {
         dayStatus = 'selected'
-      } else if ((checkIn && checkOut) && (thisCell > checkIn) && (thisCell < checkOut)) {
+      } else if (isBetweenSelected) {
         dayStatus = 'inBetween'
-      } else if (dayInfo.booked === false && dayStatus !== 'selected') {
+      } else if (isNotBooked && isNotSelected) {
         dayStatus = 'available'
       }
     }

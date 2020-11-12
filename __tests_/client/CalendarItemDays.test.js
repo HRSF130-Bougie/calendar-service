@@ -3,54 +3,53 @@ import Enzyme, { shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import CalendarDayCell from '../../client/src/components/Calendar/CalendarItemDays'
 
-describe('<Calendar Item Days', () => {
-  const wrapper = shallow(<CalendarDayCell
-    dayInfo={{
-      date: { year: 2020, month: 10, day: 1 },
-      price: 0,
-      booked: false,
-      minimumNights: 0,
-    }}
-    weekendPricing={true}
-    selectDate={() => { }}
-    checkIn={null}
-    checkOut={null}
-    monthIndex={1}
-    dayIndex={1}
-    lastPossibleCheckOut={null}
-  />)
-  let instance = wrapper.instance()
+describe('Calendar Item Days', () => {
 
-  console.log('Can I see props? ', instance.props)
+  describe('When no check in date has been selected yet', () => {
+    it(`if cell date is earlier than today's date`, () => {
+      const wrapper = shallow(<CalendarDayCell
+        dayInfo={{
+          date: { year: 2020, month: 9, day: 1 },
+          price: 0,
+          booked: false,
+          minimumNights: 0,
+        }}
+        weekendPricing={true}
+        selectDate={() => { }}
+        checkIn={null}
+        checkOut={null}
+        monthIndex={1}
+        dayIndex={1}
+        lastPossibleCheckOut={null}
+      />)
 
-  //const today = new Date(2020, 10, 1)
-  const thisCell = new Date(2020, 1, 1)
+      let instance = wrapper.instance()
+      let testValue = instance.calcDayState()
 
-  describe('CalcDayState', () => {
-    //wrapper.setProps({ dayInfo: { date: { year: 2020, month: 10, day: 1 } } });
-    //wrapper.setState({ dayState: 'lalala' })
-    wrapper.setProps({ dayInfo: { date: { year: 2020, month: 9, day: 1 } } })
-    instance = wrapper.instance()
+      expect(testValue).toBe('beforeToday')
+    })
 
-    console.log('new instance props ', instance.props)
-    describe(`Where dayState should be set to beforeToday`, () => {
-      it(`if cell date is earlier than today's date`, () => {
-        let testValue = instance.calcDayState()
-        expect(testValue).toBe('beforeToday')
-      })
+    it(`if cell date is later than today's date`, () => {
+      const wrapper = shallow(<CalendarDayCell
+        dayInfo={{
+          date: { year: 2020, month: 12, day: 1 },
+          price: 0,
+          booked: false,
+          minimumNights: 0,
+        }}
+        weekendPricing={true}
+        selectDate={() => { }}
+        checkIn={null}
+        checkOut={null}
+        monthIndex={1}
+        dayIndex={1}
+        lastPossibleCheckOut={null}
+      />)
 
+      let instance = wrapper.instance()
+      let testValue = instance.calcDayState()
 
-
-
-
+      expect(testValue).not.toBe('beforeToday')
     })
   })
-
-
-
-  // describe('calcDayState()', () => {
-  //   it('should be true', () =< {
-  //     expect(true).toBe.(true)
-  //   })
-  // })
 })
