@@ -15,8 +15,8 @@ const listingSchema = new Schema({
   ],
   reservations: [
     {
-      checkIn: String,
-      checkOut: String,
+      checkIn: Object,
+      checkOut: Object,
       guests: {
         adults: Number,
         children: Number,
@@ -26,6 +26,7 @@ const listingSchema = new Schema({
         cleaningFee: Number,
         pricesByNight: Array,
         basePrice: Number,
+        nightCount: Number,
         serviceFee: Number,
         taxes: Number,
         total: Number,
