@@ -18,12 +18,11 @@ router.route('/listing/:listingId').get((req, res) => {
 router.route('/listing/reservation/:listingId').patch((req, res) => {
   const { listingId } = req.params;
   const { newBooking } = req.body;
-  const { days } = req.body;
-  console.log(newBooking);
+  const { calendar } = req.body;
 
   schema.Listing.updateOne(
     { listing_id: listingId },
-    { $push: { reservations: newBooking }, days },
+    { $push: { reservations: newBooking }, calendar },
     { returnNewDocument: true },
   )
     .then((updated) => res.status(200).send(updated))

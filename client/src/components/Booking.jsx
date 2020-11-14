@@ -248,7 +248,7 @@ class Booking extends React.Component {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(newBooking, calendar),
+      body: JSON.stringify({ newBooking, calendar }),
     })
       .then((response) => response.json())
       .then(() => this.clearDates())
