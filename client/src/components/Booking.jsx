@@ -188,7 +188,7 @@ class Booking extends React.Component {
 
   clearGuests() {
     this.setState({
-      adults: 0,
+      adults: 1,
       children: 0,
       infants: 0,
       totalGuests: 1,
