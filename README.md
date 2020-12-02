@@ -1,4 +1,7 @@
 # Bougie - Calendar Service
+ [Live Demo Here](http://54.177.158.76:3002)
+ 
+ ![](calendar_demo.gif)
 
 ## General info
 This is a booking module and calendar for a travel rental app. 
