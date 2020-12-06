@@ -119,6 +119,7 @@ class Booking extends React.Component {
       }
     }
 
+    pricesByNight.pop(); // remove last night since you don't pay for the night you checkout
     const basePrice = pricesByNight.reduce((total, add) => total + add, 0);
     const serviceFee = Math.ceil(basePrice * 0.0148);
     const taxes = Math.ceil(basePrice * 0.011);
