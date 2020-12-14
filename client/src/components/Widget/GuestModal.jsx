@@ -43,7 +43,7 @@ const GuestModalCloseButtonWrapper = styled.div`
   justify-content: flex-end;
 `;
 
-const GuestModal = ({ hideGuestModal, show, guests, increaseGuestCount, decreaseGuestCount }) => (
+const GuestModal = ({ hideGuestModal, show, guests, guestCountFunctions }) => (
   <GuestModalWrapper>
     {
       show
@@ -52,22 +52,19 @@ const GuestModal = ({ hideGuestModal, show, guests, increaseGuestCount, decrease
             <GuestSelector
               target={{ target: 'adults', subtext: '' }}
               currentValue={guests.adults}
-              increaseGuestCount={increaseGuestCount}
-              decreaseGuestCount={decreaseGuestCount}
+              guestCountFunctions={guestCountFunctions}
               currentTotal={guests.totalGuests}
             />
             <GuestSelector
               target={{ target: 'children', subtext: 'Ages 2-12' }}
               currentValue={guests.children}
-              increaseGuestCount={increaseGuestCount}
-              decreaseGuestCount={decreaseGuestCount}
+              guestCountFunctions={guestCountFunctions}
               currentTotal={guests.totalGuests}
             />
             <GuestSelector
               target={{ target: 'infants', subtext: 'Under 2' }}
               currentValue={guests.infants}
-              increaseGuestCount={increaseGuestCount}
-              decreaseGuestCount={decreaseGuestCount}
+              guestCountFunctions={guestCountFunctions}
               currentTotal={guests.totalGuests}
             />
 
@@ -91,6 +88,5 @@ GuestModal.propTypes = {
   hideGuestModal: PropTypes.func.isRequired,
   show: PropTypes.bool.isRequired,
   guests: PropTypes.objectOf(PropTypes.number).isRequired,
-  increaseGuestCount: PropTypes.func.isRequired,
-  decreaseGuestCount: PropTypes.func.isRequired,
+  guestCountFunctions: PropTypes.objectOf(PropTypes.func).isRequired,
 };

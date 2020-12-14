@@ -272,8 +272,8 @@ class Booking extends React.Component {
           guests={{
             adults, children, infants, totalGuests,
           }}
-          increaseGuestCount={this.increaseGuestCount}
-          decreaseGuestCount={this.decreaseGuestCount}
+          // eslint-disable-next-line max-len
+          guestCountFunctions={{ increase: this.increaseGuestCount, decrease: this.decreaseGuestCount }}
           weekendPricing={weekendPricing}
           calendar={calendar}
           selectDate={this.selectDate}

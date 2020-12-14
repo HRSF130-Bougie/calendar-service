@@ -75,7 +75,7 @@ const Count = styled.div`
   align-self: center;
 `;
 
-const GuestSelector = ({ target, currentValue, increaseGuestCount, decreaseGuestCount, currentTotal }) => {
+const GuestSelector = ({ target, currentValue, guestCountFunctions, currentTotal }) => {
   let minusDisabled = false;
   if (target.target === 'adults' && currentValue < 2) {
     minusDisabled = true;
@@ -98,13 +98,13 @@ const GuestSelector = ({ target, currentValue, increaseGuestCount, decreaseGuest
       <CountWrapper>
         {minusDisabled === true
           ? (<PlusMinusButtonDisabled>-</PlusMinusButtonDisabled>)
-          : (<PlusMinusButton name={target.target} onClick={decreaseGuestCount}>-</PlusMinusButton>)}
+          : (<PlusMinusButton name={target.target} onClick={guestCountFunctions.decrease}>-</PlusMinusButton>)}
 
         <Count>{currentValue}</Count>
 
         {plusDisabled === true
           ? (<PlusMinusButtonDisabled>+</PlusMinusButtonDisabled>)
-          : (<PlusMinusButton name={target.target} onClick={increaseGuestCount}>+</PlusMinusButton>)}
+          : (<PlusMinusButton name={target.target} onClick={guestCountFunctions.increase}>+</PlusMinusButton>)}
       </CountWrapper>
 
     </SelectorWrapper>
@@ -116,7 +116,6 @@ export default memo(GuestSelector);
 GuestSelector.propTypes = {
   target: PropTypes.objectOf(PropTypes.string, PropTypes.string).isRequired,
   currentValue: PropTypes.number.isRequired,
-  increaseGuestCount: PropTypes.func.isRequired,
-  decreaseGuestCount: PropTypes.func.isRequired,
+  guestCountFunctions: PropTypes.objectOf(PropTypes.func).isRequired,
   currentTotal: PropTypes.number.isRequired,
 };
