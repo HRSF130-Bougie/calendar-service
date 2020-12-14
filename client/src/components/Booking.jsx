@@ -158,12 +158,6 @@ class Booking extends React.Component {
     this.setState({ totalGuests: adults + children });
   }
 
-  // eslint-disable-next-line class-methods-use-this
-  appendLeadingZeroes(n) {
-    // TODO: Use a ternary when you want to return something
-    return n <= 9 ? `0${n}` : n;
-  }
-
   showModal(targetName, preFunct) {
     if (preFunct) { preFunct(); }
     this.setState({ [targetName]: true });
@@ -272,8 +266,8 @@ class Booking extends React.Component {
           guests={{
             adults, children, infants, totalGuests,
           }}
-          increaseGuestCount={this.increaseGuestCount}
-          decreaseGuestCount={this.decreaseGuestCount}
+          // eslint-disable-next-line max-len
+          guestCountFunctions={{ increase: this.increaseGuestCount, decrease: this.decreaseGuestCount }}
           weekendPricing={weekendPricing}
           calendar={calendar}
           selectDate={this.selectDate}
@@ -286,7 +280,6 @@ class Booking extends React.Component {
           hideCalendarModal={this.hideCalendarModal}
           calendarModalVisible={calendarModalVisible}
           lastPossibleCheckOut={lastPossibleCheckOut}
-          appendLeadingZeroes={this.appendLeadingZeroes}
           fees={fees}
           headerInfo={headerInfo}
           addReservation={this.addReservation}

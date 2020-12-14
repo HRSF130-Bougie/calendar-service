@@ -23,7 +23,6 @@ const WidgetWrapper = styled.div`
   box-shadow: rgba(0, 0, 0, 0.12) 0px 6px 16px;
   margin: auto;
 `;
-
 class Widget extends React.PureComponent {
   constructor(props) {
     super(props);
@@ -39,11 +38,11 @@ class Widget extends React.PureComponent {
     this.hideGuestModal = hideModal.bind(this);
   }
 
-  toggleGuestModal(event, bool) {
+  toggleGuestModal(event, boolean) {
     // eslint-disable-next-line no-unused-expressions
 
-    if (bool !== undefined) {
-      this.setState({ guestModalVisible: bool });
+    if (boolean !== undefined) {
+      this.setState({ guestModalVisible: boolean });
     } else {
       this.setState((prevState) => ({ guestModalVisible: !prevState.guestModalVisible }));
     }
@@ -52,12 +51,12 @@ class Widget extends React.PureComponent {
   render() {
     const { guestModalVisible } = this.state;
     const {
-      guests, increaseGuestCount, decreaseGuestCount,
+      guests, guestCountFunctions,
       calendar, weekendPricing, selectDate, clearDates,
       checkIn, checkOut, calendarModalVisible,
       // eslint-disable-next-line no-unused-vars
       hideModal, hideCalendarModal, showModal, showCalendarModal,
-      lastPossibleCheckOut, fees, appendLeadingZeroes, headerInfo,
+      lastPossibleCheckOut, fees, headerInfo,
       addReservation,
     } = this.props;
 
@@ -72,7 +71,6 @@ class Widget extends React.PureComponent {
           calendarModalVisible={calendarModalVisible}
           guests={guests}
           showCalendarModal={showCalendarModal}
-          appendLeadingZeroes={appendLeadingZeroes}
           checkIn={checkIn}
           checkOut={checkOut}
 
@@ -82,8 +80,7 @@ class Widget extends React.PureComponent {
           hideGuestModal={this.hideGuestModal}
           show={guestModalVisible}
           guests={guests}
-          increaseGuestCount={increaseGuestCount}
-          decreaseGuestCount={decreaseGuestCount}
+          guestCountFunctions={guestCountFunctions}
         />
         <MainButton
           checkOut={checkOut}
@@ -116,8 +113,7 @@ export default memo(Widget);
 
 Widget.propTypes = {
   guests: PropTypes.objectOf(PropTypes.number).isRequired,
-  increaseGuestCount: PropTypes.func.isRequired,
-  decreaseGuestCount: PropTypes.func.isRequired,
+  guestCountFunctions: PropTypes.objectOf(PropTypes.func).isRequired,
   calendar: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.object)).isRequired,
   weekendPricing: PropTypes.bool.isRequired,
   selectDate: PropTypes.func.isRequired,
@@ -130,7 +126,6 @@ Widget.propTypes = {
   hideCalendarModal: PropTypes.func.isRequired,
   calendarModalVisible: PropTypes.bool.isRequired,
   lastPossibleCheckOut: PropTypes.instanceOf(Date),
-  appendLeadingZeroes: PropTypes.func,
   fees: PropTypes.shape({
     cleaningFee: PropTypes.number,
     nightCount: PropTypes.number,
