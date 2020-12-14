@@ -131,12 +131,14 @@ const AngleUp = styled.span`
 
 const WidgetDateGuest = ({
   toggleGuestModal, guestModalVisible, calendarModalVisible, guests,
-  checkIn, checkOut, showCalendarModal, appendLeadingZeroes,
+  checkIn, checkOut, showCalendarModal,
 }) => {
   let guestCount = '';
   if (guests.totalGuests === 1) { guestCount = '1 guest'; } else { guestCount = `${guests.totalGuests} guests`; }
   let infantCount = '';
   if (guests.infants === 1) { infantCount = ', 1 infant'; } else if (guests.infants > 1) { infantCount = `, ${guests.infants} infants`; }
+
+  const appendLeadingZeroes = (n) => (n <= 9 ? `0${n}` : n);
 
   const formatMMDDYYYY = (date) => `${appendLeadingZeroes(date.getMonth() + 1)}/${appendLeadingZeroes(date.getDate())}/${date.getFullYear()}`;
 
@@ -188,5 +190,4 @@ WidgetDateGuest.propTypes = {
   showCalendarModal: PropTypes.func.isRequired,
   checkIn: PropTypes.instanceOf(Date),
   checkOut: PropTypes.instanceOf(Date),
-  appendLeadingZeroes: PropTypes.func.isRequired,
 };

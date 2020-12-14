@@ -39,11 +39,11 @@ class Widget extends React.PureComponent {
     this.hideGuestModal = hideModal.bind(this);
   }
 
-  toggleGuestModal(event, bool) {
+  toggleGuestModal(event, boolean) {
     // eslint-disable-next-line no-unused-expressions
 
-    if (bool !== undefined) {
-      this.setState({ guestModalVisible: bool });
+    if (boolean !== undefined) {
+      this.setState({ guestModalVisible: boolean });
     } else {
       this.setState((prevState) => ({ guestModalVisible: !prevState.guestModalVisible }));
     }
@@ -57,7 +57,7 @@ class Widget extends React.PureComponent {
       checkIn, checkOut, calendarModalVisible,
       // eslint-disable-next-line no-unused-vars
       hideModal, hideCalendarModal, showModal, showCalendarModal,
-      lastPossibleCheckOut, fees, appendLeadingZeroes, headerInfo,
+      lastPossibleCheckOut, fees, headerInfo,
       addReservation,
     } = this.props;
 
@@ -72,7 +72,6 @@ class Widget extends React.PureComponent {
           calendarModalVisible={calendarModalVisible}
           guests={guests}
           showCalendarModal={showCalendarModal}
-          appendLeadingZeroes={appendLeadingZeroes}
           checkIn={checkIn}
           checkOut={checkOut}
 
@@ -128,7 +127,6 @@ Widget.propTypes = {
   hideCalendarModal: PropTypes.func.isRequired,
   calendarModalVisible: PropTypes.bool.isRequired,
   lastPossibleCheckOut: PropTypes.instanceOf(Date),
-  appendLeadingZeroes: PropTypes.func,
   fees: PropTypes.shape({
     cleaningFee: PropTypes.number,
     nightCount: PropTypes.number,
