@@ -23,7 +23,6 @@ const WidgetWrapper = styled.div`
   box-shadow: rgba(0, 0, 0, 0.12) 0px 6px 16px;
   margin: auto;
 `;
-
 class Widget extends React.PureComponent {
   constructor(props) {
     super(props);
