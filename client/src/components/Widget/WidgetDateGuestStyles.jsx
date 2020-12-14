@@ -23,7 +23,7 @@ export const CheckInBox = styled.button`
     outline:none;
   }
 
-  ${({ calendarModalVisible }) => calendarModalVisible && CheckInBoxPopUp}
+  ${({ calendarModalVisible }) => calendarModalVisible}
 `;
 
 export const CheckOutBox = styled.div`
@@ -41,7 +41,7 @@ export const CheckOutBox = styled.div`
     outline:none;
   }
 
-  ${({ calendarModalVisible }) => calendarModalVisible && CheckOutBoxPopUp}
+  ${({ calendarModalVisible }) => calendarModalVisible}
 `;
 
 export const GuestBox = styled.div`
@@ -55,7 +55,7 @@ export const GuestBox = styled.div`
   border-style: solid;
   vertical-align: top;
 
-  ${({ guestModalVisible }) => guestModalVisible && GuestBoxPopUp}
+  ${({ guestModalVisible }) => guestModalVisible}
 
 `;
 

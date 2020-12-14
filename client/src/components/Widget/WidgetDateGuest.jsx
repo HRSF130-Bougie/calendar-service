@@ -1,5 +1,4 @@
 import React, { memo } from 'react';
-import styled, { css } from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleUp } from '@fortawesome/free-solid-svg-icons';
 import PropTypes from 'prop-types';
