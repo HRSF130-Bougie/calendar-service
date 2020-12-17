@@ -133,6 +133,28 @@ class Booking extends React.Component {
     });
   }
 
+  selectDate(date, selectedMonthIndex, selectedDayIndex) {
+    const { checkIn, checkOut } = this.state;
+    if (!checkIn || (checkIn && checkOut)) {
+      if (checkOut) { this.clearDates(); }
+      this.setState({
+        checkIn: date,
+        checkInIndex: { monthIndex: selectedMonthIndex, dayIndex: selectedDayIndex },
+      }, () => this.setState({
+        lastPossibleCheckOut: this.getLastDayCheckOut(selectedMonthIndex, selectedDayIndex),
+      }));
+    } else if (checkIn && !checkOut) {
+      this.setState({
+        checkOut: date,
+        checkOutIndex: { monthIndex: selectedMonthIndex, dayIndex: selectedDayIndex },
+        lastPossibleCheckOut: new Date(2030, 12),
+      }, () => {
+        this.hideModal(null, 'calendarModalVisible');
+        this.getSelectedDays();
+      });
+    }
+  }
+
   increaseGuestCount(event) {
     event.preventDefault();
     const targetName = event.target.name;
@@ -188,28 +210,6 @@ class Booking extends React.Component {
       infants: 0,
       totalGuests: 1,
     });
-  }
-
-  selectDate(date, selectedMonthIndex, selectedDayIndex) {
-    const { checkIn, checkOut } = this.state;
-    if (!checkIn || (checkIn && checkOut)) {
-      if (checkOut) { this.clearDates(); }
-      this.setState({
-        checkIn: date,
-        checkInIndex: { monthIndex: selectedMonthIndex, dayIndex: selectedDayIndex },
-      }, () => this.setState({
-        lastPossibleCheckOut: this.getLastDayCheckOut(selectedMonthIndex, selectedDayIndex),
-      }));
-    } else if (checkIn && !checkOut) {
-      this.setState({
-        checkOut: date,
-        checkOutIndex: { monthIndex: selectedMonthIndex, dayIndex: selectedDayIndex },
-        lastPossibleCheckOut: new Date(2030, 12),
-      }, () => {
-        this.hideModal(null, 'calendarModalVisible');
-        this.getSelectedDays();
-      });
-    }
   }
 
   addReservation() {
